@@ -1,20 +1,18 @@
 import React from 'react'
-import { useState,useRef,useEffect} from 'react';
+import {useRef} from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 
-function Register() 
-{
+const Register = () => {
     const form = useRef(null)
-    const [error,setError] = useState('error')
 
     // handle submit 
     const registerHandler = (e) => {        
         e.preventDefault();
 
         const data = new FormData(form.current);
-   
-            
+          
             axios({
                 method: "post",
                 url:"http://localhost:8000/api/register",
@@ -23,14 +21,16 @@ function Register()
             }).then(res=>{
                 console.log(res.data)
             }).catch(err=>{
-                    console.log(error)
+                    console.log(err)
             })
       
            
     }
 
   return (
+
     <div>
+        <Link to='/'>Home</Link>
         <form ref={form} encType="multipart/form-data">
             <div>
                 <input type='file'
@@ -75,7 +75,6 @@ function Register()
 
                     />
             </div>
-            <p>{error}</p>
         </form>
     </div>
   )
