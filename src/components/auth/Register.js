@@ -1,26 +1,29 @@
 import React from 'react'
 import {useRef} from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-
-
+import {Link,useNavigate } from 'react-router-dom';
 const Register = () => {
-    const form = useRef(null)
 
+    const form = useRef(null)
+    const navigate = useNavigate();
     // handle submit 
     const registerHandler = (e) => {        
         e.preventDefault();
-
-        const data = new FormData(form.current);
+       const data = new FormData(form.current);
           
             axios({
                 method: "post",
                 url:"http://localhost:8000/api/register",
                 data:data,
 
-            }).then(res=>{
-                console.log(res.data)
-            }).catch(err=>{
+            })
+            .then(res=>{
+                console.log(res)
+            })
+            .then(()=>{
+                navigate('/Login')
+            })
+            .catch(err=>{
                     console.log(err)
             })
       
@@ -79,5 +82,4 @@ const Register = () => {
     </div>
   )
 }
-
 export default Register
