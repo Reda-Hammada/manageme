@@ -1,12 +1,16 @@
-<script setup>
-   
-   components:{
+<script>
+  import AppHeader from '@/components/AppHeader.vue';
 
-   }
+  export default{
+    name:"App",
+    components:{
+     AppHeader,
+
+   
+     }
+  }
 </script>
 
 <template>
- 
-<style >
-
-</style>
+  <app-header></app-header>
+</template>

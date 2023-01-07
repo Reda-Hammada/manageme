@@ -1,4 +1,4 @@
-import {From as VeeForm,
+import {Form as VeeForm,
      Field as VeeField, 
      configure,
      defineRule
