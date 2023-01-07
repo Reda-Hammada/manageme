@@ -1,5 +1,8 @@
 <script setup>
+   
+   components:{
 
+   }
 </script>
 
 <template>
