@@ -2,10 +2,16 @@
 module.exports = {
   content: [
     "./index.html",
-    "./src/**/*.{vue,js,ts,jsx,tsx}"
+    "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+        colors:{
+          "main-color":"#4E4E91",
+          "button-color":"#FF4800"
+    }
+    },
+  
   },
   plugins: [],
 }
