@@ -9,7 +9,10 @@ module.exports = {
         colors:{
           "main-color":"#4E4E91",
           "button-color":"#FF4800"
-    }
+       },
+       fontFamily:{
+        'font': 'Rubik, sans-serif'
+       }
     },
   
   },
