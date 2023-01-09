@@ -20,6 +20,12 @@
     computed:{
       ...mapState(useHiddenStore,['isHidden']),
       ...mapWritableState(useHiddenStore,['isHidden'])
+    },
+    methods:{
+      toggleTab(argument){
+         this.$emit('change-tab',argument)    
+
+      }
     }
     
  }
@@ -27,20 +33,33 @@
 
 <template>
    <!--Auth Login & Register-->
-   <div class="absolute opacity-50 bg-black w-full  h-full bottom-0 " 
+   <div class="absolute opacity-75 bg-black w-full  h-full bottom-0 " 
     v-show="isHidden === true" >
-      <div class="bg-gray-500  w-1/2 mr-auto ml-auto mt-40">
-         <span @click='isHidden = !isHidden' class="text-4xl text-main-color">X</span>
+      <div class="bg-white rounded opacity-100 w-2/6  mr-auto ml-auto  opacity-100"
+           :class="{'h-3/6 mt-32':tab ==='Login','h-5/6 mt-14':tab ==='Register'}">
+         <span 
+         @click='isHidden = !isHidden' 
+         class="text-2xl font-bold text-black cursor-pointer hover:text-main-color"
+         >X
+        </span>
 
-         <div>
-
-         </div>
+         <div class="text-center mb-7 ">
+            <button @click="toggleTab('logIn')"
+                   class="mr-12" :class='{"hover:text-main-color bg-white": tab==="Register","w-28 w-28 rounded	h-10 bg-button-color text-white ":tab ==="Login"}' >
+                     Sign in
+                  </button>
+            <button  @click="toggleTab('signUp')"
+                   :class='{"text-main-color bg-white": tab==="Login","w-28 w-28 rounded	h-10 bg-button-color text-white ":tab ==="Register"}'>
+               Sign up
+            </button>
+        </div>
+      
          <!--Login-->
          <vee-form v-show="tab === 'Login'">
             <div>
-               <h2 class="text-main-color">{{ tab }}</h2>
+               <h2 class="text-main-color text-center">{{ tab }}</h2>
 
-               <label>email</label>
+               <label class="">email</label>
                <vee-field name="email"
                           type="text"
                           placeholder="Enter your email"
@@ -77,7 +96,6 @@
             </div>
          </vee-form>
       </div>
-
    </div>
  
 </template>

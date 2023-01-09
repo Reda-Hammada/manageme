@@ -17,7 +17,7 @@
      },
      methods:{
        changeTab(argument){
-        
+
          switch(argument){
           case 'logIn':
             this.tab = 'Login'
@@ -37,5 +37,5 @@
 
 <template>
   <app-header @change-tab="changeTab" :tab="tab"></app-header>
-  <app-auth  :tab='tab'></app-auth>
+  <app-auth @change-tab="changeTab" :tab='tab'></app-auth>
 </template>
