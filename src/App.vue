@@ -7,11 +7,35 @@
     components:{
      AppHeader,
      AppAuth,
+     },
+
+
+     data(){
+      return {
+        tab:'Login'
+      }
+     },
+     methods:{
+       changeTab(argument){
+        
+         switch(argument){
+          case 'logIn':
+            this.tab = 'Login'
+            break;
+          case 'signUp':
+            this.tab = 'Register'
+            break;
+          default:
+            this.tab = 'Login'
+            break;
+        
+         }
+       }
      }
   }
 </script>
 
 <template>
-  <app-header></app-header>
-  <app-auth></app-auth>
+  <app-header @change-tab="changeTab" :tab="tab"></app-header>
+  <app-auth  :tab='tab'></app-auth>
 </template>

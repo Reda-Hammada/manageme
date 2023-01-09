@@ -1,15 +1,23 @@
 <script>
  import {useHiddenStore} from '@/stores/hidden.js'
- import {mapState,mapWritableState} from 'pinia'
-export default {
+ import {mapWritableState} from 'pinia'
+
+export default {  
 
     name:"AppHeader",
-    components:{
+    el: '#app',
 
+    props:{
+        tab:{
+            type:String,
+            Required:true,
+        },
+       
     },
+    emits:['change-tab'],
     data(){
         return{
-            tab : 'Login'
+
         }
     },
     computed:{
@@ -17,51 +25,26 @@ export default {
 
     },
     methods:{
-         ToggleForm(){
+        // toggle form 
+         ToggleForm(argument){
             this.isHidden = !this.isHidden
-            console.log(this.isHidden)
-
-            switch(this.tab){
-                case 'Login':
-                    this.tab = 'Register'
-                    break;
-                case 'Register':
-                    this.tab = 'Login'
-                    break;
-                default:
-                    this.tab ='Login'   
-            }
-
-            
+            // pass the argument to parent component either login or signup
+            this.$emit('change-tab',argument)    
         },
 
-        ToggleTab(){
-
-            switch(this.tab){
-                case 'Login':
-                    this.tab = 'Register'
-                    break;
-                case 'Register':
-                    this.tab = 'Login'
-                    break;
-                default:
-                    this.tab ='Login'   
-            }
-
-            console.log(this.tab)
-            
-            
-        }
+       
     }
     
 }
 </script>
 <template>
+    <!--navbar-->
     <header >
         <nav class="flex justify-evenly pt-5 w-full">
             <div class=""> 
                 <h1 class="text-main-color font-bold text-3xl">Manageme</h1>
             </div>
+            <!--navbar lists and links-->
             <div class="">
                 <ul class="mt-2">
                     <li class="inline mr-4 hover:text-main-color cursor-pointer font-bold ">Home</li>
@@ -70,12 +53,15 @@ export default {
                     <li class="inline mr-4 hover:text-main-color cursor-pointer font-bold ">Contact us</li>
                 </ul>
             </div>
+            <!--sign up and login up button-->
             <div class="mt-2 ">
-                <button @click="ToggleForm " class="mr-7 w-28 rounded h-10 bg-button-color text-white ">Sign in</button>
-                <button @click="ToggleForm" class=" w-28 w-28 rounded	h-10 bg-button-color text-white ">Sign up</button>
+                <button  @click="ToggleForm('logIn') " class="mr-7 w-28 rounded h-10 bg-button-color text-white ">Sign in</button>
+                <button  @click="ToggleForm('signUp')" class=" w-28 w-28 rounded	h-10 bg-button-color text-white ">Sign up</button>
             </div>
         </nav>
     </header>
+    <!--navbar-->
+
 </template>
 <style>
 

@@ -4,9 +4,14 @@
  
  export default{
     name:"AppAuth",
+    props:{
+       tab:{
+         
+       },
+   
+    },
     data(){
       return{
-         tab:'Login',
          schema:{
             
          },
@@ -25,7 +30,7 @@
    <div class="absolute opacity-50 bg-black w-full  h-full bottom-0 " 
     v-show="isHidden === true" >
       <div class="bg-gray-500  w-1/2 mr-auto ml-auto mt-40">
-         <span @click='isHidden = !isHidden' class="text-4xl bg-black text-black">Xredererw</span>
+         <span @click='isHidden = !isHidden' class="text-4xl text-main-color">X</span>
 
          <div>
 
@@ -33,6 +38,8 @@
          <!--Login-->
          <vee-form v-show="tab === 'Login'">
             <div>
+               <h2 class="text-main-color">{{ tab }}</h2>
+
                <label>email</label>
                <vee-field name="email"
                           type="text"
@@ -50,7 +57,10 @@
          </vee-form>
          <!--Register-->
          <vee-form v-show="tab === 'Register'">
+
             <div>
+               <h2 class="text-main-color">{{ tab }}</h2>
+
                <label>email</label>
                <vee-field name="email"
                           type="text"
