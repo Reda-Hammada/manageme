@@ -1,6 +1,58 @@
 <script>
+ import {useHiddenStore} from '@/stores/hidden.js'
+ import {mapState,mapWritableState} from 'pinia'
 export default {
+
     name:"AppHeader",
+    components:{
+
+    },
+    data(){
+        return{
+            tab : 'Login'
+        }
+    },
+    computed:{
+        ...mapWritableState(useHiddenStore,['isHidden'])
+
+    },
+    methods:{
+         ToggleForm(){
+            this.isHidden = !this.isHidden
+            console.log(this.isHidden)
+
+            switch(this.tab){
+                case 'Login':
+                    this.tab = 'Register'
+                    break;
+                case 'Register':
+                    this.tab = 'Login'
+                    break;
+                default:
+                    this.tab ='Login'   
+            }
+
+            
+        },
+
+        ToggleTab(){
+
+            switch(this.tab){
+                case 'Login':
+                    this.tab = 'Register'
+                    break;
+                case 'Register':
+                    this.tab = 'Login'
+                    break;
+                default:
+                    this.tab ='Login'   
+            }
+
+            console.log(this.tab)
+            
+            
+        }
+    }
     
 }
 </script>
@@ -18,9 +70,9 @@ export default {
                     <li class="inline mr-4 hover:text-main-color cursor-pointer font-bold ">Contact us</li>
                 </ul>
             </div>
-            <div class="mt-3  ">
-                <button class="mr-7 w-28 rounded h-10 bg-button-color text-white font-bold">Sign in</button>
-                <button class=" w-28 w-28 rounded	h-10 bg-button-color text-white font-bold">Sign up</button>
+            <div class="mt-2 ">
+                <button @click="ToggleForm " class="mr-7 w-28 rounded h-10 bg-button-color text-white ">Sign in</button>
+                <button @click="ToggleForm" class=" w-28 w-28 rounded	h-10 bg-button-color text-white ">Sign up</button>
             </div>
         </nav>
     </header>

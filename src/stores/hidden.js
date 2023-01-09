@@ -1,10 +1,10 @@
 import {defineStore} from 'pinia'
 
-export default defineStore(
+export const useHiddenStore = defineStore(
     'hidden', {
         state: () =>({
-            isHidden: false,
-        }),
+            isHidden:false,
+        })
     }
-);
+)
 
