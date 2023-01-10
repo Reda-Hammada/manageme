@@ -1,7 +1,8 @@
 import {Form as VeeForm,
      Field as VeeField, 
      configure,
-     defineRule
+     defineRule,
+     ErrorMessage
     } from 'vee-validate';
 
 import{
@@ -24,6 +25,7 @@ export default{
 
         app.component("VeeField", VeeField)
         app.component("VeeForm",VeeForm)
+        app.component('ErrorMessage',ErrorMessage)
         defineRule('required',required)
         defineRule('email',email)
         defineRule('min',min)

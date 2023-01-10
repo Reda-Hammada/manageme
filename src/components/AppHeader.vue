@@ -27,6 +27,7 @@ export default {
     methods:{
         // toggle form 
          ToggleForm(argument){
+            // change global state isHidden to show the pop up form
             this.isHidden = !this.isHidden
             // pass the argument to parent component either login or signup
             this.$emit('change-tab',argument)    
