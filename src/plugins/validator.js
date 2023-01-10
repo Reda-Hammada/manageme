@@ -22,8 +22,8 @@ import{
 export default{
     install(app){
 
-        app.component(VeeField, 'VeeField')
-        app.component(VeeForm,'VeeForm')
+        app.component("VeeField", VeeField)
+        app.component("VeeForm",VeeForm)
         defineRule('required',required)
         defineRule('email',email)
         defineRule('min',min)

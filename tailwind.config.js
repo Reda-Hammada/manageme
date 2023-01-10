@@ -8,7 +8,8 @@ module.exports = {
     extend: {
         colors:{
           "main-color":"#4E4E91",
-          "button-color":"#FF4800"
+          "button-color":"#FF4800",
+          "input-color":"#E5E5E5",
        },
        fontFamily:{
         'font': 'Rubik, sans-serif'
