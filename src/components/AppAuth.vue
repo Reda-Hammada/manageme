@@ -1,6 +1,7 @@
 <script>
 import { useHiddenStore } from "@/stores/hidden.js";
 import { mapState, mapWritableState } from "pinia";
+import axios from 'axios'
 
 export default {
   name: "AppAuth",
@@ -10,6 +11,7 @@ export default {
       Required: true,
     },
   },
+
   data() {
     return {
       schemaRegister: {
@@ -18,7 +20,7 @@ export default {
         password: "required|min:8|max:20",
         confirm_password: "confirmed:@password",
       },
-      
+
       inputValidation: {
         name: {
           isValid: null,
@@ -31,7 +33,7 @@ export default {
           isValid: null,
         },
         confirmPassword: {
-          pass:'',
+          pass: "",
           isValid: null,
         },
       },
@@ -49,7 +51,6 @@ export default {
       // if the field is empty
       if (e.target.value == null || e.target.value == "") {
         this.inputValidation.email.isValid = false;
-        console.log(this.email.isValid);
       } else {
         this.inputValidation.email.isValid = true;
         this.inputValidation.email.message =
@@ -64,13 +65,13 @@ export default {
         this.inputValidation.email.isValid = true;
       }
     },
-      validatePasswordRegister(e) {
+    validatePasswordRegister(e) {
       // if field empty
       if (e.target.value == null || e.target.value == "") {
         this.inputValidation.password.isValid = false;
       } else {
         this.inputValidation.password.isValid = true;
-        this.inputValidation.confirmPassword.pass = e.target.value
+        this.inputValidation.confirmPassword.pass = e.target.value;
       }
 
       // if field does not have at least 8 character or maximum 20 characters
@@ -96,6 +97,23 @@ export default {
         this.inputValidation.name.isValid = true;
       }
     },
+    register(values) {
+      const userCred = {
+        name:values.name,
+        email:values.email,
+        password:values.password,
+
+      }
+  
+
+      this.axios.post('http://127.0.0.1:8000/api/register',userCred)
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
 };
 </script>
@@ -111,14 +129,15 @@ export default {
     class="bg-white absolute right-0 left-0 bottom-0 top-0 rounded ml-auto mr-auto w-4/5 h-fit pb-6"
     :class="{
       'w-[50%] mt-32': tab === 'Login',
-      ' mt-14': tab === 'Register',
+      'mt-14': tab === 'Register',
     }"
   >
     <div class="w-full ml-[95%] pt-[1%]">
       <span
         @click="isHidden = !isHidden"
         class="font-bold text-black cursor-pointer hover:text-main-color"
-        >X
+      >
+        X
       </span>
     </div>
 
@@ -198,7 +217,11 @@ export default {
     </div>
     <div class="w-full text-center">
       <!--Register-->
-      <vee-form v-show="tab === 'Register'" :validation-schema="schemaRegister">
+      <vee-form
+        v-show="tab === 'Register'"
+        @submit="register"
+        :validation-schema="schemaRegister"
+      >
         <!--Name -->
         <div class="mb-1">
           <label class="block ml-[8.2%] mb-2 text-start">Name :</label>
@@ -295,12 +318,12 @@ export default {
           >
           <vee-field v-slot="{ field, errors }" name="confirm_password">
             <input
-              @change="validateConfirmPassRegister($event,password)"
+              @change="validateConfirmPassRegister($event, password)"
               :class="{
                 'border-green-500 outline-green-500':
-                 inputValidation.confirmPassword.isValid === true,
+                  inputValidation.confirmPassword.isValid === true,
                 'border-red-500 outline-red-500':
-                 inputValidation.confirmPassword.isValid === false,
+                  inputValidation.confirmPassword.isValid === false,
               }"
               name="confirm_password"
               v-bind="field"
@@ -315,6 +338,8 @@ export default {
             >
               <span class="text-red-500">{{ error }}</span>
             </div>
+
+            <input type="submit" value="signup" />
           </vee-field>
         </div>
       </vee-form>
