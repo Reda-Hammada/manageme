@@ -1,7 +1,7 @@
 <script>
 import { useHiddenStore } from "@/stores/hidden.js";
 import { mapState, mapWritableState } from "pinia";
-import axios from 'axios'
+import axios from "axios";
 
 export default {
   name: "AppAuth",
@@ -36,6 +36,10 @@ export default {
           pass: "",
           isValid: null,
         },
+      },
+      messageSuccess: {
+        isMessage: false,
+        message: "",
       },
     };
   },
@@ -97,18 +101,18 @@ export default {
         this.inputValidation.name.isValid = true;
       }
     },
-    register(values) {
+     register(values) {
+
       const userCred = {
-        name:values.name,
-        email:values.email,
-        password:values.password,
+        name: values.name,
+        email: values.email,
+       password: values.password,
+      };
 
-      }
-  
-
-      this.axios.post('http://127.0.0.1:8000/api/register',userCred)
+      axios.post("http://127.0.0.1:8000/api/register", userCred)
         .then((res) => {
-          console.log(res.data);
+          this.messageSuccess.message = res.data.message;
+          this.messageSuccess.isMessage = true;
         })
         .catch((err) => {
           console.log(err);
@@ -126,7 +130,7 @@ export default {
   ></div>
   <div
     v-show="isHidden == true"
-    class="bg-white absolute right-0 left-0 bottom-0 top-0 rounded ml-auto mr-auto w-4/5 h-fit pb-6"
+    class="bg-white absolute right-0 left-0 top-0 rounded ml-auto mr-auto w-4/5 h-fit pb-6"
     :class="{
       'w-[50%] mt-32': tab === 'Login',
       'mt-14': tab === 'Register',
@@ -216,12 +220,28 @@ export default {
       </div>
     </div>
     <div class="w-full text-center">
+      <transition  name="fade" mode="out-in">
+        <div v-if="messageSuccess.isMessage == true && tab === 'Register'"
+             class="bg-green-500 w-[60%] rounded mr-auto ml-auto 
+                    mb-7 p-2 h-[90px] text-white font-bold">
+          <p>{{ messageSuccess.message }}</p>
+        </div>
+      </transition >
       <!--Register-->
       <vee-form
         v-show="tab === 'Register'"
         @submit="register"
         :validation-schema="schemaRegister"
       >
+        <!--user image-->
+        <div class="">
+          <vee-field v-slot="{ field, errors }" name="image">
+            <input type="file" class="" v-bind="field" name="image" />
+            <div :key="error" v-for="error in errors">
+              <span>{{ error }}</span>
+            </div>
+          </vee-field>
+        </div>
         <!--Name -->
         <div class="mb-1">
           <label class="block ml-[8.2%] mb-2 text-start">Name :</label>
@@ -339,10 +359,27 @@ export default {
               <span class="text-red-500">{{ error }}</span>
             </div>
 
-            <input type="submit" value="signup" />
           </vee-field>
+          <div class="pt-2">
+            <div>
+              <input  class="bg-main-color cursor-pointer rounded font-bold text-white h-[35px] w-[120px]" type="submit" value="signup" />
+            </div>
+          </div>
         </div>
       </vee-form>
     </div>
   </div>
 </template>
+
+<style>
+.fade-enter-form {
+  opacity: 0;
+}
+.fade-enter-active {
+  opacity: 1;
+  transition: all 3s linear;
+}
+
+
+
+</style>
