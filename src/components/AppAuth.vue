@@ -101,23 +101,28 @@ export default {
         this.inputValidation.name.isValid = true;
       }
     },
-     register(values) {
-
+    register(values) {
       const userCred = {
         name: values.name,
         email: values.email,
-       password: values.password,
+        password: values.password,
       };
 
-      axios.post("http://127.0.0.1:8000/api/register", userCred)
+      axios
+        .post("http://127.0.0.1:8000/api/register", userCred)
         .then((res) => {
           this.messageSuccess.message = res.data.message;
           this.messageSuccess.isMessage = true;
+
+          setTimeout(() => {
+            this.messageSuccess.isMessage = false;
+          }, 3000);
         })
         .catch((err) => {
           console.log(err);
         });
     },
+    login(values) {},
   },
 };
 </script>
@@ -220,13 +225,14 @@ export default {
       </div>
     </div>
     <div class="w-full text-center">
-      <transition  name="fade" mode="out-in">
-        <div v-if="messageSuccess.isMessage == true && tab === 'Register'"
-             class="bg-green-500 w-[60%] rounded mr-auto ml-auto 
-                    mb-7 p-2 h-[90px] text-white font-bold">
-          <p>{{ messageSuccess.message }}</p>
+      <transition name="fade">
+        <div
+          v-if="messageSuccess.isMessage == true && tab === 'Register'"
+          class="bg-green-500 w-[60%] rounded mr-auto ml-auto mb-7 p-2 h-[90px] text-white font-bold"
+        >
+          {{ messageSuccess.message }}
         </div>
-      </transition >
+      </transition>
       <!--Register-->
       <vee-form
         v-show="tab === 'Register'"
@@ -358,11 +364,14 @@ export default {
             >
               <span class="text-red-500">{{ error }}</span>
             </div>
-
           </vee-field>
           <div class="pt-2">
             <div>
-              <input  class="bg-main-color cursor-pointer rounded font-bold text-white h-[35px] w-[120px]" type="submit" value="signup" />
+              <input
+                class="bg-main-color cursor-pointer rounded font-bold text-white h-[35px] w-[120px]"
+                type="submit"
+                value="signup"
+              />
             </div>
           </div>
         </div>
@@ -372,14 +381,21 @@ export default {
 </template>
 
 <style>
-.fade-enter-form {
+.fade-enter-from {
   opacity: 0;
 }
-.fade-enter-active {
+
+.fade-enter-to {
   opacity: 1;
-  transition: all 3s linear;
+  transition: all 1s ease;
 }
 
+.fade-leave-to {
+  opacity: 1;
+}
 
-
+.fade-leave-active {
+  opacity: 0;
+  transition: all 1s ease;
+}
 </style>
