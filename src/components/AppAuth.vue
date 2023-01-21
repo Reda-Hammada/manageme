@@ -1,7 +1,7 @@
 <script>
 import { useHiddenStore } from "@/stores/hidden.js";
-import { mapState, mapWritableState } from "pinia";
-import axios from "axios";
+import { useAuthStore } from "@/stores/auth";
+import { mapState, mapWritableState, mapActions } from "pinia";
 
 export default {
   name: "AppAuth",
@@ -41,11 +41,20 @@ export default {
         isMessage: false,
         message: "",
       },
+      messageError: {
+        isMessage: false,
+        message: "",
+      },
     };
   },
   computed: {
     ...mapState(useHiddenStore, ["isHidden"]),
+
     ...mapWritableState(useHiddenStore, ["isHidden"]),
+    ...mapWritableState(useAuthStore,['isAuthenticated']),
+    ...mapState(useAuthStore, ["Success"]),
+    ...mapState(useAuthStore, ["Error"]),
+    ...mapState(useAuthStore, ["userData"]),
   },
   methods: {
     toggleTab(argument) {
@@ -101,28 +110,35 @@ export default {
         this.inputValidation.name.isValid = true;
       }
     },
-    register(values) {
+    ...mapActions(useAuthStore, {
+      createUser: "register",
+    }),
+    async register(values) {
       const userCred = {
         name: values.name,
         email: values.email,
         password: values.password,
       };
+      try {
+        
+        await this.createUser(userCred);
+        this.messageSuccess.message = await this.Success;
+        this.messageSuccess.isMessage =  true;
+        this.messageError.isMessage =  false;
+        this.useAuthStore.isAuthenticated = true
+        this.$router.push({ path: "/Dashboard" });
 
-      axios
-        .post("http://127.0.0.1:8000/api/register", userCred)
-        .then((res) => {
-          this.messageSuccess.message = res.data.message;
-          this.messageSuccess.isMessage = true;
 
-          setTimeout(() => {
-            this.messageSuccess.isMessage = false;
-          }, 3000);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      } catch (err) {
+        this.messageError.isMessage = true;
+        this.messageError.message = "Something went wrong,please try again";
+      }
     },
-    login(values) {},
+    async login(values) {
+      try {
+        await this.authenticate(values);
+      } catch (err) {}
+    },
   },
 };
 </script>
@@ -225,12 +241,18 @@ export default {
       </div>
     </div>
     <div class="w-full text-center">
-      <transition name="fade">
+      <transition name="fade" mode="out-in">
         <div
           v-if="messageSuccess.isMessage == true && tab === 'Register'"
           class="bg-green-500 w-[60%] rounded mr-auto ml-auto mb-7 p-2 h-[90px] text-white font-bold"
         >
           {{ messageSuccess.message }}
+        </div>
+        <div
+          v-else-if="messageError.isMessage == true && tab === 'Register'"
+          class="bg-red-500 w-fit pl-[3%] pr-[3%] rounded mr-auto mt-auto pt-[2%] pb-2 ml-auto mb-7 p-2 h-[90px] text-white font-bold"
+        >
+          {{ messageError.message }}
         </div>
       </transition>
       <!--Register-->

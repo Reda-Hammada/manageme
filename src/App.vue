@@ -1,41 +1,10 @@
 <script>
-  import AppHeader from '@/components/AppHeader.vue';
-  import AppAuth from '@/components/AppAuth.vue';
-
-  export default {
-    name:"App",
-    components:{
-     AppHeader,
-     AppAuth,
-     },
-
-
-     data(){
-      return {
-        tab:'Login'
-      }
-     },
-     methods:{
-       changeTab(argument){
-
-         switch(argument){
-          case 'logIn':
-            this.tab = 'Login'
-            break;
-          case 'signUp':
-            this.tab = 'Register'
-            break;
-          default:
-            this.tab = 'Login'
-            break;
-        
-         }
-       }
-     }
-  }
+import { RouterView } from 'vue-router';
+export default {
+  name: "App",
+};
 </script>
 
 <template>
-  <app-header @change-tab="changeTab" :tab="tab"></app-header>
-  <app-auth @change-tab="changeTab" :tab='tab'></app-auth>
+  <router-view></router-view>
 </template>
