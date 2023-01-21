@@ -1,12 +1,14 @@
 <script>
   import AppHeader from '@/components/AppHeader.vue';
   import AppAuth from '@/components/AppAuth.vue';
+  import AppHero from './AppHero.vue';
 
   export default {
     name:"AppHome",
     components:{
      AppHeader,
      AppAuth,
+     AppHero,
      },
 
 
@@ -38,4 +40,5 @@
 <template>
   <app-header @change-tab="changeTab" :tab="tab"></app-header>
   <app-auth @change-tab="changeTab" :tab='tab'></app-auth>
+  <app-hero></app-hero>
 </template>
