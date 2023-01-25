@@ -45,13 +45,15 @@ export default {
         isMessage: false,
         message: "",
       },
+      isLoading: false,
     };
   },
   computed: {
     ...mapState(useHiddenStore, ["isHidden"]),
 
     ...mapWritableState(useHiddenStore, ["isHidden"]),
-    ...mapWritableState(useAuthStore,['isAuthenticated']),
+    ...mapWritableState(useAuthStore, ["isAuthenticated"]),
+    ...mapState(useAuthStore, ["authenticateError"]),
     ...mapState(useAuthStore, ["Success"]),
     ...mapState(useAuthStore, ["Error"]),
     ...mapState(useAuthStore, ["userData"]),
@@ -112,7 +114,9 @@ export default {
     },
     ...mapActions(useAuthStore, {
       createUser: "register",
+      authenticate: "logUser",
     }),
+
     async register(values) {
       const userCred = {
         name: values.name,
@@ -120,23 +124,24 @@ export default {
         password: values.password,
       };
       try {
-        
         await this.createUser(userCred);
         this.messageSuccess.message = await this.Success;
-        this.messageSuccess.isMessage =  true;
-        this.messageError.isMessage =  false;
-        this.useAuthStore.isAuthenticated = true
+        this.messageSuccess.isMessage = true;
+        this.messageError.isMessage = false;
+        this.useAuthStore.isAuthenticated = true;
         this.$router.push({ path: "/Dashboard" });
-
-
       } catch (err) {
         this.messageError.isMessage = true;
         this.messageError.message = "Something went wrong,please try again";
       }
     },
-    async login(values) {
+    async Login(values) {
+        this.isLoading = true;
+        console.log(this.isLoading)
       try {
-        await this.authenticate(values);
+
+
+        await this.logUser(values);
       } catch (err) {}
     },
   },
@@ -190,8 +195,15 @@ export default {
     </div>
     <div class="w-full">
       <div class="w-[80%] ml-auto mr-auto h-fit text-center pt-3">
+        <div class="w-[50%] bg-red-500">
+          {{ authenticateError }}
+        </div>
         <!--Login-->
-        <vee-form v-show="tab === 'Login'" :validation-schema="schema">
+        <vee-form
+          v-show="tab === 'Login'"
+           method="POST"
+          @submit="Login"
+        >
           <!--email-->
           <div>
             <label class="block ml-[8.2%] mb-2 text-start">Email :</label>
@@ -228,10 +240,18 @@ export default {
           <div class="w-full mt-4">
             <div class="w-2/5 mr-auto ml-auto">
               <input
+                v-if="isLoading === false"
+                class="bg-main-color ring-button-color hover:ring-2 cursor-pointer w-28 text-white py-1.5 px-3 rounded"
+                value="Log in"
+                type="submit"
+              />
+              <button
+                v-else
                 class="bg-main-color ring-button-color hover:ring-2 cursor-pointer w-28 text-white py-1.5 px-3 rounded"
                 type="submit"
-                value="Login"
-              />
+              >
+                <i class="fa-solid fa-spinner-third"></i>
+              </button>
             </div>
           </div>
         </vee-form>
