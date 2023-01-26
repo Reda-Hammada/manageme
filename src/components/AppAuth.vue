@@ -20,6 +20,10 @@ export default {
         password: "required|min:8|max:20",
         confirm_password: "confirmed:@password",
       },
+      schemaLogin: {
+        email: "required|email",
+        password: "required",
+      },
 
       inputValidation: {
         name: {
@@ -114,8 +118,9 @@ export default {
     },
     ...mapActions(useAuthStore, {
       createUser: "register",
-      authenticate: "logUser",
+      logUser:'logIn',
     }),
+    ...mapActions(useAuthStore, ""),
 
     async register(values) {
       const userCred = {
@@ -136,13 +141,13 @@ export default {
       }
     },
     async Login(values) {
-        this.isLoading = true;
-        console.log(this.isLoading)
+      this.isLoading = true;
       try {
-
-
         await this.logUser(values);
-      } catch (err) {}
+        this.isLoading = false;
+      } catch (err) {
+        console.log(err);
+      }
     },
   },
 };
@@ -194,15 +199,16 @@ export default {
       </button>
     </div>
     <div class="w-full">
-      <div class="w-[80%] ml-auto mr-auto h-fit text-center pt-3">
-        <div class="w-[50%] bg-red-500">
+      <div  v-if="tab === 'Login'"
+      class=" h-fit text-center pt-3">
+        <div class="w-[70%] rounded pt-2 h-[40px] mb-4 ml-auto mr-auto text-white font-bold bg-red-500">
           {{ authenticateError }}
         </div>
         <!--Login-->
         <vee-form
           v-show="tab === 'Login'"
-           method="POST"
-          @submit="Login"
+          :validation-schema="schemaLogin"
+          @submit="Login(values)"
         >
           <!--email-->
           <div>
@@ -227,13 +233,18 @@ export default {
             <label class="block ml-[8.2%] mb-2 mt-2 text-start"
               >Password :</label
             >
-            <vee-field name="password">
+            <vee-field v-slot="{ field, errors }" name="password">
               <input
+                v-bind="field"
                 class="border outline-blue-600 border-2 h-9 w-5/6 text-black pl-5 focus:border-green-500 rounded border-input-color"
                 name="password"
                 type="password"
                 placeholder="Enter your password"
               />
+              <!--Errors passowrd -->
+              <div class="text-start" :key="error" v-for="error in errors">
+                <span class="text-red-500">{{ error }}</span>
+              </div>
             </vee-field>
           </div>
           <!--Submit-->
