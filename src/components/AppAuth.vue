@@ -118,7 +118,7 @@ export default {
     },
     ...mapActions(useAuthStore, {
       createUser: "register",
-      logUser:'logIn',
+      logUser: "logIn",
     }),
     ...mapActions(useAuthStore, ""),
 
@@ -134,7 +134,6 @@ export default {
         this.messageSuccess.isMessage = true;
         this.messageError.isMessage = false;
         this.useAuthStore.isAuthenticated = true;
-        this.$router.push({ path: "/Dashboard" });
       } catch (err) {
         this.messageError.isMessage = true;
         this.messageError.message = "Something went wrong,please try again";
@@ -199,16 +198,24 @@ export default {
       </button>
     </div>
     <div class="w-full">
-      <div  v-if="tab === 'Login'"
-      class=" h-fit text-center pt-3">
-        <div class="w-[70%] rounded pt-2 h-[40px] mb-4 ml-auto mr-auto text-white font-bold bg-red-500">
+      <div class="h-fit text-center pt-3">
+        <div
+          v-if="authenticateError && tab === 'Login'"
+          class="w-[70%] rounded pt-2 h-[40px] mb-4 ml-auto mr-auto text-white font-bold bg-red-500"
+        >
           {{ authenticateError }}
+        </div>
+        <div
+          v-if="Success && tab === 'Login'"
+          class="w-[70%] rounded pt-2 h-[40px] mb-4 ml-auto mr-auto text-white font-bold bg-green-500"
+        >
+          {{ Success }}
         </div>
         <!--Login-->
         <vee-form
           v-show="tab === 'Login'"
           :validation-schema="schemaLogin"
-          @submit="Login(values)"
+          @submit="Login"
         >
           <!--email-->
           <div>
@@ -222,7 +229,11 @@ export default {
                 placeholder="Enter yo ur email"
               />
               <!--Errors email -->
-              <div class="text-start" :key="error" v-for="error in errors">
+              <div
+                class="text-start ml-9 mt-2"
+                :key="error"
+                v-for="error in errors"
+              >
                 <span class="text-red-500">{{ error }}</span>
               </div>
             </vee-field>
@@ -242,7 +253,11 @@ export default {
                 placeholder="Enter your password"
               />
               <!--Errors passowrd -->
-              <div class="text-start" :key="error" v-for="error in errors">
+              <div
+                class="text-start ml-9 mt-2"
+                :key="error"
+                v-for="error in errors"
+              >
                 <span class="text-red-500">{{ error }}</span>
               </div>
             </vee-field>

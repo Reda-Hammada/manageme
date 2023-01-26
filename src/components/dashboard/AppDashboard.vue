@@ -8,21 +8,23 @@ export default {
 
   data() {
     return {
-      userData: JSON.parse(localStorage.getItem("userData")),
+      userData:localStorage.getItem("userData"),
     };
   },
   methods: {
     consoleUser() {
       console.log(this.userData);
     },
-    ...mapActions(useAuthStore,['logout'])
+    logOut(){
+      localStorage.removeItem('user_token')
+      localStorage.removeItem('userData')
+      this.$router.push({name:'Home'})
+    }
   },
 };
 </script>
 <template>
   <h1>Dashboard</h1>
-
-  <button @click="consoleUser">Click me !!</button>
-  <p>{{userData.name}}</p>
-  <button @click="logout">Logout</button>
+    <p>{{userData}}</p>
+  <button @click="logOut">Logout</button>
 </template>
