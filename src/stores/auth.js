@@ -31,14 +31,20 @@ export const useAuthStore = defineStore("auth", {
         .then(async (res) => {
           if (res) {
             if ((await res.data.status) === 200) {
+              this.authenticateError = "";
               this.Success = await res.data.message;
               localStorage.setItem("userData", await res.data.user);
               localStorage.setItem("user_token", await res.data.token);
+              setTimeout(()=>{
+                this.Success = "" 
+              },3000)
+            
+          
             }
-            if (res.data.status === 401) {
-              console.log(res);
-
+            if (await res.data.status === 401) {
+              this.Success = "";
               this.authenticateError = await res.data.message;
+           
             }
           }
         });

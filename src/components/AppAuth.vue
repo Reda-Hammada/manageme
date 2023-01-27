@@ -144,6 +144,8 @@ export default {
       try {
         await this.logUser(values);
         this.isLoading = false;
+        this.Success = null
+        this.$router.push({name:'Dashboard'})
       } catch (err) {
         console.log(err);
       }
@@ -200,13 +202,13 @@ export default {
     <div class="w-full">
       <div class="h-fit text-center pt-3">
         <div
-          v-if="authenticateError && tab === 'Login'"
+          v-if="authenticateError  && tab === 'Login'"
           class="w-[70%] rounded pt-2 h-[40px] mb-4 ml-auto mr-auto text-white font-bold bg-red-500"
         >
           {{ authenticateError }}
         </div>
         <div
-          v-if="Success && tab === 'Login'"
+          v-if="Success  && tab === 'Login'"
           class="w-[70%] rounded pt-2 h-[40px] mb-4 ml-auto mr-auto text-white font-bold bg-green-500"
         >
           {{ Success }}
