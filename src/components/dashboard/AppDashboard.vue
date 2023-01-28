@@ -1,20 +1,13 @@
 <script>
-import { RouterLink, RouterView } from "vue-router";
-import { useAuthStore } from "@/stores/auth";
-import { mapActions } from "pinia";
-
 export default {
   name: "AppDashboard",
 
   data() {
     return {
-      userData:localStorage.getItem("userData"),
+      userData:JSON.parse(localStorage.userData),
     };
   },
   methods: {
-    consoleUser() {
-      console.log(this.userData);
-    },
     logOut(){
       localStorage.removeItem('user_token')
       localStorage.removeItem('userData')
@@ -25,6 +18,7 @@ export default {
 </script>
 <template>
   <h1>Dashboard</h1>
-    <p>{{userData}}</p>
+  <p>{{userData.name}}</p>
+    <button @click="consoleUser">console</button>
   <button @click="logOut">Logout</button>
 </template>

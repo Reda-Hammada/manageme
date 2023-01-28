@@ -4,8 +4,9 @@ import axios from "axios";
 export const useAuthStore = defineStore("auth", {
   state: () => ({
     isAuthenticated: false,
-    Success: "",
-    Error: "",
+    SuccessLogin: "",
+    SuccessSignUp: "",
+    ErrorSignUp: "",
     authenticateError: "",
   }),
   actions: {
@@ -13,38 +14,49 @@ export const useAuthStore = defineStore("auth", {
       await axios
         .post("http://127.0.0.1:8000/api/register", userCred)
         .then(async (res) => {
-          const userData = await res.data.user;
-          localStorage.setItem("userData", userData);
-          this.Success = await res.data.message;
-          let userToken = await res.data.token;
-          localStorage.setItem("user_token", userToken);
+          if (res) {
+            if ((await res.data.status) == 201) {
+              this.ErrorSignUp = "";
+              this.SuccessSignUp = await res.data.message;
+              localStorage.setItem(
+                "userData",
+                JSON.stringify(await res.data.user)
+              );
+              localStorage.setItem("user_token", await res.data.token);
+              setTimeout(() => {
+                this.SuccessSignUp = "";
+              }, 3000);
+            }
+         
+          }
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(async(err) => {
+          this.ErrorSignUp = await err.response.data.message;
+          console.log(this.ErrorSignUp)
         });
     },
     async logIn(values) {
       const userCreds = values;
-      console.log(userCreds);
       await axios
         .post("http://127.0.0.1:8000/api/Login", userCreds)
         .then(async (res) => {
           if (res) {
             if ((await res.data.status) === 200) {
               this.authenticateError = "";
-              this.Success = await res.data.message;
-              localStorage.setItem("userData", await res.data.user);
+              this.SuccessLogin = await res.data.message;
+              localStorage.setItem(
+                "userData",
+                JSON.stringify(await res.data.user)
+              );
               localStorage.setItem("user_token", await res.data.token);
-              setTimeout(()=>{
-                this.Success = "" 
-              },3000)
-            
-          
+              setTimeout(() => {
+                this.SuccessLogin = "";
+              }, 3000);
             }
-            if (await res.data.status === 401) {
+            if ((await res.data.status) === 401) {
               this.Success = "";
               this.authenticateError = await res.data.message;
-           
+          
             }
           }
         });

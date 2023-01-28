@@ -58,8 +58,9 @@ export default {
     ...mapWritableState(useHiddenStore, ["isHidden"]),
     ...mapWritableState(useAuthStore, ["isAuthenticated"]),
     ...mapState(useAuthStore, ["authenticateError"]),
-    ...mapState(useAuthStore, ["Success"]),
-    ...mapState(useAuthStore, ["Error"]),
+    ...mapState(useAuthStore, ["SuccessLogin"]),
+    ...mapState(useAuthStore, ["SuccessSignUp"]),
+    ...mapState(useAuthStore, ["ErrorSignUp"]),
     ...mapState(useAuthStore, ["userData"]),
   },
   methods: {
@@ -123,6 +124,7 @@ export default {
     ...mapActions(useAuthStore, ""),
 
     async register(values) {
+      this.isLoading = true;
       const userCred = {
         name: values.name,
         email: values.email,
@@ -130,13 +132,10 @@ export default {
       };
       try {
         await this.createUser(userCred);
-        this.messageSuccess.message = await this.Success;
-        this.messageSuccess.isMessage = true;
-        this.messageError.isMessage = false;
-        this.useAuthStore.isAuthenticated = true;
+        this.isLoading = false;
+        this.$router.push({ name: "Dashboard" });
       } catch (err) {
-        this.messageError.isMessage = true;
-        this.messageError.message = "Something went wrong,please try again";
+        console.log(err);
       }
     },
     async Login(values) {
@@ -144,8 +143,8 @@ export default {
       try {
         await this.logUser(values);
         this.isLoading = false;
-        this.Success = null
-        this.$router.push({name:'Dashboard'})
+        this.SuccessLogin = '';
+        this.$router.push({ name: "Dashboard" });
       } catch (err) {
         console.log(err);
       }
@@ -202,16 +201,16 @@ export default {
     <div class="w-full">
       <div class="h-fit text-center pt-3">
         <div
-          v-if="authenticateError  && tab === 'Login'"
+          v-if="authenticateError && tab === 'Login'"
           class="w-[70%] rounded pt-2 h-[40px] mb-4 ml-auto mr-auto text-white font-bold bg-red-500"
         >
           {{ authenticateError }}
         </div>
         <div
-          v-if="Success  && tab === 'Login'"
+          v-if="SuccessLogin && tab === 'Login'"
           class="w-[70%] rounded pt-2 h-[40px] mb-4 ml-auto mr-auto text-white font-bold bg-green-500"
         >
-          {{ Success }}
+          {{ SuccessLogin }}
         </div>
         <!--Login-->
         <vee-form
@@ -232,7 +231,7 @@ export default {
               />
               <!--Errors email -->
               <div
-                class="text-start ml-9 mt-2"
+                class="text-start ml-[9%] mt-2"
                 :key="error"
                 v-for="error in errors"
               >
@@ -256,7 +255,7 @@ export default {
               />
               <!--Errors passowrd -->
               <div
-                class="text-start ml-9 mt-2"
+                class="text-start ml-[9%] mt-2"
                 :key="error"
                 v-for="error in errors"
               >
@@ -289,20 +288,20 @@ export default {
       </div>
     </div>
     <div class="w-full text-center">
-      <transition name="fade" mode="out-in">
+      <transition-group name="fade" mode="out-in">
         <div
-          v-if="messageSuccess.isMessage == true && tab === 'Register'"
+          v-if="SuccessSignUp && tab === 'Register'"
           class="bg-green-500 w-[60%] rounded mr-auto ml-auto mb-7 p-2 h-[90px] text-white font-bold"
         >
-          {{ messageSuccess.message }}
+          {{ SuccessSignUp }}
         </div>
         <div
-          v-else-if="messageError.isMessage == true && tab === 'Register'"
+          v-if="ErrorSignUp && tab === 'Register'"
           class="bg-red-500 w-fit pl-[3%] pr-[3%] rounded mr-auto mt-auto pt-[2%] pb-2 ml-auto mb-7 p-2 h-[90px] text-white font-bold"
         >
-          {{ messageError.message }}
+          {{ ErrorSignUp  }}
         </div>
-      </transition>
+      </transition-group>
       <!--Register-->
       <vee-form
         v-show="tab === 'Register'"
@@ -437,11 +436,17 @@ export default {
           </vee-field>
           <div class="pt-2">
             <div>
-              <input
+              <input v-if="isLoading === false"
                 class="bg-main-color cursor-pointer rounded font-bold text-white h-[35px] w-[120px]"
                 type="submit"
                 value="signup"
               />
+              <button v-if="isLoading === true"
+                     class="bg-main-color cursor-pointer rounded font-bold text-white h-[35px] w-[120px]"
+              >
+                <i class="fa-solid fa-spinner-third"></i>
+
+              </button>
             </div>
           </div>
         </div>
@@ -457,15 +462,6 @@ export default {
 
 .fade-enter-to {
   opacity: 1;
-  transition: all 1s ease;
-}
-
-.fade-leave-to {
-  opacity: 1;
-}
-
-.fade-leave-active {
-  opacity: 0;
   transition: all 1s ease;
 }
 </style>
