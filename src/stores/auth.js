@@ -33,7 +33,7 @@ export const useAuthStore = defineStore("auth", {
         .catch(async(err) => {
           this.ErrorSignUp = await err.response.data.message;
           console.log(this.ErrorSignUp)
-        });
+        }); 
     },
     async logIn(values) {
       const userCreds = values;
