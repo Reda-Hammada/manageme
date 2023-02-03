@@ -5,5 +5,5 @@ describe('AppAuth.vue',()=>{
     test('render inner test', () => { 
         const wrapper = shallowMount(AppDashboard)
         expect(wrapper.text()).toContain('Dashboard')
-     })
+     }) 
 })
