@@ -143,7 +143,7 @@ export default {
       try {
         await this.logUser(values);
         this.isLoading = false;
-        this.SuccessLogin = '';
+        this.SuccessLogin = "";
         this.$router.push({ name: "Dashboard" });
       } catch (err) {
         console.log(err);
@@ -156,7 +156,7 @@ export default {
 <template>
   <!--Auth Login & Register-->
   <div
-    class="absolute opacity-75 a bg-black w-full h-full top-100 bottom-0"
+    class="absolute  top-100 h-screen opacity-75 a bg-black w-full h-full top-100 bottom-0"
     v-show="isHidden === true"
   ></div>
   <div
@@ -299,7 +299,7 @@ export default {
           v-if="ErrorSignUp && tab === 'Register'"
           class="bg-red-500 w-fit pl-[3%] pr-[3%] rounded mr-auto mt-auto pt-[2%] pb-2 ml-auto mb-7 p-2 h-[90px] text-white font-bold"
         >
-          {{ ErrorSignUp  }}
+          {{ ErrorSignUp }}
         </div>
       </transition-group>
       <!--Register-->
@@ -436,16 +436,17 @@ export default {
           </vee-field>
           <div class="pt-2">
             <div>
-              <input v-if="isLoading === false"
+              <input
+                v-if="isLoading === false"
                 class="bg-main-color cursor-pointer rounded font-bold text-white h-[35px] w-[120px]"
                 type="submit"
                 value="signup"
               />
-              <button v-if="isLoading === true"
-                     class="bg-main-color cursor-pointer rounded font-bold text-white h-[35px] w-[120px]"
+              <button
+                v-if="isLoading === true"
+                class="bg-main-color cursor-pointer rounded font-bold text-white h-[35px] w-[120px]"
               >
                 <i class="fa-solid fa-spinner-third"></i>
-
               </button>
             </div>
           </div>

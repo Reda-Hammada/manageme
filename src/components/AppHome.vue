@@ -3,6 +3,7 @@
   import AppAuth from '@/components/AppAuth.vue';
   import AppHero from './AppHero.vue';
   import AppWhy from '@/components/AppWhy.vue'
+  import AppAbout from '@/components/AppAbout.vue';
 
   export default {
     name:"AppHome",
@@ -11,6 +12,7 @@
      AppAuth,
      AppHero,
      AppWhy,
+     AppAbout
      },
 
 
@@ -44,4 +46,5 @@
   <app-auth @change-tab="changeTab" :tab='tab'></app-auth>
   <app-hero></app-hero>
   <app-why></app-why>
+  <app-about></app-about>
 </template>

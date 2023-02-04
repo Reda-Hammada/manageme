@@ -18,7 +18,7 @@ export default {
       </div>
     </div>
     <div class="w-[90%] flex justify-between mr-auto ml-auto mt-12">
-      <div class="w-[20%] ">
+      <div class="w-[25%] ">
         <div class="text-center  h-[300px] rounded pt-6 pl-3 pr-3 bg-white">
           <h3 class="pb-5 text-main-color font-bold text-xl">
             Multiple boards
@@ -35,7 +35,7 @@ export default {
           </p>
         </div>
       </div>
-      <div class="w-[20%]">
+      <div class="w-[25%]">
         <div class="text-center h-[300px] rounded pt-5 pl-3 pr-3 bg-white">
           <h3 class="pb-5 text-main-color font-bold text-xl">
             Multiple task phases
@@ -51,7 +51,7 @@ export default {
           </p>
         </div>
       </div>
-      <div class="w-[20%] ">
+      <div class="w-[25%] ">
         <div class="text-center  h-[300px] rounded pt-5 pl-3 pr-3 bg-white">
           <h3 class="pb-5 text-main-color font-bold text-xl">
             Each task can have subtasks
