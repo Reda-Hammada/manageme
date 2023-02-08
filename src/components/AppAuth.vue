@@ -1,4 +1,4 @@
-<script>
+<script >
 import { useHiddenStore } from "@/stores/hidden.js";
 import { useAuthStore } from "@/stores/auth";
 import { mapState, mapWritableState, mapActions } from "pinia";
@@ -277,7 +277,9 @@ export default {
                 class="bg-main-color ring-button-color hover:ring-2 cursor-pointer w-28 text-white py-1.5 px-3 rounded"
                 type="submit"
               >
-                <i class="fa-solid fa-spinner-third"></i>
+                <i class="fa-solid fa-spinner-third">
+                  
+                </i>
               </button>
             </div>
           </div>
