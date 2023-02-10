@@ -1,27 +1,26 @@
 import AppAuth from "@/components/AppAuth.vue";
-import { shallowMount } from "@vue/test-utils";
+import { mount } from "@vue/test-utils";
 import { createPinia } from "pinia";
-import { form, field, configure, defineRule, ErrorMessage } from "vee-validate";
+import VeeValidatePlugin from "@/plugins/validator.js";
 
 describe("AppAuth.vue", () => {
   test("test tab props", () => {
+
     const form = {
-      tab: "Login",
-    };
-
-    const wrapper = shallowMount(
+      tab: 'Login' || 'Register',
+    }
+    const wrapper = mount(
       AppAuth,
-      { global: { plugins: [createPinia(),
-                             field]
-                            } 
-                        },
-      {
-        propsData: {
-          form,
-        },
-      }
+      { 
+        global: { plugins: [createPinia(), VeeValidatePlugin] } },
+        {
+          propsData: {
+            form
+          }
+        }
     );
-
-    expect(wrapper.text()).toContain(form.tab);
+    expect(wrapper.props().form.tab).toBe(
+      'Login' || 'Register'
+    )
   });
 });
