@@ -4,7 +4,7 @@ export default {
 
   data() {
     return {
-      // userData:JSON.parse(localStorage.userData),
+      userData:JSON.parse(localStorage.userData),
     };
   },
   methods: {
@@ -18,7 +18,7 @@ export default {
 </script>
 <template>
   <h1>Dashboard</h1>
-  <!-- <p>{{userData.name}}</p>
+  <p>{{userData.name}}</p>
     <button @click="consoleUser">console</button>
-  <button @click="logOut">Logout</button> -->
+     <button @click="logOut">Logout</button>
 </template>

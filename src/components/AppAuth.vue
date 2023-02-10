@@ -146,7 +146,7 @@ export default {
         this.SuccessLogin = "";
         this.$router.push({ name: "Dashboard" });
       } catch (err) {
-        console.log(err);
+        this.ErrorSignUp = err;
       }
     },
   },

@@ -53,6 +53,11 @@ export default {
             Features
           </li>
           <li
+          class="inline mr-4 hover:text-main-color cursor-pointer font-bold"
+        >
+          Testimonies
+        </li>
+          <li
             class="inline mr-4 hover:text-main-color cursor-pointer font-bold"
           >
             About us
