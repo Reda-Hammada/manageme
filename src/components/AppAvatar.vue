@@ -3,7 +3,7 @@
         name:'AppAvatar',
         props:{
             image:{
-                type:String, Object ,
+                type:String,
                 required:true
             }
         }
@@ -14,7 +14,7 @@
 
 <template>
     <div class="w-[20%] mr-auto ml-auto pt-3 pb-4">
-        <img :src='image'
+        <img :src="image"
              alt='a person'
              />
              
