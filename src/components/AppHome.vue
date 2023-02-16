@@ -5,6 +5,7 @@
   import AppWhy from '@/components/AppWhy.vue'
   import AppAbout from '@/components/AppAbout.vue';
   import AppTestimony from './AppTestimony.vue';
+  import AppContact from './AppContact.vue';
 
   export default {
     name:"AppHome",
@@ -14,7 +15,8 @@
      AppHero,
      AppWhy,
      AppAbout,
-     AppTestimony
+     AppTestimony,
+        AppContact
      },
 
 
@@ -50,4 +52,5 @@
   <app-why></app-why>
   <app-about></app-about>
   <app-testimony></app-testimony>
+  <app-contact></app-contact>
 </template>

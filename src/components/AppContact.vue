@@ -4,94 +4,111 @@ export default{
     data(){
         return{
             contactSchema : {
-                fullName:'required',
+                fullname:'required',
                 email:'required|email',
                 subject:'required',
-                message:'required'
+                message:'required',
             }
         }
     }
 }
 </script>
 <template>
-    <section class="w-full pt-6">
+    <section class="w-full pt-6 bg-white">
         <div class="w-[80%] text-center m-auto">
-            <h2>Contact Us</h2>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam erat libero, bibendum in libero tempor, luctus volutpat ligula. Integer fringilla porttitor pretium.
-            </p>
+            <h3 class="text-main-color mb-3 text-2xl font-bold">Drop us a  message</h3>
+            <div class="w-[50%] mr-auto ml-auto text-xl">
+                <p class="">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam erat libero, bibendum in libero tempor, luctus volutpat ligula. Integer fringilla porttitor pretium.
+                </p>
+            </div>
         </div>
-        <div class="w-">
-            <h3>Drop us a  message</h3>
-            <div>
-                <vee-form :validation-schema="contactSchema">
-                    <div>
-                        <!--full name-->
-                        <vee-field name="fullName"
-                                   v-slot="{field,errors}">
-                            <input type="text"
-                                v-bind="field"
-                                name="fullName"
-                                placeholder="fullName"
-                                
-                            />
-                            <!--error fullname-->
-                            <div v-for="error in errors"
-                                 :key="error">
-                                  <span class="text-red-500">{{error}}</span>
-                            </div>
-                        </vee-field>
-                    </div>
-                    <!--email-->
-                    <div>
-                        <vee-field v-slot="{field,errors}"
-                                    name='email'>
-
-                            <input type="text"
-                                   name="email"
-                                   v-bind="field"
+        <div class="w-[50%] mr-auto ml-auto ">
+            <div class="w-[100%] mt-6   text-center">
+                <div class="">
+                    <vee-form :validation-schema="contactSchema">
+                        <div class="w-full ">
+                            <!--full name-->
+                            <vee-field name="fullname"
+                                       v-slot="{field,errors}">
+                                <input  class="border-4 w-[400px] h-[40px] rounded-b-lg pl-2 "
+                                        type="text" 
+                                        v-bind="field"
+                                        name="full name"
+                                        placeholder="fullname"
+                                    
                                 />
-                            <!--email error-->
-                            <div v-for="error in errors"
-                                 :key="error">
-                                    <span>{{error}}</span>
-                            </div>
-                         </vee-field>
-
-                    </div>
-                    <!--subject-->
-                    <div>
-                        <vee-field v-slot="{field,errors}"
-                                   name="subject">
-                            <input type="text"
-                                   name="subject"
-                                   v-bind="field"
-                                />
-                            <!--subject Errors-->
-                            <div v-for="error in errors"
-                                 :key="error">
-                                 
-                                 <span class="text-red-500">{{error}}</span>
-
-                            </div>
-                        </vee-field>
-                    </div>
-                    <!--message-->
-                    <div>
-                     <vee-field name="message"
-                                v-slot="{field,errors}">
-                        <textarea name="message"
-                                  v-bind="field">
-
-                        </textarea>
-                        <!--message errors-->
-                        <div v-for="error in errors"
-                             :key="error">
-                            <span class="text-red-500">{{ error }}</span>
+                                <!--error fullname-->
+                                <div v-for="error in errors"
+                                     :key="error">
+                                      <span class="text-start text-red-500">{{error}}</span>
+                                </div>
+                            </vee-field>
                         </div>
-                    </vee-field>
-                    </div>
-                </vee-form>
+                        <!--email-->
+                        <div>
+                            <vee-field v-slot="{field,errors}"
+                                        name='email'>
+    
+                                <input type="email"
+                                       class=" h-[40px] border-4 mt-5 w-[400px] rounded-b-lg pl-2 "
+                                       name="email"
+                                       placeholder="Email"
+                                       v-bind="field"
+                                    />
+                                <!--email error-->
+                                <div v-for="error in errors"
+                                     :key="error">
+                                        <span class="text-red-500">{{error}}</span>
+                                </div>
+                             </vee-field>
+    
+                        </div>
+                        <!--subject-->
+                        <div>
+                            <vee-field v-slot="{field,errors}"
+                                       name="subject">
+                                <input type="text"
+                                       class="h-[40px] border-4 mt-5 w-[400px] rounded-b-lg pl-2 "
+                                       name="subject"
+                                       placeholder="subject"
+                                       v-bind="field"
+                                    />
+                                <!--subject Errors-->
+                                <div v-for="error in errors"
+                                     :key="error">
+                                     
+                                     <span class="text-red-500">{{error}}</span>
+    
+                                </div>
+                            </vee-field>
+                        </div>
+                        <!--message-->
+                        <div>
+                            <vee-field name="message"
+                                        v-slot="{field,errors}">
+                                <textarea name="message"
+                                          placeholder="Message"
+                                          class=" h-200 resize-none border-4 mt-5 w-[400px]  rounded-b-lg pl-2 "
+                                         v-bind="field">
+                                </textarea>
+                                <!--message errors-->
+                                <div v-for="error in errors"
+                                    :key="error">
+                                    <span class="text-red-500">{{ error }}</span>
+                                </div>
+                            </vee-field>
+                        </div>
+                        <div class="mt-3 mb-5">
+                            <div>
+                                <input  class="bg-main-color h-[35px] cursor-pointer text-bold text-white  rounded-b-lg w-[170px]"
+                                        type="submit"
+                                        value="Send message" 
+                                        />
+                            </div>
+                        </div>
+                    </vee-form>
+                </div>
             </div>
         </div>
     </section>
