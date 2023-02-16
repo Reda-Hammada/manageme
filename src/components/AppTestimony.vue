@@ -11,17 +11,17 @@ export default {
         {
           img: "@/assets/images/phases.png",
           text: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat officia ipsum distinctio ut esse ratione nobis amet voluptate aperiam quam? Sed libero aliquam commodi nesciunt?",
-          person: 1,
+          person: 'Reda -CTO',
         },
         {
           img: "@/src/assets/images/tasks.png",
           text: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat officia ipsum distinctio ut esse ratione nobis amet voluptate aperiam quam? Sed libero aliquam commodi nesciunt?",
-          person: 2,
+          person: "Joe -CEO",
         },
         {
           img: "@/assets/images/boards.png",
           text: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat officia ipsum distinctio ut esse ratione nobis amet voluptate aperiam quam? Sed libero aliquam commodi nesciunt?",
-          person: 3,
+          person: "Mark -Founder",
         },
       ],
       currentSlide: 0,
@@ -29,7 +29,7 @@ export default {
     };
   },
   mounted() {
-    this.intervalId = setInterval(this.playSlides, 3000);
+    this.intervalId = setInterval(this.playSlides, 4000);
   },
   beforeDestroy() {
     clearInterval(this.intervalId);
@@ -66,7 +66,7 @@ export default {
               <p class="pl-32 pr-32 pb-5">
                 {{ slide.text }}
               </p>
-              <p>
+              <p class="text-main-color font-bold">
                 {{ slide.person }}
               </p>
             </div>
@@ -78,26 +78,7 @@ export default {
 </template>
 
 <style>
-/*
-.fade-enter-form {
-  opacity: 0;
-}
-.fade-enter-to {
-  opacity: 1;
-}
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 1s linear;
-}
 
-.fade-leave-from {
-  opacity: 1;
-}
-.fade-leave-to {
-  opacity: 0;
-}
-
-*/
 
 .fade-enter-from {
   opacity: 0;
