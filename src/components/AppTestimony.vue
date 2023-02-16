@@ -14,7 +14,7 @@ export default {
           person: 1,
         },
         {
-          img: "@/assets/images/tasks.png",
+          img: "@/src/assets/images/tasks.png",
           text: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat officia ipsum distinctio ut esse ratione nobis amet voluptate aperiam quam? Sed libero aliquam commodi nesciunt?",
           person: 2,
         },
@@ -29,7 +29,7 @@ export default {
     };
   },
   mounted() {
-    this.intervalId = setInterval(this.playSlides, 2000);
+    this.intervalId = setInterval(this.playSlides, 3000);
   },
   beforeDestroy() {
     clearInterval(this.intervalId);
@@ -49,14 +49,15 @@ export default {
       </h2>
     </div>
     <!--Slider-->
+
     <div class="w-full">
-      <Transition name="fade-slider">
-        <div class="w-[80%] mr-auto ml-auto">
+      <div class="w-[80%] mr-auto ml-auto">
+        <transition-group name="fade" mode="in-out">
           <div
             v-for="(slide, index) in slides"
             :key="index"
+            v-show="currentSlide === index"
             class="w-[40%] mr-auto ml-auto pb-12 mt-6 bg-white rounded"
-            :style="{ display: currentSlide === index ? 'block': 'none' }"
           >
             <div class="w-full">
               <app-avatar :image="slide.img"></app-avatar>
@@ -70,32 +71,54 @@ export default {
               </p>
             </div>
           </div>
-        </div>
-      </Transition>
+        </transition-group>
+      </div>
     </div>
-
   </section>
 </template>
 
 <style>
-.fade-slider-enter-from {
+/*
+.fade-enter-form {
   opacity: 0;
-  
 }
-
-.fade-slider-enter-active {
-  transition: opacity 0.5s ease;
-}
-
-.fade-slider-enter-to {
+.fade-enter-to {
   opacity: 1;
 }
-
-.fade-slider-leave-active {
-  transition: opacity 0.5s ease;
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 1s linear;
 }
 
-.fade-slider-leave-to {
+.fade-leave-from {
+  opacity: 1;
+}
+.fade-leave-to {
   opacity: 0;
+}
+
+*/
+
+.fade-enter-from {
+  opacity: 0;
+}
+.fade-enter-to {
+  opacity: 1;
+}
+.fade-enter-active {
+  transition: opacity 1s linear;
+}
+
+.fade-leave-active {
+  display: none;
+  transition:display 0.5s linear ;
+}
+
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-move {
+  transition: opacity 1s linear;
 }
 </style>
