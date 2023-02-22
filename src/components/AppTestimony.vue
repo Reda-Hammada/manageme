@@ -25,11 +25,13 @@ export default {
         },
       ],
       currentSlide: 0,
+      selected:0,
       intervalId: null,
     };
   },
   mounted() {
-    this.intervalId = setInterval(this.playSlides, 4000);
+    this.intervalId = setInterval(this.playSlides, 3000);
+   
   },
   beforeDestroy() {
     clearInterval(this.intervalId);
@@ -38,7 +40,22 @@ export default {
     playSlides() {
       this.currentSlide = (this.currentSlide + 1) % this.slides.length;
     },
+    assignCheckedSlide(){ 
+
+      clearInterval(this.intervalId);
+      this.currentSlide = this.selected % this.slides.length;
+      
+
+    }
+
   },
+  watch:{
+    selected(oldValue,newValue){
+      if(oldValue !== newValue){
+          this.assignCheckedSlide()
+      }
+    }
+  }
 };
 </script>
 <template>
@@ -72,7 +89,27 @@ export default {
             </div>
           </div>
         </transition-group>
+        <div class="w-[15%] mr-auto mt-5 ml-auto ">
+          <div class="w-full pr-12">
+            <input type="radio"
+                    class="mr-6"
+                   value=0 
+                   v-model='selected'
+            />
+            <input type ='radio'
+                   class="mr-6"
+                   value=1
+                   v-model='selected'
+                   />
+            <input type ='radio'
+                   value=2
+                   class="mr-6"
+                   v-model='selected'
+                />
+          </div>
+        </div>
       </div>
+      
     </div>
   </section>
 </template>
