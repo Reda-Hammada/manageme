@@ -9,17 +9,17 @@ export default {
     return {
       slides: [
         {
-          img: "@/assets/images/phases.png",
+          img:'../src/assets/images/person1.jpg',
           text: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat officia ipsum distinctio ut esse ratione nobis amet voluptate aperiam quam? Sed libero aliquam commodi nesciunt?",
-          person: 'Reda -CTO',
+          person: 'Müller -CTO',
         },
         {
-          img: "@/src/assets/images/tasks.png",
+          img: "../src/assets/images/person2.jpg",
           text: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat officia ipsum distinctio ut esse ratione nobis amet voluptate aperiam quam? Sed libero aliquam commodi nesciunt?",
-          person: "Joe -CEO",
+          person: "Jenna -CEO",
         },
         {
-          img: "@/assets/images/boards.png",
+          img: "../src/assets/images/person3.jpg",
           text: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat officia ipsum distinctio ut esse ratione nobis amet voluptate aperiam quam? Sed libero aliquam commodi nesciunt?",
           person: "Mark -Founder",
         },
@@ -89,12 +89,12 @@ export default {
             </div>
           </div>
         </transition-group>
-        <div class="w-[15%] mr-auto mt-5 ml-auto ">
-          <div class="w-full pr-12">
-            <input type="radio"
+        <div class="w-[50%] mr-auto mt-5 ml-auto ">
+           <div class="w-[15%] mr-auto ml-auto">
+             <input type="radio"
                     class="mr-6"
-                   value=0 
-                   v-model='selected'
+                    value=0 
+                    v-model='selected'
             />
             <input type ='radio'
                    class="mr-6"
@@ -106,7 +106,7 @@ export default {
                    class="mr-6"
                    v-model='selected'
                 />
-          </div>
+           </div>
         </div>
       </div>
       
