@@ -10,7 +10,7 @@ export default {
   data() {
     return {
       userData: JSON.parse(localStorage.userData),
-      Board: "",
+      Board: null,
     };
   },
   methods: {
@@ -20,22 +20,21 @@ export default {
       this.$router.push({ name: "Home" });
     },
     async createBoard() {
-      alert(this.Board)
       try {
-        const response = await axios.post(
-          `http://127.0.0.1:8000/api/board/create/${this.userData.id}`,
-          {
-            Board:this.Board,
-          },
-          {
-           
-            headers: {
-              Authorization: "Bearer " + localStorage.user_token,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        console.log(response);
+        await axios
+          .post(
+            `http://127.0.0.1:8000/api/board/create/${this.userData.id}`,
+            { Board: this.Board },
+            {
+              headers: {
+                Authorization: "Bearer " + localStorage.user_token,
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((res) => {
+            alert(res);
+          });
       } catch (err) {
         alert(err);
       }
@@ -51,14 +50,10 @@ export default {
   <app-side-nav></app-side-nav>
   {{ userData.id }}
   <div>
-    <form >
+    <form @submit="createBoard">
       <div>
-        <input type="text" 
-               v-model="Board" 
-               name="Board" />
-        <input type="submit"
-                @click="createBoard" 
-            value="create" />
+        <input type="text" name="Board" v-model="Board" />
+        <input type="submit" value="create" />
       </div>
     </form>
   </div>

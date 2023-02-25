@@ -41,7 +41,11 @@ export default {
   <section>
     <div>
       <h1>boards:</h1>
-      <p>{{ boards }}</p>
+      <div>
+        <ul v-for="(board,index) in boards" :key='index'>
+          <li :key="index">{{board.board_name}}</li>
+        </ul>
+      </div>
     </div>
   </section>
 </template>
