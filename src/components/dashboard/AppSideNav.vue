@@ -33,19 +33,34 @@ export default {
         alert(err.response.data.message);
       }
     },
+    toggleIsAdd(){
+      this.$emit('ToggleAdd');
+    }
   },
 };
 </script>
 
 <template>
-  <section>
-    <div>
-      <h1>boards:</h1>
-      <div>
-        <ul v-for="(board,index) in boards" :key='index'>
-          <li :key="index">{{board.board_name}}</li>
-        </ul>
+  <header>
+    <nav>
+      <div class="mb-12 pt-2 pl-3 font-bold text-2xl text-main-color ">
+        <h1>Manageme:</h1>
       </div>
-    </div>
-  </section>
+      <h1 class="ml-3 font-bold text-xl">All Boards ({{boards.length}})</h1>
+      <div class="pl-5 mt-3  ">
+        <ul class="" 
+            v-for="(board,index) in boards" 
+            :key='index'>
+          <li class="bg-main-color cursor-pointer text-white   w-[80%] mb-2 rounded-r-full h-[35px] pt-1 pl-5 font-bold" 
+          >
+          {{board.board_name}}
+         </li>
+        </ul>
+        <a class="text-main-color font-bold mt-3 cursor-pointer" 
+          @click="toggleIsAdd">
+          + Create a New Board
+        </a>
+      </div>
+    </nav>
+  </header>
 </template>
