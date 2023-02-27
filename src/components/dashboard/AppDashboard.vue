@@ -72,18 +72,4 @@ export default {
   </div>
   
 
-  <!-- <p>{{ userData.name }}</p>
-  <button @click="consoleUser">console</button>
-  <button @click="logOut">Logout</button>
-  <app-side-nav></app-side-nav>
-  {{ userData.id }}
-  <div>
-    <form 
-          @submit="createBoard">
-      <div>
-        <input type="text" name="Board" v-model="Board" />
-        <input type="submit" value="create" />
-      </div>
-    </form>
-  </div> -->
 </template>

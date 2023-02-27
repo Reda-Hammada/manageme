@@ -5,6 +5,7 @@ import App from "./App.vue";
 import AppHome from "@/components/AppHome.vue";
 import AppNotFound from "@/components/AppNotFound.vue";
 import AppDashboard from "@/components/dashboard/AppDashboard.vue";
+import AppSetting from '@/components/dashboard/AppSetting.vue'
 import VeeValidatePlugin from "@/plugins/validator.js";
 import axios from "axios";
 import VueAxios from "vue-axios";
@@ -23,6 +24,11 @@ const router = createRouter({
       path: "/Dashboard",
       name: "Dashboard",
       component: AppDashboard,
+    },
+    {
+      path:'/Setting',
+      name:'Setting',
+      component:AppSetting,
     },
     { path: "/:pathMatch(.*)*", name: "NotFound", component: AppNotFound },
   ],
