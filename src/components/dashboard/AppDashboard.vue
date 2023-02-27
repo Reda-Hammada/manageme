@@ -52,7 +52,7 @@ export default {
     </div>
     <div class="w-[85%]">
       <!--navbar-->
-      <app-nav class="bg-white w-full h-[5%] divide-x-2">
+      <app-nav class="bg-white w-full h-[8%] divide-x-2">
 
       </app-nav>
     </div>
