@@ -21,7 +21,7 @@ export default {
       try {
         await axios
           .post(
-            `http://127.0.0.1:8000/api/board/create/${this.userData.id}`,
+            `http://127.0.0.1:8000/api/boards/user/${this.userData.id}`,
             { Board: this.Board },
             {
               headers: {
