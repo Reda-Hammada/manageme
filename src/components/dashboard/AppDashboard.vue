@@ -1,6 +1,7 @@
 <script>
 import AppSideNav from "@/components/dashboard/AppSideNav.vue";
 import AppNav from "./AppNav.vue";
+import AppBoard from "./AppBoard.vue";
 import axios from "axios";
 
 export default {
@@ -8,6 +9,7 @@ export default {
   components: {
     AppSideNav,
     AppNav,
+    AppBoard
   },
   data() {
     return {
@@ -50,11 +52,12 @@ export default {
     <div class="bg-white h-screen w-[15%]">
       <app-side-nav @ToggleAdd="updateIsAdd"></app-side-nav>
     </div>
-    <div class="w-[85%]">
+    <div class="w-[85%] flex flex-column">
       <!--navbar-->
       <app-nav class="bg-white w-full h-[8%] divide-x-2">
 
       </app-nav>
+      <app-board></app-board>
     </div>
   </div>
   <div v-if="isAdd === true" 

@@ -18,14 +18,11 @@ export default {
     async fetchBoards() {
       try {
         await axios
-          .get(
-            `http://127.0.0.1:8000/api/boards/user/${this.userData.id}`,
-            {
-              headers: {
-                Authorization: "Bearer " + localStorage.user_token,
-              },
-            }
-          )
+          .get(`http://127.0.0.1:8000/api/boards/user/${this.userData.id}`, {
+            headers: {
+              Authorization: "Bearer " + localStorage.user_token,
+            },
+          })
           .then(async (res) => {
             if (res.status === 200) {
               this.boards = res.data.boards;
@@ -38,8 +35,10 @@ export default {
     toggleIsAdd() {
       this.$emit("ToggleAdd");
     },
+ 
+
   },
-};
+}
 </script>
 
 <template>

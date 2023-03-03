@@ -57,5 +57,4 @@ app.use(router);
 app.use(createPinia());
 app.use(VeeValidatePlugin);
 app.use(VueAxios, axios);
-
 app.mount("#app");
