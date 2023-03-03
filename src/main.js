@@ -1,4 +1,5 @@
 import { createApp } from "vue";
+import mitt from 'mitt';
 import { createPinia, mapState } from "pinia";
 import { useAuthStore } from "./stores/auth.js";
 import App from "./App.vue";
@@ -54,6 +55,9 @@ router.beforeEach((to, from, next) => {
 
 const app = createApp(App);
 app.use(router);
+// event bus
+const eventBus = mitt();
+app.provide('eventBus',eventBus);
 app.use(createPinia());
 app.use(VeeValidatePlugin);
 app.use(VueAxios, axios);

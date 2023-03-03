@@ -3,6 +3,7 @@ import axios from "axios";
 
 export default {
   name: "AppSideNav",
+  inject:['eventBus'],
   data() {
     return {
       boards: [],
@@ -35,6 +36,9 @@ export default {
     toggleIsAdd() {
       this.$emit("ToggleAdd");
     },
+    triggerFetchBoard(boardId){
+       this.eventBus.emit('trigger-board',boardId)
+    }
  
 
   },
@@ -50,7 +54,7 @@ export default {
       <h1 class="ml-3 font-bold text-xl">All Boards ({{ boards.length }})</h1>
       <div class="pl-5 mt-3">
         <ul class="" v-for="(board, index) in boards" :key="index">
-          <li
+          <li @click="triggerFetchBoard(board.id)"
             class="bg-main-color cursor-pointer text-white w-[80%] mb-2 rounded-r-full h-[35px] pt-1 pl-5 font-bold"
           >
             {{ board.board_name }}
