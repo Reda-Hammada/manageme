@@ -52,12 +52,15 @@ export default {
     <div class="bg-white h-screen w-[15%]">
       <app-side-nav @ToggleAdd="updateIsAdd"></app-side-nav>
     </div>
-    <div class="w-[85%] flex flex-column">
+    <div class="w-[85%] flex flex-col">
       <!--navbar-->
       <app-nav class="bg-white w-full h-[8%] divide-x-2">
 
       </app-nav>
-      <app-board></app-board>
+      <div>
+        <app-board></app-board>
+
+      </div>
     </div>
   </div>
   <div v-if="isAdd === true" 

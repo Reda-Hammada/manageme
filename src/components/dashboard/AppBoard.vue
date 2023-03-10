@@ -1,20 +1,22 @@
-<script>    
-
-import axios from 'axios'
+<script>
+import axios from "axios";
+import AppTaskComponent from "./AppTaskComponent.vue";
 
 export default {
   name: "AppBoard",
-  inject: ['eventBus'],
-
+  inject: ["eventBus"],
+  components:{
+    AppTaskComponent,
+  },
   data() {
     return {
       isLoading: false,
-      fetchedBoard: [],
+      fetchedBoard:[],
     };
   },
   created() {
-      this.eventBus.on('trigger-board', async(boardId)=>{
-        await axios
+    this.eventBus.on("trigger-board", async (boardId) => {
+      await axios
         .get(
           `http://127.0.0.1:8000/api/boards/${boardId}/phases/tasks/subtasks/`,
           {
@@ -27,25 +29,36 @@ export default {
         .then(async (res) => {
           if (res.status === 200) {
             this.fetchedBoard = res.data.boards;
+            this.eventBus.emit('pass-board-name',this.fetchedBoard.board_name);
+
           }
         });
-       })
-    },
-  methods:{
-    
-    
-   }
-
-  }
-   
-
+    });
+  },
+  methods: {},
+};
 </script>
 
 <template>
-    <div v-if="fetchedBoard.length === 0">
-       no board yet
-    </div>
-    <div v-else>
-        {{ fetchedBoard }}
-    </div>
+  <div v-if="fetchedBoard.length === 0">
+    no phase yet
+  </div>
+  <div v-else>
+    <section>
+      <!--Phases-->
+       <div v-for='(phase,index) in fetchedBoard.phase'
+            :key='index'>
+          <div>{{phase.phase}} ({{phase.tasks.length}})</div>
+          <!--Tasks-->
+          <div v-for='(task,index) in phase.tasks'
+               :key='index'>
+              <div>
+                <app-task-component :Task="task.task_name">
+
+                </app-task-component>
+              </div>
+          </div>
+       </div>
+    </section>
+  </div>
 </template>

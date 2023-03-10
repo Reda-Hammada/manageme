@@ -1,12 +1,16 @@
 import axios from "axios";
+import eventBus 
 <script>
   export default{ 
     name:'AppNav',
+    inject:['eventBus'],
+
     
   data(){
     return{
       userImage:JSON.parse(localStorage.userData),
       isClicked:false,
+      boardName : '',
     }
   },
   methods:{
@@ -18,8 +22,14 @@ import axios from "axios";
     toggleSettingContainer(){
       this.isClicked = !this.isClicked;
     }
+  },
+  mounted(){
+    this.eventBus.on('pass-board-name',(board)=>{
+      this.boardName = board;
+    });
   }
-  }
+
+}
 </script>
 
 <template>
@@ -27,7 +37,7 @@ import axios from "axios";
        <header>
         <nav class="flex justify-between ">
             <div class="w-[60%]">
-                <h1 class="font-bold   pt-2 pl-2 text-2xl">Dashboard:</h1>
+                <h1 class="font-bold   pt-2 pl-2 text-2xl">{{ boardName }}</h1>
             </div>
             <div class="w-[30%] cursor-pointer">
               <div @click="toggleSettingContainer"
