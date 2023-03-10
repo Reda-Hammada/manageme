@@ -44,18 +44,17 @@ export default {
     no phase yet
   </div>
   <div v-else>
-    <section>
+    <section class="ml-12 mt-3">
       <!--Phases-->
-       <div v-for='(phase,index) in fetchedBoard.phase'
+       <div  class="w-[20%] text-start"
+             v-for='(phase,index) in fetchedBoard.phase'
             :key='index'>
           <div>{{phase.phase}} ({{phase.tasks.length}})</div>
           <!--Tasks-->
           <div v-for='(task,index) in phase.tasks'
                :key='index'>
               <div>
-                <app-task-component :Task="task.task_name">
-
-                </app-task-component>
+                <app-task-component :Task="task.task_name"></app-task-component>
               </div>
           </div>
        </div>
