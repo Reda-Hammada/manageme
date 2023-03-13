@@ -4,4 +4,4 @@ export const useTheme = defineStore('theme',{
     state :() =>({
         isDark : false,
     })
-})  
+})    

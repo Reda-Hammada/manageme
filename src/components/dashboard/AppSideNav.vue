@@ -46,9 +46,9 @@ export default {
 </script>
 
 <template>
-  <header>
-    <nav>
-      <div class="mb-12 pt-2 pl-3 font-bold text-2xl text-main-color">
+  <header class="border-r-2 h-full">
+    <nav >
+      <div class="mb-12 pt-2 pl-3 font-bold pb-10 border-gray text-2xl text-main-color">
         <h1>Manageme:</h1>
       </div>
       <h1 class="ml-3 font-bold text-xl">All Boards ({{ boards.length }})</h1>

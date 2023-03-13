@@ -21,7 +21,7 @@ export default {
   methods: {
     async createBoard() {
       try {
-        await axios
+        await axios 
           .post(
             `http://127.0.0.1:8000/api/boards/user/${this.userData.id}`,
             { Board: this.Board },
@@ -50,11 +50,12 @@ export default {
   <div class=" flex">
     <!--Side navbar-->
     <div class="bg-white h-screen w-[15%]">
-      <app-side-nav @ToggleAdd="updateIsAdd"></app-side-nav>
+      <app-side-nav 
+                    @ToggleAdd="updateIsAdd"></app-side-nav>
     </div>
     <div class="w-[85%] flex flex-col">
       <!--navbar-->
-      <app-nav class="bg-white w-full h-[8%] divide-x-2">
+      <app-nav class="bg-white w-full h-[8%] border-b-2 border-gray ">
 
       </app-nav>
       <div>

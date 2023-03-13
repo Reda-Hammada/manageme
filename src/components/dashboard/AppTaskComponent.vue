@@ -7,14 +7,12 @@ export default {
       required: true,
     },
   },
-
-
 };
 </script>
 <template>
-  <div class=" ">
-    <div class="text-center mt-5 bg-white font-bold pt-8 mb-5 w-[100%] h-[100px]">
-        {{ Task }}
-    </div>
+  <div
+    class="text-start pl-2 bg-color  mr-auto ml-auto pt-2 bg-bg-color mb-5 w-[90%] h-[40px]"
+  >
+    {{ Task }}
   </div>
 </template>
