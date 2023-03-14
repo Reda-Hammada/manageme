@@ -1,12 +1,14 @@
 <script>
 import axios from "axios";
 import AppTaskComponent from "./AppTaskComponent.vue";
+import AppTaskForm from "./AppTaskForm.vue";
 
 export default {
   name: "AppBoard",
   inject: ["eventBus"],
   components:{
     AppTaskComponent,
+    AppTaskForm,
   },
   data() {
     return {
@@ -74,46 +76,22 @@ export default {
                     
 
                   </div>
-                <div>
-                    <div>
-                      
-                    </div>
-                </div>
                  
               </div>
-              <div v-if="isAddTask === false"
+              <div 
                   class="text-main-color pl-5 cursor-pointer"
                    @click="toggleAddTaskForm()">
                 + Add a task
               </div>
-              <!--add task form-->
-              <div v-else-if="isAddTask === true"
-                   class="ml-5">
-                 <form>
-                   <div>
-                      <input class="border w-[90%] h-[60px] bg-white border-4 border-bg-color pb-7 pl-2 bg-bg-color"
-                             placeholder="Add a task"
-                             type="text"
-                             name="task"
-                             />
-                   </div>
-                   <div class="flex justify-start w-[100%]">
-                    <div class="w-[60%]"> 
-                      <input  class="bg-main-color border rounded text-white  w-[60%] h-[40px] mt-2 "
-                             type="submit"
-                             value="Add" />
-                    </div>
-                    <div class="w-[40%] text-gray-400 mt-2 text-xl cursor-pointer"
-                          @click="toggleAddTaskForm()"
-                          >
-                      X
-                    </div>
-                   </div>
-                 </form>
-              </div>
+           
               
         </div>
 
+       </div>
+       <div>
+          <app-task-form :isAddTask="isAddTask">
+
+          </app-task-form>
        </div>
     </section>
   </div>
