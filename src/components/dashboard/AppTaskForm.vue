@@ -10,13 +10,14 @@ export default{
   },
   data(){
     return{
-      Subtask:[
+      Subtasks:[
       ]
     }
   },
   methods:{
     addSubstakInput(){
-      this.Subtasks.push({Subtask: ''});
+      this.Subtasks.push({Subtask:''});
+      alert(this.Subtasksgi)
     }
   }
 }
@@ -69,7 +70,7 @@ export default{
               <div v-for="(Subtask,index) in Subtasks" :key="index">
                  
                   <vee-field v-slot="{field,errors}"
-                             :name="`Subtask${index + 1}`">
+                              :name="`Subtask${index + 1}`">
                      <input type="text"
                             v-bind="field"
                             v-model="Subtask.substask"
