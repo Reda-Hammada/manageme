@@ -41,6 +41,9 @@ export default {
   methods: {
     toggleAddTaskForm(){
         this.isAddTask = !this.isAddTask;
+    },
+    closeTaskFormByEmit(){
+        this.isAddTask = false;
     }
   },
 };
@@ -70,8 +73,9 @@ export default {
               <div v-for='(task,index) in phase.tasks'
                   :key='index'>
                   <div >
-                    <app-task-component :Task="task.task_name">
-
+                    <app-task-component :Task="task.task_name"
+                   >
+  
                     </app-task-component>
                     
 
@@ -89,7 +93,8 @@ export default {
 
        </div>
        <div>
-          <app-task-form :isAddTask="isAddTask">
+          <app-task-form :isAddTask="isAddTask"
+          @close-taskform = 'closeTaskFormByEmiti '>
 
           </app-task-form>
        </div>
