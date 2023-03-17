@@ -38,12 +38,14 @@ export default {
         });
     });
   },
+ 
   methods: {
     toggleAddTaskForm(){
         this.isAddTask = !this.isAddTask;
     },
     closeTaskFormByEmit(){
         this.isAddTask = false;
+        console.log(this.isAddTask)
     }
   },
 };
@@ -82,21 +84,23 @@ export default {
                   </div>
                  
               </div>
+                    <app-task-form :isAddTask="isAddTask"
+                                    :phaseId="phase.id"
+                                    @close-taskform = 'closeTaskFormByEmit '>
+
+                    </app-task-form>
               <div 
                   class="text-main-color pl-5 cursor-pointer"
                    @click="toggleAddTaskForm()">
                 + Add a task
               </div>
-           
+              
               
         </div>
 
        </div>
        <div>
-          <app-task-form :isAddTask="isAddTask"
-          @close-taskform = 'closeTaskFormByEmiti '>
-
-          </app-task-form>
+          
        </div>
     </section>
   </div>
