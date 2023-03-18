@@ -15,20 +15,20 @@ export default {
   },
   data() {
     return {
-      Subtasks: [[{ Subtask: "" }]],
+      Subtasks: [[{ value: "" ,rules:'required'}]],
       addTaskSchema: {
         title: "required",
-        description: "required",
       },
     };
   },
-  mounted(){
-      alert(phaseId)
+  watch(){
+   
+    
   },
   methods: {
     addSubstakInput() {
-      this.Subtasks.push({ Subtask: "" });
-      console.log(this.Subtasks);
+      this.Subtasks.push({ Subtask:"",rules:''});
+    
     },
     deleteSubTaskInput(index) {
       this.Subtasks.splice(index, 1);
@@ -47,8 +47,7 @@ export default {
               "Content-Type": "application/json",
             },
       }
-      
-      
+       
       );
 
       alert(JSON.stringify(values));
@@ -95,17 +94,20 @@ export default {
         </div>
         <div
           class="ml-12 mt-2"
+
           v-for="(Subtask, index) in Subtasks"
           :key="index"
         >
-          <vee-field v-slot="{ field, errors }" :name="`Subtask${index + 1}`">
+          <vee-field v-slot="{ field }" :name="`Subtask${index + 1}`"
+             v-validate="Subtask.rules">
             <div>
               <input
+                v-validate="Subtask.rules"
                 class="w-[90%] border mt-3 border-bg-bg-color rounded pl-3 h-[40px]"
                 type="text"
                 placeholder="e.g make your coffee"
                 v-bind="field"
-                v-model="Subtasks.Subtask"
+                v-model="Subtasks.value"
                 :name="`Subtask`"
               />
               <span
@@ -114,15 +116,11 @@ export default {
               >
                 X
               </span>
+              <!--Substask error-->
+                <span>{{Subtask.rules}}</span>
             </div>
-            <!--Substask error-->
-            <div
-              v-for="(error, index) in errors"
-              :key="index"
-              class="mt-2 text-red-600"
-            >
-              {{ error }}
-            </div>
+            
+          
           </vee-field>
         </div>
         <!--Add Subtask input button-->

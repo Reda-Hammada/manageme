@@ -89,9 +89,8 @@ export default {
                                     @close-taskform = 'closeTaskFormByEmit '>
 
                     </app-task-form>
-              <div 
-                  class="text-main-color pl-5 cursor-pointer"
-                   @click="toggleAddTaskForm()">
+              <div  class="text-main-color pl-5 cursor-pointer"
+                   @click="toggleAddTaskForm()"> 
                 + Add a task
               </div>
               

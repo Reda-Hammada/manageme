@@ -2,7 +2,7 @@ import {Form as VeeForm,
      Field as VeeField, 
      configure,
      defineRule,
-     ErrorMessage
+     ErrorMessage,
     } from 'vee-validate';
 
 import{
