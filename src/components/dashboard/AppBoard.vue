@@ -14,14 +14,30 @@ export default {
     return {
       isLoading: false,
       isAddTask:false,
+      boardId:null,
       fetchedBoard:[],
     };
   },
+  // when component created fetch the board
   created() {
     this.eventBus.on("trigger-board", async (boardId) => {
+        this.boardId = boardId
+        this.fetchBoard();
+    });
+  },
+ 
+  methods: {
+    toggleAddTaskForm(){
+        this.isAddTask = !this.isAddTask;
+    },
+    closeTaskFormByEmit(){
+        this.isAddTask = false;
+    },
+    // fetch board  
+    async fetchBoard(){
       await axios
         .get(
-          `http://127.0.0.1:8000/api/boards/${boardId}/phases/tasks/subtasks/`,
+          `http://127.0.0.1:8000/api/boards/${this.boardId}/phases/tasks/subtasks/`,
           {
             headers: {
               Authorization: "Bearer " + localStorage.user_token,
@@ -36,31 +52,28 @@ export default {
 
           }
         });
-    });
-  },
- 
-  methods: {
-    toggleAddTaskForm(){
-        this.isAddTask = !this.isAddTask;
-    },
-    closeTaskFormByEmit(){
-        this.isAddTask = false;
-        console.log(this.isAddTask)
     }
   },
 
-  watch(){
-    
+  watch:{
+    // relood the component if the a new value added to fetchedBoard
+      fetchedBoard(oldValue,newValue){
+        if(oldValue !== newValue){
+              this.fetchBoard();
+        }
+        
+      }
   }
 };
 </script>
 
 <template>
+  <div :key="componentKey">
   <div v-if="fetchedBoard.length === 0">
     no phase yet
   </div>
   <div v-else>
-    <section class="ml-12 mt-3">
+    <section  class="ml-12 mt-3">
       <!--Phases-->
        <div  class="w-[20%] text-start font-bold"
              v-for='(phase,index) in fetchedBoard.phase'
@@ -89,6 +102,7 @@ export default {
                  
               </div>
                     <app-task-form :isAddTask="isAddTask"
+                                    @setAddFalse = 'closeTaskFormByEmit'
                                     :phaseId="phase.id"
                                     @close-taskform = 'closeTaskFormByEmit '>
 
@@ -107,4 +121,5 @@ export default {
        </div>
     </section>
   </div>
+</div>
 </template>

@@ -44,8 +44,10 @@ export default {
       
         
        })
-      .then(async(response)=>{
-          console.log(response);
+      .then(async( response)=>{
+           if(  response.status === 201){
+            this.$emit('setAddFalse');
+          }
        })
 
 
