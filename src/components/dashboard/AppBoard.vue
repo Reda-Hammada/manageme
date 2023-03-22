@@ -48,6 +48,10 @@ export default {
         console.log(this.isAddTask)
     }
   },
+
+  watch(){
+    
+  }
 };
 </script>
 

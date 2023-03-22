@@ -1,5 +1,5 @@
 <script>
- import axios from 'axios';
+import axios from "axios";
 
 export default {
   name: "AppTaskForm",
@@ -8,27 +8,22 @@ export default {
       Type: Boolean,
       Required: true,
     },
-    phaseId:{
+    phaseId: {
       Type: Number,
-      Required:true,
-    }
+      Required: true,
+    },
   },
   data() {
     return {
-      Subtasks: [[{ value: "" ,rules:'required'}]],
+      Subtasks: [{ Subtask: "" }],
       addTaskSchema: {
         title: "required",
       },
     };
   },
-  watch(){
-   
-    
-  },
   methods: {
     addSubstakInput() {
-      this.Subtasks.push({ Subtask:"",rules:''});
-    
+      this.Subtasks.push([{ Subtask: "" }]);
     },
     deleteSubTaskInput(index) {
       this.Subtasks.splice(index, 1);
@@ -36,21 +31,28 @@ export default {
     closeAddTaskForm() {
       this.$emit("close-taskform");
     },
-   async addTask(values) {
-      await axios.post(`http://127.0.0.1:8000/api/tasks/`,
-      { 
+    async addTask(values) {
+      try {
+        axios.post(`http://127.0.0.1:8000/api/task/${this.phaseId}`,values,
+        
+       {
 
-      },
-      {
-         headers: {
-              Authorization: "Bearer " + localStorage.user_token,
-              "Content-Type": "application/json",
-            },
+        headers:{
+          Authorization: "Bearer " + localStorage.user_token,
+          "Content-Type": "application/json",
+        },
+      
+        
+       })
+      .then(async(response)=>{
+          console.log(response);
+       })
+
+
+      } catch (err) {
+          console.log(err);
       }
-       
-      );
 
-      alert(JSON.stringify(values));
     },
   },
 };
@@ -61,7 +63,7 @@ export default {
     class="absolute bg-black w-full h-full top-0 left-0 bg-opacity-50"
     v-show="isAddTask === true"
   >
-    <div class="bg-white w-[30%] pb-[3%] rounded mr-auto ml-auto mt-[5%]">
+    <div class="bg-white w-[30%] h-fit pb-[3%] rounded mr-auto ml-auto mt-[5%]">
       <div class="w-full ml-12 font-bold text-xl pt-5 flex justify-between">
         <h2>Add a new task</h2>
         <span class="mr-24 cursor-pointer" @click="closeAddTaskForm()">X</span>
@@ -94,12 +96,14 @@ export default {
         </div>
         <div
           class="ml-12 mt-2"
-
           v-for="(Subtask, index) in Subtasks"
           :key="index"
         >
-          <vee-field v-slot="{ field }" :name="`Subtask${index + 1}`"
-             v-validate="Subtask.rules">
+          <vee-field
+            v-slot="{ field }"
+            :name="`Subtask${index + 1}`"
+            v-validate="Subtask.rules"
+          >
             <div>
               <input
                 v-validate="Subtask.rules"
@@ -107,7 +111,7 @@ export default {
                 type="text"
                 placeholder="e.g make your coffee"
                 v-bind="field"
-                v-model="Subtasks.value"
+                v-model="Subtasks.Subtask"
                 :name="`Subtask`"
               />
               <span
@@ -117,10 +121,8 @@ export default {
                 X
               </span>
               <!--Substask error-->
-                <span>{{Subtask.rules}}</span>
+              <span>{{ Subtask.rules }}</span>
             </div>
-            
-          
           </vee-field>
         </div>
         <!--Add Subtask input button-->
