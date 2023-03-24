@@ -56,10 +56,10 @@ export default {
   },
 
   watch:{
-    // relood the component if the a new value added to fetchedBoard
+    // relood the component if the value of the fetchedBoard changed (added,delete,updated)
       fetchedBoard(oldValue,newValue){
-        if(oldValue !== newValue){
-              this.fetchBoard();
+        if(newValue){
+            this.fetchBoard();
         }
         
       }
@@ -68,7 +68,7 @@ export default {
 </script>
 
 <template>
-  <div :key="componentKey">
+  <div  >
   <div v-if="fetchedBoard.length === 0">
     no phase yet
   </div>

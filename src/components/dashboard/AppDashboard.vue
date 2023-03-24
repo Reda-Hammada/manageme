@@ -42,7 +42,7 @@ export default {
     updateIsAdd(){
       this.isAdd = !this.isAdd;
     }
-  },
+  },  
 };
 </script>
 <template>
@@ -50,8 +50,7 @@ export default {
   <div class=" flex">
     <!--Side navbar-->
     <div class="bg-white h-screen w-[15%]">
-      <app-side-nav 
-                    @ToggleAdd="updateIsAdd"></app-side-nav>
+      <app-side-nav  @ToggleAdd="updateIsAdd"></app-side-nav>
     </div>
     <div class="w-[85%] flex flex-col">
       <!--navbar-->

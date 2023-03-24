@@ -22,6 +22,29 @@ export default {
     };
   },
   methods: {
+    async addTask(values) {
+      try {
+        axios
+          .post(
+            `http://127.0.0.1:8000/api/task/${this.phaseId}`,
+            values,
+
+            {
+              headers: {
+                Authorization: "Bearer " + localStorage.user_token,
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then(async (response) => {
+            if (response.status === 201) {
+              this.$emit("setAddFalse");
+            }
+          });
+      } catch (err) {
+        console.log(err);
+      }
+    },
     addSubstakInput() {
       this.Subtasks.push([{ Subtask: "" }]);
     },
@@ -31,31 +54,20 @@ export default {
     closeAddTaskForm() {
       this.$emit("close-taskform");
     },
-    async addTask(values) {
-      try {
-        axios.post(`http://127.0.0.1:8000/api/task/${this.phaseId}`,values,
-        
-       {
+    resetForm() {
+      const form = this.$refs.taskForm.$el.children;
+      console.log(form);
 
-        headers:{
-          Authorization: "Bearer " + localStorage.user_token,
-          "Content-Type": "application/json",
-        },
-      
-        
-       })
-      .then(async( response)=>{
-           if(  response.status === 201){
-            this.$emit('setAddFalse');
-          }
-       })
+      for (let i = 0; i < form.length; i++) {
+        console.log(form[i]);
 
+        if (form[i].nodeName === "input" || form[i].nodeName === "textarea") {
+          console.log(form[i]);
+          form[i].value = form[i].defaultValue;
+        }
 
-      } catch (err) {
-          console.log(err);
       }
-
-    },
+    }
   },
 };
 </script>
@@ -70,7 +82,7 @@ export default {
         <h2>Add a new task</h2>
         <span class="mr-24 cursor-pointer" @click="closeAddTaskForm()">X</span>
       </div>
-      <vee-form :validation-schema="addTaskSchema" @submit="addTask">
+      <vee-form :validation-schema="addTaskSchema" @submit="addTask" ref="taskForm">
         <!--Task title-->
         <div class="ml-12 mt-6">
           <label class="font-bold"> Title: </label><br />
@@ -101,14 +113,9 @@ export default {
           v-for="(Subtask, index) in Subtasks"
           :key="index"
         >
-          <vee-field
-            v-slot="{ field }"
-            :name="`Subtask${index + 1}`"
-            v-validate="Subtask.rules"
-          >
+          <vee-field v-slot="{ field }" :name="`Subtask${index + 1}`">
             <div>
               <input
-                v-validate="Subtask.rules"
                 class="w-[90%] border mt-3 border-bg-bg-color rounded pl-3 h-[40px]"
                 type="text"
                 placeholder="e.g make your coffee"
