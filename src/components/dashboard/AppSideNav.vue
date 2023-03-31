@@ -46,7 +46,7 @@ export default {
 </script>
 
 <template>
-  <header class="border-r-2 h-[100%]">
+  <header class="border-r-2  ">
     <nav >
       <div class="mb-12 pt-2 pl-3 font-bold pb-10 border-gray text-2xl text-main-color">
         <h1>Manageme:</h1>

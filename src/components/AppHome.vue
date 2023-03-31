@@ -45,12 +45,14 @@ export default {
 </script>
 
 <template>
-  <app-header @change-tab="changeTab" :tab="tab"></app-header>
-  <app-auth @change-tab="changeTab" :tab="tab"></app-auth>
-  <app-hero></app-hero>
-  <app-why></app-why>
-  <app-about></app-about>
-  <app-testimony></app-testimony>
-  <app-contact></app-contact>
-  <app-footer></app-footer>
+  <div class="overflow-scroll h-screen">
+    <app-header @change-tab="changeTab" :tab="tab"></app-header>
+    <app-auth @change-tab="changeTab" :tab="tab"></app-auth>
+    <app-hero></app-hero>
+    <app-why></app-why>
+    <app-about></app-about>
+    <app-testimony></app-testimony>
+    <app-contact></app-contact>
+    <app-footer></app-footer>
+  </div>
 </template>

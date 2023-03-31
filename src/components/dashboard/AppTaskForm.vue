@@ -38,6 +38,10 @@ export default {
           )
           .then(async (response) => {
             if (response.status === 201) {
+              // reset inputs value 
+              this.$refs.myForm.setFieldValue('title','')
+              this.$refs.myForm.setFieldValue('description', '');
+              // close add task popup 
               this.$emit("setAddFalse");
             }
           });
@@ -54,20 +58,7 @@ export default {
     closeAddTaskForm() {
       this.$emit("close-taskform");
     },
-    resetForm() {
-      const form = this.$refs.taskForm.$el.children;
-      console.log(form);
-
-      for (let i = 0; i < form.length; i++) {
-        console.log(form[i]);
-
-        if (form[i].nodeName === "input" || form[i].nodeName === "textarea") {
-          console.log(form[i]);
-          form[i].value = form[i].defaultValue;
-        }
-
-      }
-    }
+    
   },
 };
 </script>
@@ -82,7 +73,7 @@ export default {
         <h2>Add a new task</h2>
         <span class="mr-24 cursor-pointer" @click="closeAddTaskForm()">X</span>
       </div>
-      <vee-form :validation-schema="addTaskSchema" @submit="addTask" ref="taskForm">
+      <vee-form :validation-schema="addTaskSchema" @submit="addTask" ref="myForm">
         <!--Task title-->
         <div class="ml-12 mt-6">
           <label class="font-bold"> Title: </label><br />
