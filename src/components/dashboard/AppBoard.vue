@@ -54,14 +54,7 @@ export default {
     },
   },
 
-  watch: {
-    // relood the component if the value of the fetchedBoard changed (added,delete,updated)
-    fetchedBoard(oldValue, newValue) {
-      if (newValue) {
-        this.fetchBoard();
-      }
-    },
-  },
+  
 };
 </script>
 
@@ -72,13 +65,13 @@ export default {
       <section class="ml-12 mt-3 w-full">
         <!--Phases-->
         <div
-          class="w-[23%]   overflow-y-auto scrollbar-track-purple scrollbar-thumb-pink text-start font-bold"
+          class="w-[23%]   text-start font-bold"
           v-for="(phase, index) in fetchedBoard.phase"
           :key="index"
         >
           <!--Phase tasks container-->
-          <div class="h-[100vh] overflow-x-scroll">
-            <div class="w-[100%]     pt-6 bg-white mb-3 pb-3 mb-32">
+          <div class="h-[90vh] overflow-y-auto overflow-x-hidden ">
+            <div class="w-[100%]     pt-6 bg-white mb-3 pb-3 ">
               <!--Phase-->
               <div class="flex w-[100%] justify-between">
                 <div class="mb-5 pl-5">
@@ -109,7 +102,6 @@ export default {
             </div>
           </div>
         </div>
-        <div></div>
       </section>
     </div>
   </div>

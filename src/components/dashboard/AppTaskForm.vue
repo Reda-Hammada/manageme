@@ -68,7 +68,7 @@ export default {
     class="absolute bg-black w-full h-full top-0 left-0 bg-opacity-50"
     v-show="isAddTask === true"
   >
-    <div class="bg-white w-[30%] h-fit pb-[3%] rounded mr-auto ml-auto mt-[5%]">
+    <div class="bg-white w-[40%]  h-[80vh] overflow-y-auto overflow-x-hidden pb-[3%] rounded mr-auto ml-auto mt-[5%]">
       <div class="w-full ml-12 font-bold text-xl pt-5 flex justify-between">
         <h2>Add a new task</h2>
         <span class="mr-24 cursor-pointer" @click="closeAddTaskForm()">X</span>

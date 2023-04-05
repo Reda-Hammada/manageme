@@ -25,8 +25,8 @@ export default {
             },
           })
           .then(async (res) => {
-            if (res.status === 200) {
-              this.boards = res.data.boards;
+            if(res.status === 200) {
+                this.boards = res.data.boards;
             }
           });
       } catch (err) {
@@ -41,6 +41,14 @@ export default {
     }
  
 
+  },
+  watch: {
+    // relood the component if  the values of board (added,delete,updated)
+    boards(oldValue, newValue) {
+      if (newValue) {
+        this.fetchBoards();
+      }
+    },
   },
 }
 </script>

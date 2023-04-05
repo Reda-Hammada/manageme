@@ -13,18 +13,21 @@ export default {
   },
   data() {
     return {
+      addBoardSchema:{
+        board:'required',
+      },
       userData: JSON.parse(localStorage.userData),
       Board: null,
       isAdd: false,
     };
   },
   methods: {
-    async createBoard() {
+    async createBoard(values) {
       try {
         await axios
           .post(
             `http://127.0.0.1:8000/api/boards/user/${this.userData.id}`,
-            { Board: this.Board },
+            { Board:values.board },
             {
               headers: {
                 Authorization: "Bearer " + localStorage.user_token,
@@ -33,21 +36,30 @@ export default {
             }
           )
           .then((res) => {
-            alert(res);
+            this.isAdd = false;
           });
       } catch (err) {
-        alert(err);
+        console.log(err)
       }
     },
     updateIsAdd() {
       this.isAdd = !this.isAdd;
+    },
+  
+  },
+  watch: {
+    // relood the component if the value of the fetchedBoard changed (added,delete,updated)
+    fetchedBoard(oldValue, newValue) {
+      if (newValue) {
+        this.fetchBoard();
+      }
     },
   },
 };
 </script>
 <template>
   <!--Ultimate container-->
-  <div class="flex w-full ">
+  <div class="flex w-full bg-gray-200">
     <!--Side navbar-->
     <div class="bg-white h-screen w-[15%]">
       <app-side-nav class="h-screen" @ToggleAdd="updateIsAdd"></app-side-nav>
@@ -64,15 +76,40 @@ export default {
   </div>
   <div
     v-if="isAdd === true"
-    class="absolute bg-black w-full h-full opacity-25 top-0"
+    class="absolute bg-black w-full h-full  bg-opacity-50 top-0"
   >
-    <div v-if="isAdd === true" class="aboslute bg-white w-[50%] top-100">
-      <form @submit="createBoard">
+    <div v-if="isAdd === true" class="  mr-auto ml-auto bg-white w-[30%] mt-32 rounded">
+      <div class="w-full ml-12 font-bold text-xl pt-5 flex justify-between">
+        <h2>Add a new board</h2>
+        <span class="mr-24 cursor-pointer" @click="updateIsAdd()">X</span>
+      </div>
+      <vee-form @submit="createBoard" :validation-schema="addBoardSchema">
         <div>
-          <input type="text" name="Board" v-model="Board" />
-          <input type="submit" value="create" />
+          <div class="mt-3 ml-4 mb-3 ">
+            <label class=" font-bold block">
+              Board title :
+            </label>
+            <vee-field v-slot="{field,errors}" name="board">
+              <input type="text" 
+                     name="board"
+                     class="w-[90%] border mt-3 border-bg-bg-color border-4 rounded pl-3 h-[35px]"
+                    v-bind=field
+                    placeholder="e.g todo app project"
+              />
+              <div v-for="error in errors" :key="error">
+                  <span class='text-red-500 font-bold'>
+                    {{ error }}
+                  </span>
+              </div>
+          </vee-field>
+          </div>
+         <div class="w-[100%]  text-center">
+            <input type="submit"
+                  value="create" 
+                 class="w-[24%] mt- mb-5 cursor-pointer text-center text-white font-bold  rounded-full h-[30px] bg-main-color"/>
+         </div>
         </div>
-      </form>
+      </vee-form>
     </div>
   </div>
 </template>
