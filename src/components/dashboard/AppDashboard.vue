@@ -47,14 +47,8 @@ export default {
     },
   
   },
-  watch: {
-    // relood the component if the value of the fetchedBoard changed (added,delete,updated)
-    fetchedBoard(oldValue, newValue) {
-      if (newValue) {
-        this.fetchBoard();
-      }
-    },
-  },
+    
+
 };
 </script>
 <template>

@@ -15,7 +15,7 @@ export default {
   },
   data() {
     return {
-      Subtasks: [{ Subtask: "" }],
+      Subtasks: [{ name: "" }],
       addTaskSchema: {
         title: "required",
       },
@@ -23,12 +23,16 @@ export default {
   },
   methods: {
     async addTask(values) {
+      console.log(JSON.stringify(values));
+      const data = values;
+      alert(JSON.stringify(data));
+
       try {
         axios
           .post(
             `http://127.0.0.1:8000/api/task/${this.phaseId}`,
-            values,
 
+            data,
             {
               headers: {
                 Authorization: "Bearer " + localStorage.user_token,
@@ -38,19 +42,19 @@ export default {
           )
           .then(async (response) => {
             if (response.status === 201) {
-              // reset inputs value 
-              this.$refs.myForm.setFieldValue('title','')
-              this.$refs.myForm.setFieldValue('description', '');
-              // close add task popup 
+              // reset inputs value
+              this.$refs.myForm.setFieldValue("title", "");
+              this.$refs.myForm.setFieldValue("description", "");
+              // close add task popup
               this.$emit("setAddFalse");
             }
           });
       } catch (err) {
-        console.log(err);
+        alert(err.message);
       }
     },
     addSubstakInput() {
-      this.Subtasks.push([{ Subtask: "" }]);
+      this.Subtasks.push({ Subtask: "" });
     },
     deleteSubTaskInput(index) {
       this.Subtasks.splice(index, 1);
@@ -58,7 +62,6 @@ export default {
     closeAddTaskForm() {
       this.$emit("close-taskform");
     },
-    
   },
 };
 </script>
@@ -68,12 +71,18 @@ export default {
     class="absolute bg-black w-full h-full top-0 left-0 bg-opacity-50"
     v-show="isAddTask === true"
   >
-    <div class="bg-white w-[40%]  h-[80vh] overflow-y-auto overflow-x-hidden pb-[3%] rounded mr-auto ml-auto mt-[5%]">
+    <div
+      class="bg-white w-[40%] h-[80vh] overflow-y-auto overflow-x-hidden pb-[2%] rounded mr-auto ml-auto mt-[5%]"
+    >
       <div class="w-full ml-12 font-bold text-xl pt-5 flex justify-between">
         <h2>Add a new task</h2>
         <span class="mr-24 cursor-pointer" @click="closeAddTaskForm()">X</span>
       </div>
-      <vee-form :validation-schema="addTaskSchema" @submit="addTask" ref="myForm">
+      <vee-form
+        :validation-schema="addTaskSchema"
+        @submit="addTask"
+        ref="myForm"
+      >
         <!--Task title-->
         <div class="ml-12 mt-6">
           <label class="font-bold"> Title: </label><br />
@@ -104,26 +113,24 @@ export default {
           v-for="(Subtask, index) in Subtasks"
           :key="index"
         >
-          <vee-field v-slot="{ field }" :name="`Subtask${index + 1}`">
-            <div>
+          <div>
+            <vee-field v-slot="{ field }" :name="`Subtask${ index + 1 }`">
               <input
                 class="w-[90%] border mt-3 border-bg-bg-color rounded pl-3 h-[40px]"
                 type="text"
                 placeholder="e.g make your coffee"
+                v-model="Subtask.Subtask"
                 v-bind="field"
-                v-model="Subtasks.Subtask"
-                :name="`Subtask`"
+                :name="`Subtask${ index + 1 }`"
               />
-              <span
-                class="ml-3 mb-2 text-xl cursor-pointer"
-                @click="deleteSubTaskInput(index)"
-              >
-                X
-              </span>
-              <!--Substask error-->
-              <span>{{ Subtask.rules }}</span>
-            </div>
-          </vee-field>
+            </vee-field>
+            <span
+              class="ml-3 mb-2 text-xl cursor-pointer"
+              @click="deleteSubTaskInput(index)"
+            >
+              X
+            </span>
+          </div>
         </div>
         <!--Add Subtask input button-->
         <div class="text-center mt-4">

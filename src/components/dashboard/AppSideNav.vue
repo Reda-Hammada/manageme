@@ -54,13 +54,13 @@ export default {
 </script>
 
 <template>
-  <header class="border-r-2  ">
-    <nav >
+  <header class="border-r-2  overflow-x-auto ">
+    <nav  >
       <div class="mb-12 pt-2 pl-3 font-bold pb-10 border-gray text-2xl text-main-color">
         <h1>Manageme:</h1>
       </div>
       <h1 class="ml-3 font-bold text-xl">All Boards ({{ boards.length }})</h1>
-      <div class="pl-5 mt-3">
+      <div class="pl-5 mt-3 mb-6 overflow-x-auto">
         <ul class="" v-for="(board, index) in boards" :key="index">
           <li @click="triggerFetchBoard(board.id)"
             class="bg-main-color cursor-pointer text-white w-[80%] mb-2 rounded-r-full h-[35px] pt-1 pl-5 font-bold"
@@ -69,7 +69,7 @@ export default {
           </li>
         </ul>
         <a
-          class="text-main-color font-bold mt-3 cursor-pointer"
+          class="text-main-color  font-bold mt-3 cursor-pointer"
           @click="toggleIsAdd"
         >
           + Create a New Board

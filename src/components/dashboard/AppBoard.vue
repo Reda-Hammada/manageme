@@ -18,8 +18,8 @@ export default {
       fetchedBoard: [],
     };
   },
-  // when component created fetch the board
-  created() {
+  // when component mounted fetch the board
+  mounted() {
     this.eventBus.on("trigger-board", async (boardId) => {
       this.boardId = boardId;
       this.fetchBoard();
@@ -53,7 +53,14 @@ export default {
         });
     },
   },
-
+    watch: {
+    // relood the component if the value of the fetchedBoard changed (added,delete,updated)
+    fetchedBoard(oldValue, newValue) {
+      if (newValue) {
+        this.fetchBoard();
+      }
+    },
+  },
   
 };
 </script>
