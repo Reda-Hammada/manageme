@@ -43,6 +43,7 @@ export default {
           .then(async (response) => {
             if (response.status === 201) {
               // reset inputs value
+              alert(JSON.stringify(response));
               this.$refs.myForm.setFieldValue("title", "");
               this.$refs.myForm.setFieldValue("description", "");
               // close add task popup
@@ -50,7 +51,7 @@ export default {
             }
           });
       } catch (err) {
-        alert(err.message);
+        alert(err);
       }
     },
     addSubstakInput() {

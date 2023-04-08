@@ -16,6 +16,7 @@ export default {
       isAddTask: false,
       boardId: null,
       fetchedBoard: [],
+      isAddPhase: false,
     };
   },
   // when component mounted fetch the board
@@ -32,6 +33,9 @@ export default {
     },
     closeTaskFormByEmit() {
       this.isAddTask = false;
+    },
+    toggleAddPhase(){
+        this.isAddPhase = !this.isAddPhase
     },
     // fetch board
     async fetchBoard() {
@@ -53,7 +57,7 @@ export default {
         });
     },
   },
-    watch: {
+  watch: {
     // relood the component if the value of the fetchedBoard changed (added,delete,updated)
     fetchedBoard(oldValue, newValue) {
       if (newValue) {
@@ -61,7 +65,6 @@ export default {
       }
     },
   },
-  
 };
 </script>
 
@@ -69,16 +72,16 @@ export default {
   <div class=" ">
     <div v-if="fetchedBoard.length === 0">no phase yet</div>
     <div v-else>
-      <section class="ml-12 mt-3 w-full">
+      <section class="ml-12 mt-3 w-full flex">
         <!--Phases-->
         <div
-          class="w-[23%]   text-start font-bold"
+          class="w-[23%] rounded-lg text-start font-bold"
           v-for="(phase, index) in fetchedBoard.phase"
           :key="index"
         >
           <!--Phase tasks container-->
-          <div class="h-[90vh] overflow-y-auto overflow-x-hidden ">
-            <div class="w-[100%]     pt-6 bg-white mb-3 pb-3 ">
+          <div class="h-[90vh] rounded-lg overflow-y-auto overflow-x-hidden">
+            <div class="w-[100%] pt-6 bg-white mb-3 pb-3">
               <!--Phase-->
               <div class="flex w-[100%] justify-between">
                 <div class="mb-5 pl-5">
@@ -109,11 +112,44 @@ export default {
             </div>
           </div>
         </div>
+        <div>
+          <div
+            @click="toggleAddPhase()"
+            v-if="isAddPhase === false"
+            class="bg-white w-[230px] h-[50px] cursor-pointer ml-12 mt-2 rounded-lg text-center pt-3 pb-2"
+          >
+            + Add a new phase
+          </div>
+          <div v-else-if="isAddPhase === true"
+                class="bg-white rounded-lg ml-12  w-[250px] h-[125px]">
+                <div class=" w-full pb-5 pr-2 ">
+                   <span class="font-bold float-right	  cursor-pointer"
+                         @click="toggleAddPhase()">x</span>
+                </div>
+            <vee-form>
+              <vee-field v-slot="{ field, errors }" 
+                         name="phase"
+                         >
+                <input type="text" 
+                        name="phase" 
+                        placeholder="e.g to do"
+                        class="w-[90%] border pl-3 mt-3 border-bg-bg-color border-4 rounded ml-2 h-[35px]"
+                        v-bind="field" 
+                        />
+                <div  class="text-red-500 font-bold"
+                      v-for="(error, key) in errors" 
+                     :key="key">
+                  {{ error }}
+                </div>
+              </vee-field>
+              <input class="bg-main-color cursor-pointer text-white rounded w-[100px] h-[30px] mt-3 ml-4"
+                     type="submit" 
+                     value="Add phase" />
+            </vee-form>
+          </div>
+        </div>
       </section>
     </div>
   </div>
 </template>
-<style>
-
-
-</style>
+<style></style>
