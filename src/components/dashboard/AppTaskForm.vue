@@ -75,7 +75,9 @@ export default {
     <div
       class="bg-white w-[40%] h-[80vh] overflow-y-auto overflow-x-hidden pb-[2%] rounded mr-auto ml-auto mt-[5%]"
     >
-      <div class="w-full ml-12 font-bold text-xl pt-5 flex justify-between">
+      <div
+        class="w-full ml-12 mr-3 font-bold text-xl pt-5 flex justify-between"
+      >
         <h2>Add a new task</h2>
         <span class="mr-24 cursor-pointer" @click="closeAddTaskForm()">X</span>
       </div>
@@ -115,14 +117,14 @@ export default {
           :key="index"
         >
           <div>
-            <vee-field v-slot="{ field }" :name="`Subtask${ index + 1 }`">
+            <vee-field v-slot="{ field }" :name="`Subtask${index + 1}`">
               <input
                 class="w-[90%] border mt-3 border-bg-bg-color rounded pl-3 h-[40px]"
                 type="text"
                 placeholder="e.g make your coffee"
                 v-model="Subtask.Subtask"
                 v-bind="field"
-                :name="`Subtask${ index + 1 }`"
+                :name="`Subtask${index + 1}`"
               />
             </vee-field>
             <span
