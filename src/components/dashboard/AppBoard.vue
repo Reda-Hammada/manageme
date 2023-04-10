@@ -68,7 +68,6 @@ export default {
     },
     // create phase
     async createPhase(values) {
-      alert(JSON.stringify(values));
       try {
         await axios
           .post(`http://127.0.0.1:8000/api/phase/${this.boardId}/`, values, {
@@ -81,9 +80,6 @@ export default {
             if (response.status === 201) {
               this.isAddPhase = false;
             }
-          })
-          .then(async (err) => {
-            alert(err);
           });
       } catch (err) {
         alert(err);
@@ -102,21 +98,23 @@ export default {
 </script>
 
 <template>
-  <div class=" ">
+  <div class="">
     <div v-if="fetchedBoard.length === 0">no phase yet</div>
     <div v-else>
-      <section class=" mt-3 mr-6 w-full flex justify-start">
+      <section class="overflow-x-visible w-[100vw] mt-3 mr-6 w-full flex">
         <!--Phases-->
         <div
-          class="w-[23%] ml-12 rounded-lg text-start font-bold"
+          class="w-64 ml-12 rounded-lg w-[100%] text-start font-bold"
           v-for="(phase, index) in fetchedBoard.phase"
           :key="index"
         >
           <!--Phase tasks container-->
-          <div class="h-[90vh] rounded-lg overflow-y-auto overflow-x-hidden">
+          <div
+            class="h-[90vh] w-[290px] rounded-lg overflow-y-auto overflow-x-hidden"
+          >
             <div class="w-[100%] pt-6 bg-white mb-3 pb-3">
               <!--Phase-->
-              <div class="flex w-[100%] justify-between">
+              <div class="flex justify-between">
                 <div class="mb-5 pl-5">
                   {{ phase.phase }} ({{ phase.tasks.length }})
                 </div>

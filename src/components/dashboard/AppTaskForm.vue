@@ -69,7 +69,7 @@ export default {
 
 <template>
   <section
-    class="absolute bg-black w-full h-full top-0 left-0 bg-opacity-50"
+    class="absolute bg-black w-full h-full top-0 left-0 bg-opacity-25"
     v-show="isAddTask === true"
   >
     <div

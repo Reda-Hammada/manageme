@@ -60,7 +60,7 @@ export default {
       <app-nav class="bg-white w-full h-[8.5%] border-b-2 border-gray">
       </app-nav>
       <div>
-        <app-board class="  "> </app-board>
+        <app-board class="overflow-x-auto"> </app-board>
        
       </div>
     </div>
