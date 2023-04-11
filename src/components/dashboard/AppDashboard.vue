@@ -50,7 +50,7 @@ export default {
 </script>
 <template>
   <!--Ultimate container-->
-  <div class="flex w-full bg-gray-200 overflow-x-scroll">
+  <div class="flex w-full bg-bg-color overflow-x-scroll">
     <!--Side navbar-->
     <div class="bg-white h-screen w-[15%]">
       <app-side-nav class="h-screen" @ToggleAdd="updateIsAdd"></app-side-nav>

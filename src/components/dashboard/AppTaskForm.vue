@@ -23,9 +23,7 @@ export default {
   },
   methods: {
     async addTask(values) {
-      console.log(JSON.stringify(values));
       const data = values;
-      alert(JSON.stringify(data));
 
       try {
         axios
@@ -43,7 +41,6 @@ export default {
           .then(async (response) => {
             if (response.status === 201) {
               // reset inputs value
-              alert(JSON.stringify(response));
               this.$refs.myForm.setFieldValue("title", "");
               this.$refs.myForm.setFieldValue("description", "");
               // close add task popup
@@ -51,7 +48,7 @@ export default {
             }
           });
       } catch (err) {
-        alert(err);
+        alert('An error happened try again')
       }
     },
     addSubstakInput() {
@@ -73,7 +70,7 @@ export default {
     v-show="isAddTask === true"
   >
     <div
-      class="bg-white w-[40%] h-[80vh] overflow-y-auto overflow-x-hidden pb-[2%] rounded mr-auto ml-auto mt-[5%]"
+      class="bg-white w-[40%] h-[80vh] overflow-y-auto  overflow-x-hidden pb-[2%] rounded mr-auto ml-auto mt-[5%]"
     >
       <div
         class="w-full ml-12 mr-3 font-bold text-xl pt-5 flex justify-between"

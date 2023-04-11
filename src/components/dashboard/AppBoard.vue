@@ -15,11 +15,13 @@ export default {
       phaseSchema: {
         phase: "required",
       },
+
       isLoading: false,
       isAddTask: false,
       boardId: null,
       fetchedBoard: [],
       isAddPhase: false,
+      isTaskDetails: false,
     };
   },
   // when component mounted fetch the board
@@ -43,6 +45,7 @@ export default {
     // fetch board
     async fetchBoard() {
       try {
+        this.isLoading = true;
         await axios
           .get(
             `http://127.0.0.1:8000/api/boards/${this.boardId}/phases/tasks/subtasks/`,
@@ -60,10 +63,13 @@ export default {
                 "pass-board-name",
                 this.fetchedBoard.board_name
               );
+              if (this.fetchedBoard !== null) {
+                this.isLoading = false;
+              }
             }
           });
       } catch (err) {
-        console.log(err);
+        alert("An Errror occurred try again");
       }
     },
     // create phase
@@ -82,26 +88,28 @@ export default {
             }
           });
       } catch (err) {
-        alert(err);
+        alert("An Errror occurred try again");
       }
     },
   },
-  watch: {
-    // relood the component if the value of the fetchedBoard changed (added,delete,updated)
-    fetchedBoard(oldValue, newValue) {
-      if (newValue) {
-        this.fetchBoard();
-      }
-    },
-  },
+  // watch: {
+  //   // relood the component if the value of the fetchedBoard changed (added,delete,updated)
+  //   fetchedBoard(oldValue, newValue) {
+  //     if (newValue) {
+  //       this.fetchBoard();
+  //     }
+  //   },
+  // },
 };
 </script>
 
 <template>
   <div class="">
-    <div v-if="fetchedBoard.length === 0">no phase yet</div>
-    <div v-else>
-      <section class="overflow-x-visible w-[100vw] mt-3 mr-6 w-full flex">
+    <div v-if="isLoading === true">
+      <img src="src\assets\images\isLoading.svg" alt="loalding animation" />
+    </div>
+    <div v-elseif="isLoading === false">
+      <section class="overflow-x-auto w-[100vw] mt-3 mr-6 w-full flex">
         <!--Phases-->
         <div
           class="w-64 ml-12 rounded-lg w-[100%] text-start font-bold"

@@ -42,14 +42,14 @@ export default {
  
 
   },
-  watch: {
-    // relood the component if  the values of board (added,delete,updated)
-    boards(oldValue, newValue) {
-      if (newValue) {
-        this.fetchBoards();
-      }
-    },
-  },
+  // watch: {
+  //   // relood the component if  the values of board (added,delete,updated)
+  //   boards(newValue) {
+  //     if (newValue) {
+  //       this.fetchBoards();
+  //     }
+  //   },
+  // },
 }
 </script>
 
