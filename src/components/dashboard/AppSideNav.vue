@@ -3,12 +3,14 @@ import axios from "axios";
 
 export default {
   name: "AppSideNav",
-  inject:['eventBus'],
+  inject: ["eventBus"],
   data() {
     return {
+      
       boards: [],
+      isBoardActive:false,
       boardsFetchErro: null,
-      isLoading: false,
+     
       userData: JSON.parse(localStorage.userData),
     };
   },
@@ -18,6 +20,7 @@ export default {
   methods: {
     async fetchBoards() {
       try {
+
         await axios
           .get(`http://127.0.0.1:8000/api/boards/user/${this.userData.id}`, {
             headers: {
@@ -25,8 +28,8 @@ export default {
             },
           })
           .then(async (res) => {
-            if(res.status === 200) {
-                this.boards = res.data.boards;
+            if (res.status === 200) {
+              this.boards = res.data.boards;
             }
           });
       } catch (err) {
@@ -36,40 +39,51 @@ export default {
     toggleIsAdd() {
       this.$emit("ToggleAdd");
     },
-    triggerFetchBoard(boardId){
-       this.eventBus.emit('trigger-board',boardId)
-    }
- 
+    triggerFetchBoard(boardId) {
+      this.eventBus.emit("trigger-board", boardId);
+      this.boards.forEach((board)=>{
+            if(board.id === boardId){
+              this.isBoardActive = true;
+            } 
+      })
 
+   
+
+    },
   },
-  // watch: {
-  //   // relood the component if  the values of board (added,delete,updated)
-  //   boards(newValue) {
-  //     if (newValue) {
-  //       this.fetchBoards();
-  //     }
-  //   },
-  // },
-}
+  watch: {
+    boards(newValue, oldValue) {
+      if (newValue.length !== oldValue.length) {
+        this.fetchBoards();
+      }
+    },
+  },
+ 
+  
+};
 </script>
 
 <template>
-  <header class="border-r-2  overflow-x-auto ">
-    <nav  >
-      <div class="mb-12 pt-2 pl-3 font-bold pb-10 border-gray text-2xl text-main-color">
+  <header class="border-r-2 overflow-x-auto">
+    <nav>
+      <div
+        class="mb-12 pt-2 pl-3 font-bold pb-10 border-gray text-2xl text-main-color"
+      >
         <h1>Manageme:</h1>
       </div>
       <h1 class="ml-3 font-bold text-xl">All Boards ({{ boards.length }})</h1>
       <div class="pl-5 mt-3 mb-6 overflow-x-auto">
         <ul class="" v-for="(board, index) in boards" :key="index">
-          <li @click="triggerFetchBoard(board.id)"
-            class="bg-main-color cursor-pointer text-white w-[80%] mb-2 rounded-r-full h-[35px] pt-1 pl-5 font-bold"
+         
+          <li 
+            @click="triggerFetchBoard(board.id)"
+            class="text-main-color hover:bg-main-color hover:text-white cursor-pointer  w-[80%] mb-2 rounded-r-full h-[35px] pt-1 pl-5 font-bold"
           >
             {{ board.board_name }}
           </li>
         </ul>
         <a
-          class="text-main-color  font-bold mt-3 cursor-pointer"
+          class="text-main-color font-bold mt-3 cursor-pointer"
           @click="toggleIsAdd"
         >
           + Create a New Board

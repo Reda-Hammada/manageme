@@ -15,7 +15,6 @@ export default {
       phaseSchema: {
         phase: "required",
       },
-
       isLoading: false,
       isAddTask: false,
       boardId: null,
@@ -64,7 +63,8 @@ export default {
                 this.fetchedBoard.board_name
               );
               if (this.fetchedBoard !== null) {
-                this.isLoading = false;
+                    this.isLoading = false;
+                   
               }
             }
           });
@@ -92,29 +92,34 @@ export default {
       }
     },
   },
-  // watch: {
-  //   // relood the component if the value of the fetchedBoard changed (added,delete,updated)
-  //   fetchedBoard(oldValue, newValue) {
-  //     if (newValue) {
-  //       this.fetchBoard();
-  //     }
-  //   },
-  // },
+  watch: {
+    fetchedBoard(oldValue, newValue) {
+      if (newValue.length > oldValue.length) {
+        this.fetchBoard();
+      }
+    },
+  },
 };
 </script>
 
 <template>
   <div class="">
     <div v-if="isLoading === true">
-      <img src="src\assets\images\isLoading.svg" alt="loalding animation" />
+      <div class="w-[100%] text-center mt-[15%] pl-auto pr-auto">
+        <div class="mr-auto ml-auto w-[10%]">
+          <img src="src\assets\images\isLoading.svg" alt="loalding animation" />
+        </div>
+      </div>
     </div>
-    <div v-elseif="isLoading === false">
-      <section class="overflow-x-auto w-[100vw] mt-3 mr-6 w-full flex">
+    <div v-else-if="isLoading === false">
+      <section class="mt-3 mr-6 w-full flex">
         <!--Phases-->
         <div
           class="w-64 ml-12 rounded-lg w-[100%] text-start font-bold"
           v-for="(phase, index) in fetchedBoard.phase"
           :key="index"
+
+         
         >
           <!--Phase tasks container-->
           <div
@@ -152,9 +157,10 @@ export default {
           </div>
         </div>
         <div>
-          <div
+          <div 
             @click="toggleAddPhase()"
-            v-if="isAddPhase === false"
+            v-if="isAddPhase === false && fetchedBoard !== null"
+      
             class="bg-white w-[230px] h-[50px] cursor-pointer ml-12 mt-2 rounded-lg text-center pt-3 pb-2"
           >
             + Add a new phase
