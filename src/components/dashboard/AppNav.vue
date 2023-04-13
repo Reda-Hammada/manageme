@@ -1,5 +1,3 @@
-import axios from "axios";
-import eventBus 
 <script>
   export default{ 
     name:'AppNav',
@@ -41,7 +39,7 @@ import eventBus
             </div>
             <div class="w-[30%] cursor-pointer">
               <div @click="toggleSettingContainer"
-                   class="w-[13%] mr-auto ml-auto mt-1">
+                   class="w-[13%] mr-auto ml-auto mt-1 mb-2">
                   <img  class="rounded-full"
                         src='../../assets/images/person1.jpg'
                         alt="user image"/> 

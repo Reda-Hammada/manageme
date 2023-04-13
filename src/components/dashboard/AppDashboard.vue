@@ -52,8 +52,8 @@ export default {
   <!--Ultimate container-->
   <div class="flex w-full bg-bg-color overflow-x-scroll">
     <!--Side navbar-->
-    <div class="bg-white h-screen w-[22%]">
-      <app-side-nav class="h-screen" @ToggleAdd="updateIsAdd">
+    <div class="bg-white h-screen ">
+      <app-side-nav class="h-screen w-[300px]" @ToggleAdd="updateIsAdd">
         <template v-slot:boards> </template>
       </app-side-nav>
     </div>
@@ -62,9 +62,7 @@ export default {
       <app-nav class="bg-white w-full h-[8.5%] border-b-2 border-gray">
       </app-nav>
       <div>
-        <app-board class="overflow-x-auto">
-         
-        </app-board>
+        <app-board class="overflow-x-auto"> </app-board>
       </div>
     </div>
   </div>

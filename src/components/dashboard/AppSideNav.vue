@@ -60,12 +60,12 @@ export default {
 </script>
 
 <template>
-  <header class="border-r-2 overflow-x-auto">
+  <header class="border-r-2 pb-32 overflow-x-auto">
     <nav>
      
 
               <div
-                class="mb-12 pt-2 pl-3 font-bold pb-10 border-gray text-2xl text-main-color"
+                class=" pt-2 pl-3 font-bold pb-10 border-gray text-2xl text-main-color"
               >
                 <h1>Manageme:</h1>
               </div>
