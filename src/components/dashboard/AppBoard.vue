@@ -93,10 +93,9 @@ export default {
     },
   },
   watch: {
-    fetchedBoard(oldValue, newValue) {
-      if (newValue.length > oldValue.length) {
-        this.fetchBoard();
-      }
+    fetchedBoard() {
+
+      
     },
   },
 };

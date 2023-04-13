@@ -52,11 +52,7 @@ export default {
     },
   },
   watch: {
-    boards(newValue, oldValue) {
-      if (newValue.length !== oldValue.length) {
-        this.fetchBoards();
-      }
-    },
+
   },
  
   
@@ -66,29 +62,40 @@ export default {
 <template>
   <header class="border-r-2 overflow-x-auto">
     <nav>
-      <div
-        class="mb-12 pt-2 pl-3 font-bold pb-10 border-gray text-2xl text-main-color"
-      >
-        <h1>Manageme:</h1>
-      </div>
-      <h1 class="ml-3 font-bold text-xl">All Boards ({{ boards.length }})</h1>
-      <div class="pl-5 mt-3 mb-6 overflow-x-auto">
-        <ul class="" v-for="(board, index) in boards" :key="index">
-         
-          <li 
-            @click="triggerFetchBoard(board.id)"
-            class="text-main-color hover:bg-main-color hover:text-white cursor-pointer  w-[80%] mb-2 rounded-r-full h-[35px] pt-1 pl-5 font-bold"
-          >
-            {{ board.board_name }}
-          </li>
-        </ul>
-        <a
-          class="text-main-color font-bold mt-3 cursor-pointer"
-          @click="toggleIsAdd"
-        >
-          + Create a New Board
-        </a>
-      </div>
+     
+
+              <div
+                class="mb-12 pt-2 pl-3 font-bold pb-10 border-gray text-2xl text-main-color"
+              >
+                <h1>Manageme:</h1>
+              </div>
+              <div v-if="$slots.boards">
+                 <slot name="boards">
+                    <h1 class="ml-3 font-bold text-xl">All Boards ({{ boards.length }})</h1>
+                    <div class="pl-5 mt-3 mb-6 overflow-x-auto">
+                          <ul class="" v-for="(board, index) in boards" :key="index">
+                          
+                        <li 
+                          @click="triggerFetchBoard(board.id)"
+                          class="text-main-color hover:bg-main-color hover:text-white cursor-pointer  w-[80%] mb-2 rounded-r-full h-[35px] pt-1 pl-5 font-bold"
+                        >
+                          {{ board.board_name }}
+                        </li>
+                      </ul>
+                      <a
+                        class="text-main-color font-bold mt-3 cursor-pointer"
+                        @click="toggleIsAdd"
+                      >
+                        + Create a New Board
+                      </a>
+                    </div>
+                </slot>
+              </div>
+             <div v-if="$slots.settingSideNavSlot">
+                <slot name="settingSideNavSlot">
+                  dadas
+                </slot>
+             </div>
     </nav>
   </header>
 </template>

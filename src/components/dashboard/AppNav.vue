@@ -33,9 +33,9 @@ import eventBus
 </script>
 
 <template>
-    <div>
        <header class="w-[100%]">
         <nav class="flex justify-between ">
+
             <div class="w-[60%]">
                 <h1 class="font-bold   pt-2 pl-2 text-2xl">{{ boardName }}</h1>
             </div>
@@ -65,8 +65,9 @@ import eventBus
                   </div>
               </div>
             </div>
+         
         </nav>
         
        </header>
-    </div>
+  
 </template>
