@@ -53,6 +53,7 @@ export default {
   <div class="flex w-full bg-bg-color overflow-x-scroll">
     <!--Side navbar-->
     <div class="bg-white h-screen ">
+      
       <app-side-nav class="h-screen w-[300px]" @ToggleAdd="updateIsAdd">
         <template v-slot:boards> </template>
       </app-side-nav>

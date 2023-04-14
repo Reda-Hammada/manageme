@@ -311,15 +311,7 @@ export default {
         @submit="register"
         :validation-schema="schemaRegister"
       >
-        <!--user image-->
-        <div class="">
-          <vee-field v-slot="{ field, errors }" name="image">
-            <input type="file" class="" v-bind="field" name="image" />
-            <div :key="error" v-for="error in errors">
-              <span>{{ error }}</span>
-            </div>
-          </vee-field>
-        </div>
+       
         <!--Name -->
         <div class="mb-1">
           <label class="block ml-[8.2%] mb-2 text-start">Name :</label>

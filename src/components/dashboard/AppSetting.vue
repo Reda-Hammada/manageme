@@ -15,20 +15,21 @@ export default {
 
 <template>
   <!-- Ultimate container -->
-  <div class="flex flex-col bg-bg-color">
+  <div class="flex flex-row bg-bg-color">
     <!-- Navbar-->
-    <app-nav class=" bg-white w-[100vw] border-b-2"> 
-
-    </app-nav>
-
-    <div class="flex flex-row">
-      <!-- side navbar-->
-      <app-side-nav class="bg-white w-[20vw] border-r-2 h-[100vh] ">
-        <!-- Slot for setting component only-->
-        <template v-slot:settingSideNavSlot> 
+    <app-side-nav class="bg-white w-[20vw] border-r-2 h-[100vh] ">
+              <!-- Slot for setting component only-->
+              <template v-slot:settingSideNavSlot> 
              
-        </template>
-      </app-side-nav>
+              </template>
+
+    </app-side-nav>
+
+    <div class=" flex flex-col">
+      <!-- side navbar-->
+      <app-nav class=" bg-white w-[80vw] border-b-2"> 
+  
+      </app-nav>
       <div class="w-full">
         <app-user-form>
 
