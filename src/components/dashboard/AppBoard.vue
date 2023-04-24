@@ -63,8 +63,7 @@ export default {
                 this.fetchedBoard.board_name
               );
               if (this.fetchedBoard !== null) {
-                    this.isLoading = false;
-                   
+                this.isLoading = false;
               }
             }
           });
@@ -84,6 +83,8 @@ export default {
           })
           .then(async (response) => {
             if (response.status === 201) {
+              this.$forceUpdate();
+
               this.isAddPhase = false;
             }
           });
@@ -93,10 +94,7 @@ export default {
     },
   },
   watch: {
-    fetchedBoard() {
-
-      
-    },
+    fetchedBoard() {},
   },
 };
 </script>
@@ -117,8 +115,6 @@ export default {
           class="w-64 ml-12 rounded-lg w-[100%] text-start font-bold"
           v-for="(phase, index) in fetchedBoard.phase"
           :key="index"
-
-         
         >
           <!--Phase tasks container-->
           <div
@@ -156,10 +152,9 @@ export default {
           </div>
         </div>
         <div>
-          <div 
+          <div
             @click="toggleAddPhase()"
             v-if="isAddPhase === false && fetchedBoard !== null"
-      
             class="bg-white w-[230px] h-[50px] cursor-pointer ml-12 mt-2 rounded-lg text-center pt-3 pb-2"
           >
             + Add a new phase

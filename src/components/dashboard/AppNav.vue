@@ -6,7 +6,7 @@
     
   data(){
     return{
-      userImage:JSON.parse(localStorage.userData),
+      userData:JSON.parse(localStorage.userData),
       isClicked:false,
       boardName : '',
     }
@@ -41,7 +41,7 @@
               <div @click="toggleSettingContainer"
                    class="w-[13%] mr-auto ml-auto mt-1 mb-2">
                   <img  class="rounded-full"
-                        src='../../assets/images/person1.jpg'
+                        :src="userData.image_path"
                         alt="user image"/> 
               </div>
             </div>

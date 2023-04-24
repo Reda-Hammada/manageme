@@ -27,10 +27,10 @@ export default {
 
     <div class=" flex flex-col">
       <!-- side navbar-->
-      <app-nav class=" bg-white w-[80vw] border-b-2"> 
+      <app-nav class=" bg-white w-[85vw] border-b-2"> 
   
       </app-nav>
-      <div class="w-full">
+      <div class="w-full overflow-auto h-[100vh]">
         <app-user-form>
 
         </app-user-form>
