@@ -36,6 +36,7 @@ export default{
         defineRule('confirmed',confirmed)
         defineRule('image',image)
         defineRule('ext',ext)
+        // defineRule('required_if',required_if)
         
         
         configure({
@@ -43,6 +44,7 @@ export default{
                 const messages = {
 
                     required:`The field ${ctx.field} is required`,
+                    // required_if:`The field ${ctx.field} is required`,
                     min:`The field ${ctx.field} is too short`,
                     max:`The field ${ctx.field} is too long`,
                     alpha_spaces:`the field ${ctx.field} may only contain alphabetic characters and spaces`,

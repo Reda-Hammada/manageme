@@ -139,4 +139,5 @@ export default {
 .fade-move {
   transition: opacity 1s linear;
 }
+
 </style>

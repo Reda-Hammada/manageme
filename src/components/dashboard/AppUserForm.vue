@@ -15,6 +15,7 @@
           <p>Update your image and personal information</p>
         </div>
       </div>
+
       <!--User full name-->
       <div
         v-if="isChangeName === false"
@@ -33,9 +34,10 @@
           Edit
         </button>
       </div>
+
       <div
         v-else-if="isChangeName === true"
-        class="mt-12 pl-12 pb-8 border-b-2 w-full"
+        class="mt-12 h-[160px] pl-12 pb-8 border-b-2 w-full"
       >
         <label class="font-bold">Full name:</label>
         <vee-field name="userfullname" v-slot="{ errors, field }">
@@ -72,6 +74,7 @@
           </div>
         </div>
       </div>
+
       <!--User email-->
       <div
         v-if="isChangeEmail === false"
@@ -100,8 +103,8 @@
           <input
             class="border-bg-bg-color h-[32px] pl-5 ml-[11.5%] w-[500px] border-2 rounded"
             type="email"
+            required
             name="email"
-            :placeholder="userData.email"
             v-bind="field"
           />
           <!--Errors-->
@@ -155,63 +158,69 @@
       </div>
       <div
         v-else-if="isChangePassword === true"
-        class="mt-12 pl-12 pb-8 border-b-2 w-full"
+        class="mt-12 pl-5 pb-8 border-b-2 w-full"
       >
-        <label class="font-bold">Old password:</label>
+        <div class="mb-6">
+          <label class="font-bold">Current password:</label>
 
-        <vee-field name="oldPass" v-slot="{ errors, field }">
-          <input
-            class="border-bg-bg-color h-[32px] pl-5 ml-[6%] w-[500px] border-2 rounded"
-            type="password"
-            name="newpass"
-            v-bind="field"
-          />
-          <!--Errors-->
-          <div
-            class="ml-[195px] mt-2 text-red-500 font-bold"
-            v-for="(error, index) in errors"
-            :key="index"
-          >
-            {{ error }}
-          </div>
-        </vee-field>
-        <label class="font-bold">New password:</label>
+          <vee-field name="currentpassword" v-slot="{ errors, field }">
+            <input
+              class="border-bg-bg-color h-[32px] pl-5 ml-[6%] w-[500px] border-2 rounded"
+              type="password"
+              name="currentpassword"
+              v-bind="field"
+            />
+            <!--Errors-->
+            <div
+              class="ml-[195px] mt-2 text-red-500 font-bold"
+              v-for="(error, index) in errors"
+              :key="index"
+            >
+              {{ error }}
+            </div> </vee-field
+          ><br />
+        </div>
+        <div class="">
+          <label class="font-bold">New password:</label>
 
-        <vee-field name="newpass" v-slot="{ errors, field }">
-          <input
-            class="border-bg-bg-color h-[32px] pl-5 ml-[6%] w-[500px] border-2 rounded"
-            type="password"
-            name="newpass"
-            v-bind="field"
-          />
-          <!--Errors-->
-          <div
-            class="ml-[195px] mt-2 text-red-500 font-bold"
-            v-for="(error, index) in errors"
-            :key="index"
-          >
-            {{ error }}
-          </div>
-        </vee-field>
+          <vee-field name="newpass" v-slot="{ errors, field }">
+            <input
+              class="border-bg-bg-color h-[32px] pl-5 ml-[6%] w-[500px] border-2 rounded"
+              type="password"
+              name="newpass"
+              v-bind="field"
+            />
+            <!--Errors-->
+            <div
+              class="ml-[195px] mt-2 text-red-500 font-bold"
+              v-for="(error, index) in errors"
+              :key="index"
+            >
+              {{ error }}
+            </div>
+          </vee-field>
+        </div>
+        <br />
+        <div>
+          <label class="font-bold">Confirm password:</label>
 
-        <label class="font-bold">Confirm password:</label>
-
-        <vee-field name="cpass" v-slot="{ errors, field }">
-          <input
-            class="border-bg-bg-color h-[32px] pl-5 w-[500px] ml-[4%] border-2 rounded"
-            type="password"
-            name="cpass"
-            v-bind="field"
-          />
-          <!--Errors-->
-          <div
-            class="ml-[195px] mt-2 text-red-500 font-bold"
-            v-for="(error, index) in errors"
-            :key="index"
-          >
-            {{ error }}
-          </div>
-        </vee-field>
+          <vee-field name="cpass" v-slot="{ errors, field }">
+            <input
+              class="border-bg-bg-color h-[32px] pl-5 w-[500px] ml-[4%] border-2 rounded"
+              type="password"
+              name="cpass"
+              v-bind="field"
+            />
+            <!--Errors-->
+            <div
+              class="ml-[195px] mt-2 text-red-500 font-bold"
+              v-for="(error, index) in errors"
+              :key="index"
+            >
+              {{ error }}
+            </div>
+          </vee-field>
+        </div>
         <div class="flex justify-center mt-12 pb-6">
           <div class="mr-12">
             <input
@@ -243,7 +252,7 @@ export default {
       userFromSchema: {
         userfullname: "",
         email: "email",
-        oldPass: "",
+        currentpassword: "",
         newpass: "min:8|max:20",
         cpass: "confirmed:@newpass",
       },
@@ -296,7 +305,17 @@ export default {
             },
           })
           .then(async (res) => {
-            alert(res.data.msg);
+            switch (res.data.status) {
+              case 200:
+                this.updateUserInfoMsg = res.data.msg;
+                this.$emit("msg", this.updateUserInfoMsg, res.data.status);
+                break;
+              case 401:
+                this.updateUserInfoMsg = res.data.msg;
+                this.$emit("msg", this.updateUserInfoMsg, res.data.status);
+
+                break;
+            }
           });
       } catch (err) {
         alert(err);
