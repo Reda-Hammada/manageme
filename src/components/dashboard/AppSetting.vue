@@ -14,25 +14,24 @@ export default {
     return {
       userInfoMsg: null,
       isUserInfoMsg: false,
-      msgColor:'',
+      msgColor: "",
     };
   },
   methods: {
-    getMsgAndStatus(msg,status) {
-      if(status === 200){
+    getMsgAndStatus(msg, status) {
+      if (status === 200) {
         this.userInfoMsg = msg;
-        this.msgColor = 'green';
+        this.msgColor = "green";
+        this.isUserInfoMsg = true;
+        setTimeout(() => {
+          this.isUserInfoMsg = false;
+        }, 4000);
+      }
+      if (status === 401) {
+        this.userInfoMsg = msg;
+        this.msgColor = "red";
         this.isUserInfoMsg = true;
       }
-      if(status === 401){
-        
-        this.userInfoMsg = msg;
-        this.msgColor = 'red';
-        this.isUserInfoMsg = true;
-
-      }
-      
-
     },
   },
 };
@@ -45,7 +44,7 @@ export default {
     <transition name="slide">
       <div
         v-if="isUserInfoMsg === true"
-        class="absolute rounded font-bold text-white text-center pt-2 pb-1 ml-[80%] mt-[2%] bg-red-500 w-[250px] h-[90px]"
+        class="absolute mt-[5%] rounded ml-[80%] text-center text-white pt-2 pb-1 mt-[2%] bg-[#FFF0DB] w-[250px] h-[90px]"
       >
         {{ userInfoMsg }}
         <transition name="slide-line">
@@ -74,11 +73,20 @@ export default {
 .slide-enter-from {
   transform: translateX(300px);
 }
+
 .slide-enter-active {
-  transition: transform 0.25s linear;
-}
-.slide-line-enter-from{
-
+  transition: transform ease-in;
 }
 
+.slide-leave-from {
+  opacity: 1;
+  transform: translateX(-500px);
+}
+
+.slide-leave-active {
+  transition: all 0.25s ease-out;
+}
+.slide-leave-to {
+  opacity: 0;
+}
 </style>

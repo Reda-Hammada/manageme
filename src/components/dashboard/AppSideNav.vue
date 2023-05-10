@@ -6,11 +6,10 @@ export default {
   inject: ["eventBus"],
   data() {
     return {
-      
-      boards: [],
-      isBoardActive:false,
+      boards: [], 
+      isBoardActive: false,
       boardsFetchErro: null,
-     
+
       userData: JSON.parse(localStorage.userData),
     };
   },
@@ -20,7 +19,6 @@ export default {
   methods: {
     async fetchBoards() {
       try {
-
         await axios
           .get(`http://127.0.0.1:8000/api/boards/user/${this.userData.id}`, {
             headers: {
@@ -41,61 +39,51 @@ export default {
     },
     triggerFetchBoard(boardId) {
       this.eventBus.emit("trigger-board", boardId);
-      this.boards.forEach((board)=>{
-            if(board.id === boardId){
-              this.isBoardActive = true;
-            } 
-      })
-
-   
-
+      this.boards.forEach((board) => {
+        if (board.id === boardId) {
+          this.isBoardActive = true;
+        }
+      });
     },
   },
-  watch: {
-
-  },
- 
-  
+  watch: {},
 };
 </script>
 
 <template>
   <header class="border-r-2 pb-32 overflow-x-auto">
     <nav>
-     
-
-              <div
-                class=" pt-2 pl-3 font-bold pb-10 border-gray text-2xl text-main-color"
+      <div
+        class="pt-2 pl-3 font-bold pb-10 border-gray text-2xl text-main-color"
+      >
+        <h1>Manageme:</h1>
+      </div>
+      <div v-if="$slots.boards">
+        <slot name="boards">
+          <h1 class="ml-3 font-bold text-xl">
+            All Boards ({{ boards.length }})
+          </h1>
+          <div class="pl-5 mt-3 mb-6 overflow-x-auto">
+            <ul class="pb-2" v-for="(board, index) in boards" :key="index">
+              <li
+                @click="triggerFetchBoard(board.id)"
+                class="text-main-color hover:bg-main-color hover:text-white cursor-pointer w-[80%] mb-2 rounded-r-full h-[35px] pt-1 pl-5 font-bold"
               >
-                <h1>Manageme:</h1>
-              </div>
-              <div v-if="$slots.boards">
-                 <slot name="boards">
-                    <h1 class="ml-3 font-bold text-xl">All Boards ({{ boards.length }})</h1>
-                    <div class="pl-5 mt-3 mb-6 overflow-x-auto">
-                          <ul class="" v-for="(board, index) in boards" :key="index">
-                          
-                        <li 
-                          @click="triggerFetchBoard(board.id)"
-                          class="text-main-color hover:bg-main-color hover:text-white cursor-pointer  w-[80%] mb-2 rounded-r-full h-[35px] pt-1 pl-5 font-bold"
-                        >
-                          {{ board.board_name }}
-                        </li>
-                      </ul>
-                      <a
-                        class="text-main-color font-bold mt-3 cursor-pointer"
-                        @click="toggleIsAdd"
-                      >
-                        + Create a New Board
-                      </a>
-                    </div>
-                </slot>
-              </div>
-             <div v-if="$slots.settingSideNavSlot">
-                <slot name="settingSideNavSlot">
-                  dadas
-                </slot>
-             </div>
+                {{ board.board_name }}
+              </li>
+            </ul>
+            <a
+              class="text-main-color font-bold  cursor-pointer"
+              @click="toggleIsAdd"
+            >
+              + Create a New Board
+            </a>
+          </div>
+        </slot>
+      </div>
+      <div v-if="$slots.settingSideNavSlot">
+        <slot name="settingSideNavSlot"> dadas </slot>
+      </div>
     </nav>
   </header>
 </template>
