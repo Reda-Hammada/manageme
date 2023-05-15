@@ -45,7 +45,7 @@ export default {
 </script>
 
 <template>
-  <div class="overflow-scroll h-screen">
+  <div class="overflow-y-scroll overflow-x-hidden h-screen ultimate-container">
     <app-header @change-tab="changeTab" :tab="tab"></app-header>
     <app-auth @change-tab="changeTab" :tab="tab"></app-auth>
     <app-hero></app-hero>

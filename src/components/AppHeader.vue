@@ -72,7 +72,7 @@ export default {
       <div class="mt-2 button-container">
         <button
           @click="ToggleForm('logIn')"
-          class="mr-7 w-28 rounded h-10 bg-button-color text-white"
+          class="mr-7 w-28 rounded h-10 bg-bg-color border text-main-color border-main-color"
         >
           Sign in
         </button>
@@ -93,31 +93,31 @@ export default {
   .navbar-container {
     width: 100%;
     display: flex;
-    justify-content: space-evenly;
   }
-
   .logo-container {
-    margin-left: 3%;
+    width: 40%;
   }
   .logo-container h1 {
-    margin-left: 20%;
+    font-size: 1.6rem;
+    margin-left: 5px;
   }
   .navbar-list {
     display: none;
   }
   .button-container {
     display: flex;
-    margin-left: 20%;
+    width: 60%;
+    margin-left: 60px;
   }
   .button-container button {
-    margin-right: 4%;
+    width: 70px;
+    margin-right: 3%;
   }
- /* navbar */
-
+  /* navbar */
 }
 
 @media screen and (min-width: 576px) and (max-width: 768px) {
-    /* navbar */
+  /* navbar */
   .navbar-container {
     display: flex;
     justify-content: start;
@@ -133,12 +133,11 @@ export default {
   .button-container button {
     margin-right: 4%;
   }
-    /* navbar */
-
+  /* navbar */
 }
 
 @media screen and (min-width: 768px) and (max-width: 992px) {
-      /* navbar */
+  /* navbar */
 
   .navbar-container {
     display: flex;
@@ -163,8 +162,6 @@ export default {
   .button-container button {
     margin-right: 3%;
   }
-    /* navbar */
-
+  /* navbar */
 }
-
 </style>

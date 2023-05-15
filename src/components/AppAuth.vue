@@ -1,4 +1,4 @@
-<script >
+<script>
 import { useHiddenStore } from "@/stores/hidden.js";
 import { useAuthStore } from "@/stores/auth";
 import { mapState, mapWritableState, mapActions } from "pinia";
@@ -146,7 +146,6 @@ export default {
         this.SuccessLogin = "";
         this.$router.push({ name: "Dashboard" });
       } catch (err) {
-        
         this.ErrorSignUp = err;
       }
     },
@@ -157,7 +156,7 @@ export default {
 <template>
   <!--Auth Login & Register-->
   <div
-    class="absolute  top-100 h-screen opacity-75 a bg-black w-full h-full top-100 bottom-0"
+    class="absolute auth-form top-100 h-screen opacity-75 a bg-black w-full h-full top-100 bottom-0"
     v-show="isHidden === true"
   ></div>
   <div
@@ -278,9 +277,7 @@ export default {
                 class="bg-main-color ring-button-color hover:ring-2 cursor-pointer w-28 text-white py-1.5 px-3 rounded"
                 type="submit"
               >
-                <i class="fa-solid fa-spinner-third">
-                  
-                </i>
+                <i class="fa-solid fa-spinner-third"> </i>
               </button>
             </div>
           </div>
@@ -311,7 +308,6 @@ export default {
         @submit="register"
         :validation-schema="schemaRegister"
       >
-       
         <!--Name -->
         <div class="mb-1">
           <label class="block ml-[8.2%] mb-2 text-start">Name :</label>
@@ -459,5 +455,27 @@ export default {
 .fade-enter-to {
   opacity: 1;
   transition: all 1s ease;
+}
+@media (max-width: 576px) {
+  .auth-form {
+    overflow: hidden;
+    height: 100vh;
+  }
+  .ultimate-container {
+    overflow: scroll;
+    height: 100vh;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+  /* CSS rules here */
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  /* CSS rules here */
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+  /* CSS rules here */
 }
 </style>
