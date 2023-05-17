@@ -44,7 +44,7 @@ export default {
     <transition name="slide">
       <div
         v-if="isUserInfoMsg === true"
-        class="absolute mt-[5%] rounded ml-[80%] text-center text-white pt-2 pb-1 mt-[2%] bg-[#FFF0DB] w-[250px] h-[90px]"
+        class="absolute mt-[5%] rounded ml-[80%] text-center text-white pt-2 pb-1 mt-[2%] bg-gray-500 w-[250px] h-[90px]"
       >
         {{ userInfoMsg }}
         <transition name="slide-line">
@@ -71,22 +71,23 @@ export default {
 </template>
 <style>
 .slide-enter-from {
-  transform: translateX(300px);
+  transform: translateX(400px);
 }
 
 .slide-enter-active {
-  transition: transform ease-in;
+  transition: transform 0.25s ease-in;
 }
 
 .slide-leave-from {
   opacity: 1;
-  transform: translateX(-500px);
+  transform: translateX(-400px);
 }
 
 .slide-leave-active {
-  transition: all 0.25s ease-out;
+  transition: all 0.25s linear;
 }
 .slide-leave-to {
+  transform: translateX(0px);
   opacity: 0;
 }
 </style>

@@ -18,12 +18,16 @@ export default {
       },
       userData: JSON.parse(localStorage.userData),
       Board: null,
+      sideNavComponentKey: 0,
+
       isAdd: false,
     };
   },
   methods: {
     async createBoard(values) {
       try {
+        alert(JSON.stringify(this.userData.id));
+
         await axios
           .post(
             `http://127.0.0.1:8000/api/boards/user/${this.userData.id}`,
@@ -37,7 +41,8 @@ export default {
           )
           .then((res) => {
             this.isAdd = false;
-            this.$forceUpdate();
+            // this to change the component key to force the sidenav component to rerender to show the new added boards
+            this.sideNavComponentKey++;
           });
       } catch (err) {
         console.log(err);
@@ -54,7 +59,11 @@ export default {
   <div class="flex w-full bg-bg-color overflow-x-scroll">
     <!--Side navbar-->
     <div class="bg-white h-screen">
-      <app-side-nav class="h-screen w-[300px]" @ToggleAdd="updateIsAdd">
+      <app-side-nav
+        :key="sideNavComponentKey"
+        class="h-screen w-[300px]"
+        @ToggleAdd="updateIsAdd"
+      >
         <template v-slot:boards> </template>
       </app-side-nav>
     </div>

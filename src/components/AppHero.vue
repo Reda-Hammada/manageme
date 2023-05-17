@@ -111,10 +111,14 @@ export default {
 
   .image-container {
     width: 100%;
-    text-align: center;
   }
 }
 @media (min-width: 992px) and (max-width: 1200px) {
   /* CSS rules here */
+  .image-container {
+    width: 100%;
+    margin: auto;
+    text-align: center;
+  }
 }
 </style>

@@ -6,14 +6,14 @@ export default {
   inject: ["eventBus"],
   data() {
     return {
-      boards: [], 
+      boards: [],
       isBoardActive: false,
       boardsFetchErro: null,
 
       userData: JSON.parse(localStorage.userData),
     };
   },
-  mounted() {
+  created() {
     this.fetchBoards();
   },
   methods: {
@@ -31,7 +31,7 @@ export default {
             }
           });
       } catch (err) {
-        alert(err.response.data.message);
+        console.log(err);
       }
     },
     toggleIsAdd() {
@@ -46,7 +46,6 @@ export default {
       });
     },
   },
-  watch: {},
 };
 </script>
 
@@ -73,7 +72,7 @@ export default {
               </li>
             </ul>
             <a
-              class="text-main-color font-bold  cursor-pointer"
+              class="text-main-color font-bold cursor-pointer"
               @click="toggleIsAdd"
             >
               + Create a New Board

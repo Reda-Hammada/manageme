@@ -15,6 +15,7 @@ export default {
       phaseSchema: {
         phase: "required",
       },
+      taskComponetKey: 0,
       isLoading: false,
       isAddTask: false,
       boardId: null,
@@ -83,8 +84,6 @@ export default {
           })
           .then(async (response) => {
             if (response.status === 201) {
-              this.$forceUpdate();
-
               this.isAddPhase = false;
             }
           });
@@ -93,9 +92,7 @@ export default {
       }
     },
   },
-  watch: {
-    fetchedBoard() {},
-  },
+  watch: {},
 };
 </script>
 
@@ -154,7 +151,7 @@ export default {
         <div>
           <div
             @click="toggleAddPhase()"
-            v-if="isAddPhase === false && fetchedBoard !== null"
+            v-if="isAddPhase === false && fetchedBoard.length !== 0"
             class="bg-white w-[230px] h-[50px] cursor-pointer ml-12 mt-2 rounded-lg text-center pt-3 pb-2"
           >
             + Add a new phase
