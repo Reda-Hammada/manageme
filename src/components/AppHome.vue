@@ -1,4 +1,5 @@
 <script>
+import AppLogoutMsg from "./AppLogoutMsg.vue";
 import AppHeader from "@/components/AppHeader.vue";
 import AppAuth from "@/components/AppAuth.vue";
 import AppHero from "./AppHero.vue";
@@ -11,6 +12,7 @@ import AppFooter from "@/components/AppFooter.vue";
 export default {
   name: "AppHome",
   components: {
+    AppLogoutMsg,
     AppHeader,
     AppAuth,
     AppHero,
@@ -48,6 +50,7 @@ export default {
   <div class="overflow-y-scroll overflow-x-hidden h-screen ultimate-container">
     <app-header @change-tab="changeTab" :tab="tab"></app-header>
     <app-auth @change-tab="changeTab" :tab="tab"></app-auth>
+    <app-logout-msg></app-logout-msg>
     <app-hero></app-hero>
     <app-why></app-why>
     <app-about></app-about>

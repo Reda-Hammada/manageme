@@ -15,7 +15,8 @@ export default {
       phaseSchema: {
         phase: "required",
       },
-      taskComponetKey: 0,
+      boardComponentKey: 0,
+      taskComponentKey: 0,
       isLoading: false,
       isAddTask: false,
       boardId: null,
@@ -85,19 +86,23 @@ export default {
           .then(async (response) => {
             if (response.status === 201) {
               this.isAddPhase = false;
+              this.boardComponentKey++;
             }
           });
       } catch (err) {
         alert("An Errror occurred try again");
       }
     },
+    incrementTaskComponentKeyByEmit() {
+      this.taskComponentKey++;
+      alert(this.taskComponentKey);
+    },
   },
-  watch: {},
 };
 </script>
 
 <template>
-  <div class="">
+  <div :key="taskComponentKey">
     <div v-if="isLoading === true">
       <div class="w-[100%] text-center mt-[15%] pl-auto pr-auto">
         <div class="mr-auto ml-auto w-[10%]">
@@ -128,7 +133,10 @@ export default {
               <!--Tasks-->
               <div v-for="(task, index) in phase.tasks" :key="index">
                 <div>
-                  <app-task-component :Task="task.task_name">
+                  <app-task-component
+                    :Task="task.task_name"
+                    :key="taskComponentKey"
+                  >
                   </app-task-component>
                 </div>
               </div>
@@ -137,6 +145,7 @@ export default {
                 @setAddFalse="closeTaskFormByEmit"
                 :phaseId="phase.id"
                 @close-taskform="closeTaskFormByEmit"
+                @incrementTaskComponentKey="incrementTaskComponentKeyByEmit"
               >
               </app-task-form>
               <div

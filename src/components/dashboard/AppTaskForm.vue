@@ -45,6 +45,7 @@ export default {
               this.$refs.myForm.setFieldValue("description", "");
               // close add task popup
               this.$emit("setAddFalse");
+              this.$emit('incrementTaskComponentKey')
             }
           });
       } catch (err) {

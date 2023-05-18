@@ -261,6 +261,7 @@ export default {
       isChangeName: false,
       isChangeEmail: false,
       updateUserInfoMsg: "",
+      componentKey: 0,
     };
   },
   methods: {
@@ -305,10 +306,13 @@ export default {
             },
           })
           .then(async (res) => {
+            let updatedUserData = res.data.userData;
+            localStorage.setItem("userData", updatedUserData);
             switch (res.data.status) {
               case 200:
                 this.updateUserInfoMsg = res.data.msg;
                 this.$emit("msg", this.updateUserInfoMsg, res.data.status);
+                console.log(JSON.parse(localStorage.userData));
                 break;
               case 401:
                 this.updateUserInfoMsg = res.data.msg;

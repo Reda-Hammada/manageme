@@ -15,6 +15,7 @@ export default {
       userInfoMsg: null,
       isUserInfoMsg: false,
       msgColor: "",
+      componentKey: 0,
     };
   },
   methods: {
@@ -25,6 +26,7 @@ export default {
         this.isUserInfoMsg = true;
         setTimeout(() => {
           this.isUserInfoMsg = false;
+          this.componentKey++;
         }, 4000);
       }
       if (status === 401) {
@@ -63,7 +65,9 @@ export default {
       <!-- side navbar-->
       <app-nav class="bg-white w-[85vw] border-b-2"> </app-nav>
       <div class="w-full overflow-auto h-[100vh]">
-        <app-user-form @msg="getMsgAndStatus"></app-user-form>
+        <app-user-form @msg="getMsgAndStatus" 
+                      :key="componentKey">
+        </app-user-form>
       </div>
     </div>
   </div>

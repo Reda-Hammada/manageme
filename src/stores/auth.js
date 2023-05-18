@@ -8,6 +8,7 @@ export const useAuthStore = defineStore("auth", {
     SuccessSignUp: "",
     ErrorSignUp: "",
     authenticateError: "",
+    loggedOutMsg: "",
   }),
   actions: {
     async register(userCred) {
@@ -27,13 +28,12 @@ export const useAuthStore = defineStore("auth", {
                 this.SuccessSignUp = "";
               }, 3000);
             }
-         
           }
         })
-        .catch(async(err) => {
+        .catch(async (err) => {
           this.ErrorSignUp = await err.response.data.message;
-          console.log(this.ErrorSignUp)
-        }); 
+          console.log(this.ErrorSignUp);
+        });
     },
     async logIn(values) {
       const userCreds = values;
@@ -56,11 +56,33 @@ export const useAuthStore = defineStore("auth", {
             if ((await res.data.status) === 401) {
               this.Success = "";
               this.authenticateError = await res.data.message;
-          
             }
           }
+        })
+        .catch(async (err) => {
+          console.log(await err);
+        });
+    },
+    async logout() {
+      await axios
+        .get("http://127.0.0.1:8000/api/Logout", {
+          headers: {
+            Authorization: "Bearer " + localStorage.user_token,
+            "Content-Type": "application/json",
+          },
+        })
+        .then(async (res) => {
+          if ((await res.data.status) === 200) {
+            localStorage.removeItem("user_token");
+            localStorage.removeItem("userData");
+            setTimeout(async () => {
+              this.loggedOutMsg = await res.data.msg;
+            }, 3000);
+          }
+        })
+        .catch(async (err) => {
+          console.log(await err);
         });
     },
   },
 });
- 

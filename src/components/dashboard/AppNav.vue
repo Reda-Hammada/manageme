@@ -1,4 +1,6 @@
 <script>
+  import { useAuthStore } from '../../stores/auth';
+  import {mapActions} from 'pinia';
   export default{ 
     name:'AppNav',
     inject:['eventBus'],
@@ -12,9 +14,13 @@
     }
   },
   methods:{
-    logOut() {
-      localStorage.removeItem("user_token");
-      localStorage.removeItem("userData");
+    ...mapActions(useAuthStore,{
+       logUserOut: 'logout',
+    }),
+
+    async logOut() {
+     await this.logUserOut();
+     
       this.$router.push({ name: "Home" });
     },
     toggleSettingContainer(){
