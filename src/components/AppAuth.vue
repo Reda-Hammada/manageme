@@ -58,7 +58,7 @@ export default {
     ...mapWritableState(useHiddenStore, ["isHidden"]),
     ...mapWritableState(useAuthStore, ["isAuthenticated"]),
     ...mapState(useAuthStore, ["authenticateError"]),
-    ...mapState(useAuthStore, ["SuccessLogin"]),
+    ...mapState(useAuthStore, ["j"]),
     ...mapState(useAuthStore, ["SuccessSignUp"]),
     ...mapState(useAuthStore, ["ErrorSignUp"]),
     ...mapState(useAuthStore, ["userData"]),
