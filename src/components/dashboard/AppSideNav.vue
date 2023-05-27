@@ -66,7 +66,7 @@ export default {
             <ul class="pb-2" v-for="(board, index) in boards" :key="index">
               <li
                 @click="triggerFetchBoard(board.id)"
-                class="text-main-color hover:bg-main-color hover:text-white cursor-pointer w-[80%] mb-2 rounded-r-full h-[35px] pt-1 pl-5 font-bold"
+                class="text-main-color bg-gray-200 hover:bg-main-color hover:text-white cursor-pointer w-[80%] mb-2 rounded-r-full h-[35px] pt-1 pl-5 font-bold"
               >
                 {{ board.board_name }}
               </li>

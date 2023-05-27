@@ -2,7 +2,6 @@
 import axios from "axios";
 import AppTaskComponent from "./AppTaskComponent.vue";
 import AppTaskForm from "./AppTaskForm.vue";
-import { integer } from "@vee-validate/rules";
 
 export default {
   name: "AppPhase",
@@ -12,7 +11,7 @@ export default {
       required: true,
     },
     boardId: {
-      type: integer,
+      type: Number,
       required: true,
     },
   },
@@ -25,12 +24,18 @@ export default {
       taskComponentKey: 0,
       isAddPhase: false,
       isAddTask: false,
+      isUpdatePhase: false,
       taskFormComponentId: null,
       isTaskDetails: false,
-      isPhaseSetting: false,
+      phaseupdateSchema: {
+        phase: "required",
+      },
     };
   },
   methods: {
+    toggleEdit() {
+      this.isUpdatePhase = !this.isUpdatePhase;
+    },
     toggleAddTaskForm() {
       this.isAddTask = !this.isAddTask;
     },
@@ -43,10 +48,7 @@ export default {
     incrementPhaseCompKeyByEmit() {
       this.$emit("incrementPhaseKey");
     },
-    togglePhaseSettings() {
-      this.isPhaseSetting = !this.isPhaseSetting;
-    },
-    rerenderTaskComponent(){
+    rerenderTaskComponent() {
       this.taskComponentKey++;
       this.incrementPhaseCompKeyByEmit();
     },
@@ -70,6 +72,46 @@ export default {
         alert("An Errror occurred try again");
       }
     },
+    async updatePhase(phaseId,values) {
+      try {
+        await axios
+          .put(
+            `http://127.0.0.1:8000/api/phase/${phaseId}`,
+            values,
+            {
+              headers: {
+                Authorization: "Bearer " + localStorage.user_token,
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then(async (res) => {
+            if ((await res.data.status) === 200) {
+              this.incrementPhaseCompKeyByEmit();
+            }
+          });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async deletePhase(phaseId) {
+      try {
+        await axios
+          .delete(`http://127.0.0.1:8000/api/phase/${phaseId}`, {
+            headers: {
+              Authorization: "Bearer " + localStorage.user_token,
+              "Content-Type": "application/json",
+            },
+          })
+          .then(async (res) => {
+            if ((await res.data.status) === 200) {
+              this.incrementPhaseCompKeyByEmit();
+            }
+          });
+      } catch (err) {
+        alert(err);
+      }
+    },
   },
 };
 </script>
@@ -87,20 +129,57 @@ export default {
       <div class="w-[100%] pt-6 bg-white mb-3 pb-3">
         <!--Phase-->
         <div class="flex justify-between">
-          <div class="mb-5 pl-5">
+          <div v-if="isUpdatePhase === false" class="mb-5 pl-5">
             {{ phase.phase }} ({{ phase.tasks.length }})
           </div>
-          <div class="text-xl mr-4 pb-3" @click="togglePhaseSettings">...</div>
-          <div
-            v-if="isPhaseSetting === true"
-            class="absolute flex flex-col items-between"
-          >
-            <button class="bg-gray-400 text-white w-[90px] rounded">
-              edit
-            </button>
-            <button class="bg-red-600 text-white w-[90px] rounded">
-              delete
-            </button>
+
+          <div v-if="isUpdatePhase === true" class="mb-5 pl-5">
+            <vee-form
+              :validation-schema="phaseupdateSchema"
+              @submit="updatePhase(phase.id)"
+            >
+              <div>
+                <vee-field name="phase" v-slot="{ field, errors }">
+                  <div>
+                    <input
+                      class="w-[90%] border pl-3 mt-3 border-bg-bg-color border-4 rounded ml-2 h-[35px]"
+                      name="phase"
+                      type="text"
+                      v-model="phase.phase"
+                      v-bind="field"
+                    />
+                  </div>
+                  <div :key="index" v-for="(index, error) in errors">
+                    {{ error }}
+                  </div>
+                </vee-field>
+
+                <div>
+                  <input
+                    type="submit"
+                    value="update"
+                    class="bg-main-color cursor-pointer text-white rounded w-[100px] h-[30px] mb-2 mt-3 ml-4"
+                  />
+                </div>
+              </div>
+            </vee-form>
+          </div>
+
+          <div v-show="isUpdatePhase === false" class="flex">
+            <!--edit-->
+            <div
+              @click="toggleEdit()"
+              class="mr-4 cursor-pointer hover:bg-gray-400 w-[22px] text-center h-fit rounded-full"
+            >
+              <i class="fa-solid fa-pen fa-sm" style="color: #4e4e91"></i>
+            </div>
+            <!--Delete-->
+            <div
+              @click="deletePhase(phase.id)"
+              class="mr-2 cursor-pointer hover:bg-gray-400 w-[22px] text-center h-fit rounded-full"
+            >
+              <i class="fa-solid fa-trash fa-sm" style="color: #4e4e91"></i>
+            </div>
           </div>
         </div>
         <!--Tasks-->
@@ -113,11 +192,13 @@ export default {
           >
           </app-task-form>
           <div>
-            <app-task-component  :key='taskComponentKey'
-                                 @emit-parentPhase = 'rerenderTaskComponent()'
-                                 :Task="task.task_name"
-                                 :idTask="task.id"> 
-              </app-task-component>
+            <app-task-component
+              :key="taskComponentKey"
+              @emit-parentPhase="rerenderTaskComponent()"
+              :Task="task.task_name"
+              :idTask="task.id"
+            >
+            </app-task-component>
           </div>
         </div>
 

@@ -26,8 +26,8 @@ export default {
     emitParent() {
       this.$emit("emit-parentPhase");
     },
-    openEdit() {
-      this.isEdit = true;
+    toggleEdit() {
+      this.isEdit = !this.isEdit;
     },
     async updateTask(values) {
       const task = values;
@@ -43,9 +43,9 @@ export default {
             this.emitParent();
           }
         })
-        .catch(async(err)=>{
-          console.log(await err)
-        })
+        .catch(async (err) => {
+          console.log(await err);
+        });
     },
     async deleteTask(idTask) {
       await axios
@@ -62,7 +62,7 @@ export default {
         })
         .catch(async (err) => {
           if (await err) {
-            alert(err);
+            alert(err.message);
           }
         });
     },
@@ -88,14 +88,14 @@ export default {
       <!--Delete-->
       <div
         @click="deleteTask(idTask)"
-        class="hover:bg-gray-400 rounded-full pl-2 pr-2 mr-2"
+        class="hover:bg-gray-400 h-fit rounded-full pl-2 pr-2 mr-2"
       >
         <i class="fa-solid fa-trash fa-sm" style="color: #4e4e91"></i>
       </div>
       <!--Edit-->
       <div
-        @click="openEdit()"
-        class="hover:bg-gray-400 rounded-full pl-2 pr-2 mr-2"
+        @click="toggleEdit()"
+        class="hover:bg-gray-400 h-fit rounded-full pl-2 pr-2 mr-2"
       >
         <i class="fa-solid fa-pen fa-sm" style="color: #4e4e91"></i>
       </div>
@@ -103,9 +103,14 @@ export default {
   </div>
   <div v-else-if="isEdit === true">
     <vee-form @submit="updateTask" :validation-scheme="taskSchema">
+      <span
+        class="font-bold cursor-pointer h-fit float-right mr-2 cursor-pointer"
+        @click="toggleEdit()"
+        >x</span
+      >
       <vee-field v-slot="{ field, errors }" name="task">
         <input
-          class="w-[90%] border-4 ml-2 border-bg-bg-color rounded pl-3 h-[40px]"
+          class="w-[85%] h-fit border-4 ml-2 border-bg-bg-color rounded pl-3"
           type="text"
           v-model="getTask"
           v-bind="field"
