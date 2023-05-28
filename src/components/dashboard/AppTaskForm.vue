@@ -12,9 +12,8 @@ export default {
       Type: Number,
       Required: true,
     },
-    taskFormComponentId:{
-      Type: Number,
-      required:true,
+    addTaskID:{
+      Required:true,
     }
   },
   data() {
@@ -72,7 +71,7 @@ export default {
 <template>
   <section
     class="absolute bg-black w-full h-full top-0 left-0 bg-opacity-25"
-    v-show="isAddTask === true"
+    v-if="addTaskID === phaseId"
   >
     <div
       class="bg-white w-[40%] h-[80vh] overflow-y-auto overflow-x-hidden pb-[2%] rounded mr-auto ml-auto mt-[5%]"

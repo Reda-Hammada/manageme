@@ -21,10 +21,11 @@ export default {
   },
   data() {
     return {
+      phaseValue: "",
       taskComponentKey: 0,
       isAddPhase: false,
-      isAddTask: false,
-      isUpdatePhase: false,
+      updatePhaeID: null,
+      addTaskID: null,
       taskFormComponentId: null,
       isTaskDetails: false,
       phaseupdateSchema: {
@@ -33,11 +34,24 @@ export default {
     };
   },
   methods: {
-    toggleEdit() {
-      this.isUpdatePhase = !this.isUpdatePhase;
+    toggleEdit(phaseId) {
+      // if is form not open assing the id to it to be open
+      if (this.updatePhaeID !== phaseId) {
+        // assigning the phase id to the updatePhaseId so that only the clicked phase form can be shown
+        this.updatePhaeID = phaseId;
+
+        // else if it is open  then close it
+      } else if (this.updatePhaeID === phaseId) {
+        // hide the update form
+        this.updatePhaeID = null;
+      }
     },
-    toggleAddTaskForm() {
-      this.isAddTask = !this.isAddTask;
+    toggleAddTaskForm(phaseId) {
+      if (this.addTaskID !== phaseId) {
+        this.addTaskID = phaseId;
+      } else if (this.addTaskID === phaseId) {
+        this.addTaskID = null;
+      }
     },
     closeTaskFormByEmit() {
       this.isAddTask = false;
@@ -72,12 +86,13 @@ export default {
         alert("An Errror occurred try again");
       }
     },
-    async updatePhase(phaseId,values) {
+    async updatePhase(phaseId) {
       try {
+        const data = this.phaseValue;
         await axios
           .put(
             `http://127.0.0.1:8000/api/phase/${phaseId}`,
-            values,
+            { phase: data },
             {
               headers: {
                 Authorization: "Bearer " + localStorage.user_token,
@@ -129,11 +144,14 @@ export default {
       <div class="w-[100%] pt-6 bg-white mb-3 pb-3">
         <!--Phase-->
         <div class="flex justify-between">
-          <div v-if="isUpdatePhase === false" class="mb-5 pl-5">
+          <div v-if="updatePhaeID !== phase.id" class="mb-5 pl-5">
             {{ phase.phase }} ({{ phase.tasks.length }})
           </div>
 
-          <div v-if="isUpdatePhase === true" class="mb-5 pl-5">
+          <div v-if="updatePhaeID === phase.id" class="mb-5 pl-5">
+            <div class="mb-2 ml-2 w-full" @click="toggleEdit(phase.id)">
+              <span class="font-bold float-right cursor-pointer"> x </span>
+            </div>
             <vee-form
               :validation-schema="phaseupdateSchema"
               @submit="updatePhase(phase.id)"
@@ -145,7 +163,7 @@ export default {
                       class="w-[90%] border pl-3 mt-3 border-bg-bg-color border-4 rounded ml-2 h-[35px]"
                       name="phase"
                       type="text"
-                      v-model="phase.phase"
+                      v-model="phaseValue"
                       v-bind="field"
                     />
                   </div>
@@ -165,32 +183,29 @@ export default {
             </vee-form>
           </div>
 
-          <div v-show="isUpdatePhase === false" class="flex">
+          <div v-if="updatePhaeID !== phase.id" class="flex">
             <!--edit-->
             <div
-              @click="toggleEdit()"
+              ref="toggleEdit"
+              @click="toggleEdit(phase.id)"
               class="mr-4 cursor-pointer hover:bg-gray-400 w-[22px] text-center h-fit rounded-full"
             >
               <i class="fa-solid fa-pen fa-sm" style="color: #4e4e91"></i>
             </div>
             <!--Delete-->
             <div
-              @click="deletePhase(phase.id)"
               class="mr-2 cursor-pointer hover:bg-gray-400 w-[22px] text-center h-fit rounded-full"
             >
-              <i class="fa-solid fa-trash fa-sm" style="color: #4e4e91"></i>
+              <i
+                class="fa-solid fa-trash fa-sm"
+                style="color: #4e4e91"
+                @click="deletePhase(phase.id)"
+              ></i>
             </div>
           </div>
         </div>
         <!--Tasks-->
         <div v-for="(task, index) in phase.tasks" :key="index">
-          <app-task-form
-            :isAddTask="isAddTask"
-            :phaseId="phase.id"
-            :taskFormComponentId="phase.id"
-            @close-taskform="closeTaskFormByEmit"
-          >
-          </app-task-form>
           <div>
             <app-task-component
               :key="taskComponentKey"
@@ -204,13 +219,21 @@ export default {
 
         <div
           class="text-main-color pl-5 cursor-pointer"
-          @click="toggleAddTaskForm()"
+          @click="toggleAddTaskForm(phase.id)"
         >
           + Add a task
         </div>
       </div>
     </div>
+    <app-task-form
+      ref="taskComponentForm"
+      :phaseId="phase.id"
+      :addTaskID="addTaskID"
+      @close-taskform="toggleAddTaskForm"
+    >
+    </app-task-form>
   </div>
+
   <div class="w-full pr-[20%]">
     <div
       @click="toggleAddPhase()"
