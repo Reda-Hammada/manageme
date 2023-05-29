@@ -218,7 +218,7 @@ export default {
         <div v-for="(task, index) in phase.tasks" :key="index">
           <div>
             <app-task-component
-              @click="toggleShowTaskDetails(task.id)"
+              @show-taskdetails="toggleShowTaskDetails(task.id)"
               :key="taskComponentKey"
               @emit-parentPhase="rerenderTaskComponent()"
               :Task="task.task_name"

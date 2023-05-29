@@ -58,15 +58,24 @@ export default {
     <!-- Navbar-->
     <app-side-nav class="bg-white w-[20vw] border-r-2 h-[100vh]">
       <!-- Slot for setting component only-->
-      <template v-slot:settingSideNavSlot> </template>
+      <template v-slot:settingSideNavSlot>
+        <div class="bg-gray-200 pb-2 rounded-r-full w-[80%]">
+          <router-link
+            class="font-light text-xl font-font text-main-color"
+            :to="{ name: 'Dashboard' }"
+          >
+            <i class="fas fa-columns fa-lg text-4xl ml-6 mt-1"> </i>
+            <span class="ml-3">Dashboard</span>
+          </router-link>
+        </div>
+      </template>
     </app-side-nav>
 
     <div class="flex flex-col">
       <!-- side navbar-->
       <app-nav class="bg-white w-[85vw] border-b-2"> </app-nav>
       <div class="w-full overflow-auto h-[100vh]">
-        <app-user-form @msg="getMsgAndStatus" 
-                      :key="componentKey">
+        <app-user-form @msg="getMsgAndStatus" :key="componentKey">
         </app-user-form>
       </div>
     </div>

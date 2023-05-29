@@ -23,6 +23,9 @@ export default {
     };
   },
   methods: {
+    emitShowTaskDetails() {
+      this.$emit("show-taskdetails");
+    },
     emitParent() {
       this.$emit("emit-parentPhase");
     },
@@ -81,7 +84,7 @@ export default {
     @mouseleave="hover = false"
     class="text-start flex justify-between pl-2 pb-3 bg-color mr-auto ml-auto pt-3 bg-bg-color mb-5 w-[90%] h-fit hover:bg-gray-300 cursor-pointer rounded"
   >
-    <div>
+    <div @click="emitShowTaskDetails">
       {{ Task }}
     </div>
     <div v-show="hover === true" class="flex">
