@@ -1,14 +1,6 @@
 # manage-me
 
-This template should help get you started developing with Vue 3 in Vite.
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+manageme application provides a digital solution to manage your project effortlessly using kanban style.Each user can have multiple boards for different projects to divide it to tasks and subtasks in order to boost your productivty and your project progress
 
 ## Project Setup
 
@@ -27,3 +19,19 @@ npm run dev
 ```sh
 npm run build
 ```
+
+## Built with :
+
+### Front-end:
+
+- HTML5/CSS3/Tailwind
+- Javascript
+- Vue.js
+- Vee-validate for form validation
+- Pinia for state management
+
+### Back-end:
+
+- Laravel/PHP
+- SQL/MySQL
+- Sanctum API for authentication
