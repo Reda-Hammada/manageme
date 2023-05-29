@@ -12,9 +12,9 @@ export default {
       Type: Number,
       Required: true,
     },
-    addTaskID:{
-      Required:true,
-    }
+    addTaskID: {
+      Required: true,
+    },
   },
   data() {
     return {
@@ -29,7 +29,6 @@ export default {
       const data = values;
 
       try {
-        alert(this.phaseId);
         axios
           .post(
             `http://127.0.0.1:8000/api/task/${this.phaseId}`,
@@ -49,6 +48,8 @@ export default {
               this.$refs.myForm.setFieldValue("description", "");
               // close add task popup
               this.closeAddTaskForm();
+              // rerender phase component after adding a new task
+              this.rerenderPhaseComponent();
             }
           });
       } catch (err) {
@@ -63,6 +64,10 @@ export default {
     },
     closeAddTaskForm() {
       this.$emit("close-taskform");
+    },
+    // triger the phase component to be rerender after a new task is added
+    rerenderPhaseComponent() {
+      this.$emit("rerender-phase");
     },
   },
 };

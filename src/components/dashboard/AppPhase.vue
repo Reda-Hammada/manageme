@@ -2,6 +2,7 @@
 import axios from "axios";
 import AppTaskComponent from "./AppTaskComponent.vue";
 import AppTaskForm from "./AppTaskForm.vue";
+import AppTaskDetails from "./AppTaskDetails.vue";
 
 export default {
   name: "AppPhase",
@@ -18,6 +19,7 @@ export default {
   components: {
     AppTaskComponent,
     AppTaskForm,
+    AppTaskDetails,
   },
   data() {
     return {
@@ -26,6 +28,7 @@ export default {
       isAddPhase: false,
       updatePhaeID: null,
       addTaskID: null,
+      taskDetailsID: null,
       taskFormComponentId: null,
       isTaskDetails: false,
       phaseupdateSchema: {
@@ -53,8 +56,12 @@ export default {
         this.addTaskID = null;
       }
     },
-    closeTaskFormByEmit() {
-      this.isAddTask = false;
+    toggleShowTaskDetails(taskId) {
+      if (this.taskDetailsID !== taskId) {
+        this.taskDetailsID = taskId;
+      } else if (this.taskDetailsID === taskId) {
+        this.taskId = null;
+      }
     },
     toggleAddPhase() {
       this.isAddPhase = !this.isAddPhase;
@@ -147,7 +154,7 @@ export default {
           <div v-if="updatePhaeID !== phase.id" class="mb-5 pl-5">
             {{ phase.phase }} ({{ phase.tasks.length }})
           </div>
-
+          <!-- Edit phae form-->
           <div v-if="updatePhaeID === phase.id" class="mb-5 pl-5">
             <div class="mb-2 ml-2 w-full" @click="toggleEdit(phase.id)">
               <span class="font-bold float-right cursor-pointer"> x </span>
@@ -182,15 +189,18 @@ export default {
               </div>
             </vee-form>
           </div>
-
+          <!-- edit and delte phase icons-->
           <div v-if="updatePhaeID !== phase.id" class="flex">
             <!--edit-->
             <div
               ref="toggleEdit"
-              @click="toggleEdit(phase.id)"
               class="mr-4 cursor-pointer hover:bg-gray-400 w-[22px] text-center h-fit rounded-full"
             >
-              <i class="fa-solid fa-pen fa-sm" style="color: #4e4e91"></i>
+              <i
+                @click="toggleEdit(phase.id)"
+                class="fa-solid fa-pen fa-sm"
+                style="color: #4e4e91"
+              ></i>
             </div>
             <!--Delete-->
             <div
@@ -208,12 +218,22 @@ export default {
         <div v-for="(task, index) in phase.tasks" :key="index">
           <div>
             <app-task-component
+              @click="toggleShowTaskDetails(task.id)"
               :key="taskComponentKey"
               @emit-parentPhase="rerenderTaskComponent()"
               :Task="task.task_name"
               :idTask="task.id"
             >
             </app-task-component>
+          </div>
+          <div>
+            <app-task-details
+              :taskDetailsID="taskDetailsID"
+              :taskId="task.id"
+              :tasks="task"
+              @closetaskdetails-emit="toggleShowTaskDetails()"
+            >
+            </app-task-details>
           </div>
         </div>
 
@@ -230,6 +250,7 @@ export default {
       :phaseId="phase.id"
       :addTaskID="addTaskID"
       @close-taskform="toggleAddTaskForm"
+      @rerender-phase="incrementPhaseCompKeyByEmit"
     >
     </app-task-form>
   </div>
