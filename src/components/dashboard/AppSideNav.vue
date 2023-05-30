@@ -39,11 +39,7 @@ export default {
     },
     triggerFetchBoard(boardId) {
       this.eventBus.emit("trigger-board", boardId);
-      this.boards.forEach((board) => {
-        if (board.id === boardId) {
-          this.isBoardActive = true;
-        }
-      });
+      this.isBoardActive = boardId;
     },
   },
 };
@@ -65,8 +61,13 @@ export default {
           <div class="pl-5 mt-3 mb-6 overflow-x-auto">
             <ul class="pb-2" v-for="(board, index) in boards" :key="index">
               <li
+                :style="
+                  isBoardActive === board.id
+                    ? { backgroundColor: '#4E4E91', color: '#ffff' }
+                    : { backgroundColor: '#F5F5F5 ' }
+                "
                 @click="triggerFetchBoard(board.id)"
-                class="text-main-color bg-gray-200 hover:bg-main-color hover:text-white cursor-pointer w-[80%] mb-2 rounded-r-full h-[50px] pt-3 pl-5 font-bold"
+                class="text-main-color h-fit hover:bg-main-color cursor-pointer w-[90%] mb-2 pt-3 pb-3 rounded-r-full pl-5 font-bold"
               >
                 {{ board.board_name }}
               </li>

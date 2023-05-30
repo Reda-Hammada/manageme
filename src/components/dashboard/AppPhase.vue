@@ -146,7 +146,7 @@ export default {
   >
     <!--Phase tasks container-->
     <div
-      class="h-[90vh] w-[290px] rounded-lg overflow-y-auto overflow-x-hidden"
+      class="h-[90vh] w-[260px] rounded-lg overflow-y-auto overflow-x-hidden"
     >
       <div class="w-[100%] pt-6 bg-white mb-3 pb-3">
         <!--Phase-->
@@ -259,13 +259,13 @@ export default {
     <div
       @click="toggleAddPhase()"
       v-if="isAddPhase === false && fetchedBoard.length !== 0"
-      class="bg-white w-[230px] h-[50px] cursor-pointer ml-[24%] mt-2 rounded-lg text-center pt-3 pb-2"
+      class="bg-white w-[200px] h-[50px] cursor-pointer ml-[7%] mt-2 rounded-lg text-center pt-3 pb-2"
     >
       + Add a new phase
     </div>
     <div
       v-else-if="isAddPhase === true"
-      class="bg-white rounded-lg w-[250px] ml-[25%] h-[150px]"
+      class="bg-white rounded-lg w-[250px] ml-[9%] h-[150px]"
     >
       <div class="w-full pb-5 pr-2">
         <span

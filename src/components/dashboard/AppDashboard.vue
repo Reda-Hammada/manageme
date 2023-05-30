@@ -19,6 +19,7 @@ export default {
       userData: JSON.parse(localStorage.userData),
       Board: null,
       sideNavComponentKey: 0,
+      dashBoardCompKey: 0,
 
       isAdd: false,
     };
@@ -26,8 +27,6 @@ export default {
   methods: {
     async createBoard(values) {
       try {
-        alert(JSON.stringify(this.userData.id));
-
         await axios
           .post(
             `http://127.0.0.1:8000/api/boards/user/${this.userData.id}`,
@@ -51,12 +50,18 @@ export default {
     updateIsAdd() {
       this.isAdd = !this.isAdd;
     },
+    rerenderDashbaordParent() {
+      this.dashBoardCompKey++;
+    },
   },
 };
 </script>
 <template>
   <!--Ultimate container-->
-  <div class="flex w-full bg-bg-color overflow-x-scroll">
+  <div
+    :key="dashBoardCompKey"
+    class="flex w-full bg-bg-color overflow-x-scroll"
+  >
     <!--Side navbar-->
     <div class="bg-white h-screen">
       <app-side-nav
@@ -72,7 +77,11 @@ export default {
       <app-nav class="bg-white w-full h-[8.5%] border-b-2 border-gray">
       </app-nav>
       <div>
-        <app-board class="overflow-x-auto"> </app-board>
+        <app-board
+          @rerender-dashboard="rerenderDashbaordParent"
+          class="overflow-x-auto"
+        >
+        </app-board>
       </div>
     </div>
   </div>
@@ -96,7 +105,7 @@ export default {
               <input
                 type="text"
                 name="board"
-                class="w-[90%] border mt-3 border-bg-bg-color border-4 rounded pl-3 h-[35px]"
+                class="w-[90%] border mt-3 border-bg-bg-color border-4 rounded pl-3 h-[40px]"
                 v-bind="field"
                 placeholder="e.g todo app project"
               />
@@ -111,7 +120,7 @@ export default {
             <input
               type="submit"
               value="create"
-              class="w-[24%] mt- mb-5 cursor-pointer text-center text-white font-bold rounded-full h-[30px] bg-main-color"
+              class="w-[24%] mt- mb-5 cursor-pointer text-center text-white font-bold rounded-full h-[40px] bg-main-color"
             />
           </div>
         </div>

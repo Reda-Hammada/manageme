@@ -64,7 +64,7 @@ export default {
             class="font-light text-xl font-font text-main-color"
             :to="{ name: 'Dashboard' }"
           >
-            <i class="fas fa-columns fa-lg text-4xl ml-6 mt-1"> </i>
+            <i class="fas fa-columns fa-md ml-6 mt-2"> </i>
             <span class="ml-3">Dashboard</span>
           </router-link>
         </div>
