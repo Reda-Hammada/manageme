@@ -35,7 +35,7 @@ export default {
     async updateTask(values) {
       const task = values;
       await axios
-        .put(`http://127.0.0.1:8000/api/task/${this.idTask}`, task, {
+        .put(`http://127.0.0.1:8000/api/tasks/${this.idTask}`, task, {
           headers: {
             Authorization: "Bearer " + localStorage.user_token,
             "Content-Type": "application/json",
@@ -52,7 +52,7 @@ export default {
     },
     async deleteTask(idTask) {
       await axios
-        .delete(`http://127.0.0.1:8000/api/task/${idTask}`, {
+        .delete(`http://127.0.0.1:8000/api/tasks/${idTask}`, {
           headers: {
             Authorization: "Bearer " + localStorage.user_token,
             "Content-Type": "application/json",

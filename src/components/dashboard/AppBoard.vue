@@ -1,6 +1,7 @@
 <script>
 import axios from "axios";
 import AppPhase from "./AppPhase.vue";
+import AppUpdateBoardForm from "./AppUpdateBoardForm.vue";
 import { faTruckField } from "@fortawesome/free-solid-svg-icons";
 
 export default {
@@ -8,6 +9,7 @@ export default {
   inject: ["eventBus"],
   components: {
     AppPhase,
+    AppUpdateBoardForm,
   },
   data() {
     return {
@@ -19,6 +21,7 @@ export default {
       isConfirmDelete: false,
       isLoading: false,
       boardId: null,
+      isUpdateBoard: false,
       fetchedBoard: [],
     };
   },
@@ -37,7 +40,7 @@ export default {
         this.isLoading = true;
         await axios
           .get(
-            `http://127.0.0.1:8000/api/boards/${this.boardId}/phases/tasks/subtasks/`,
+            `http://127.0.0.1:8000/api/boards/${this.boardId}/phases/tasks`,
             {
               headers: {
                 Authorization: "Bearer " + localStorage.user_token,
@@ -74,6 +77,9 @@ export default {
       } else if (this.isBoardSetting === false) {
         this.isBoardSetting = true;
       }
+    },
+    toggleBoardUpdate() {
+      this.isUpdateBoard = !this.isUpdateBoard;
     },
 
     async deleteBoard(boardId, argument) {
@@ -145,6 +151,7 @@ export default {
           <div class="w-[100%] mt-4">
             <div class="ml-auto mr-auto w-[55%]">
               <button
+                @click="toggleBoardUpdate"
                 class="bg-main-color text-white h-[35px] font-bold w-[120px] rounded-lg"
               >
                 Edit
@@ -191,6 +198,12 @@ export default {
             </div>
           </div>
         </div>
+        <app-update-board-form
+          v-show="isUpdateBoard === true"
+          :board="this.fetchedBoard"
+          @trigger-updateBoard-form="toggleBoardUpdate"
+        >
+        </app-update-board-form>
       </section>
     </div>
   </div>

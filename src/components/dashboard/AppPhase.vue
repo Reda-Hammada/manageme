@@ -77,12 +77,16 @@ export default {
     async createPhase(values) {
       try {
         await axios
-          .post(`http://127.0.0.1:8000/api/phase/${this.boardId}/`, values, {
-            headers: {
-              Authorization: "Bearer " + localStorage.user_token,
-              "Content-Type": "application/json",
-            },
-          })
+          .post(
+            `http://127.0.0.1:8000/api/boards/phases/${this.boardId}/`,
+            values,
+            {
+              headers: {
+                Authorization: "Bearer " + localStorage.user_token,
+                "Content-Type": "application/json",
+              },
+            }
+          )
           .then(async (response) => {
             if (response.status === 201) {
               this.isAddPhase = false;
@@ -98,7 +102,7 @@ export default {
         const data = this.phaseValue;
         await axios
           .put(
-            `http://127.0.0.1:8000/api/phase/${phaseId}`,
+            `http://127.0.0.1:8000/api/phases/${phaseId}`,
             { phase: data },
             {
               headers: {
@@ -119,7 +123,7 @@ export default {
     async deletePhase(phaseId) {
       try {
         await axios
-          .delete(`http://127.0.0.1:8000/api/phase/${phaseId}`, {
+          .delete(`http://127.0.0.1:8000/api/phases/${phaseId}`, {
             headers: {
               Authorization: "Bearer " + localStorage.user_token,
               "Content-Type": "application/json",

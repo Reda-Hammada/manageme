@@ -31,7 +31,7 @@ export default {
       try {
         axios
           .post(
-            `http://127.0.0.1:8000/api/task/${this.phaseId}`,
+            `http://127.0.0.1:8000/api/phases/tasks/${this.phaseId}`,
 
             data,
             {
@@ -69,6 +69,7 @@ export default {
     rerenderPhaseComponent() {
       this.$emit("rerender-phase");
     },
+ 
   },
 };
 </script>

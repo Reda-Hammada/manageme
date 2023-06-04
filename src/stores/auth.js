@@ -75,6 +75,7 @@ export const useAuthStore = defineStore("auth", {
           if ((await res.data.status) === 200) {
             localStorage.removeItem("user_token");
             localStorage.removeItem("userData");
+
             setTimeout(async () => {
               this.loggedOutMsg = await res.data.msg;
             }, 3000);
